@@ -17,8 +17,8 @@
 
 </div>
 
-Fishstrap (pronounced fish-strap) is a custom bootstrapper for Roblox based on
-[Bloxstrap][bloxstrap] (pronounced blox-strap). It provides additional features
+Fishstrap V2 (pronounced fish-strap v2) is a custom bootstrapper for Roblox based on
+[Fishstrap][fishstrap] (pronounced fish-strap). It provides additional features
 to enhance your experience.
 
 If you found any bugs, please [open an issue here][repo-new-issue] or make a new
