@@ -18,14 +18,14 @@
 </div>
 
 Fishstrap V2 (pronounced fish-strap v2) is a custom bootstrapper for Roblox based on
-[Fishstrap][fishstrap] (pronounced fish-strap). It provides additional features
+Fishstrap (pronounced fish-strap). It provides additional features
 to enhance your experience.
 
 If you found any bugs, please [open an issue here][repo-new-issue] or make a new
 post in [our Discord server][discord-invite]'s `#support-and-bugs` channel.
 
 > [!NOTE]
-> Fishstrap is an application for **Windows 10 and above.** For other operating
+> Fishstrap V2 is an application for **Windows 10 and above.** For other operating
 > systems, such as Mac OS and various Linux distributions, you can try
 > [AppleBlox][appleblox] and [Sober][sober] respectively.
 
