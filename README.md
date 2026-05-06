@@ -21,8 +21,7 @@ Fishstrap V2 (pronounced fish-strap v2) is a custom bootstrapper for Roblox base
 Fishstrap (pronounced fish-strap). It provides additional features
 to enhance your experience.
 
-If you found any bugs, please [open an issue here][repo-new-issue] or make a new
-post in [our Discord server][discord-invite]'s `#support-and-bugs` channel.
+If you found any bugs, please open an issue
 
 > [!NOTE]
 > Fishstrap V2 is an application for **Windows 10 and above.** For other operating
@@ -46,6 +45,7 @@ post in [our Discord server][discord-invite]'s `#support-and-bugs` channel.
 ## Special thanks
 
 - [Valra](https://github.com/NotValra) for providing their API
+- Owner of Fishstrap for most of the content
 - Other independent contributors
 
 <div align="center">
