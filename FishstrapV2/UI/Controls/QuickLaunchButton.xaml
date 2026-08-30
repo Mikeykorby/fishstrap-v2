@@ -22,7 +22,7 @@
                            VerticalAlignment="Center"/>
                 <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="14,0,13,0">
                     <TextBlock Text="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                               FontSize="14" FontWeight="SemiBold"/>
+                               FontSize="14" FontWeight="SemiBold" FontFamily="{StaticResource AppFontSemiBold}"/>
                     <TextBlock Text="{Binding Subtitle, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                Style="{DynamicResource TextSecondary}" FontSize="11.5" Margin="0,2,0,0"/>
                 </StackPanel>

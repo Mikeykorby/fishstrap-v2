@@ -20,7 +20,7 @@
 
             <Border x:Name="RpcPanel" Style="{StaticResource Card}" Margin="0,12,0,0">
                 <StackPanel>
-                    <TextBlock Text="Presence text" FontWeight="SemiBold" FontSize="13"/>
+                    <TextBlock Text="Presence text" FontWeight="SemiBold" FontFamily="{StaticResource AppFontSemiBold}" FontSize="13"/>
                     <Grid Margin="0,10,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
@@ -54,7 +54,7 @@
                         <StackPanel Orientation="Horizontal">
                             <ctrl:IconGlyph Icon="gamepad-2" Size="22" Foreground="{DynamicResource BrushAccent}" VerticalAlignment="Center"/>
                             <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
-                                <TextBlock x:Name="PreviewDetails" Text="Playing {game}" FontWeight="SemiBold" FontSize="12.5"/>
+                                <TextBlock x:Name="PreviewDetails" Text="Playing {game}" FontWeight="SemiBold" FontFamily="{StaticResource AppFontSemiBold}" FontSize="12.5"/>
                                 <TextBlock x:Name="PreviewState" Text="via Fishstrap V2" Style="{StaticResource TextSecondary}"
                                            FontSize="11.5" Margin="0,2,0,0"/>
                             </StackPanel>
@@ -85,7 +85,7 @@
                     <StackPanel Orientation="Horizontal">
                         <ctrl:IconGlyph Icon="send" Size="16" Foreground="#8FA7E0" VerticalAlignment="Center"/>
                         <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
-                            <TextBlock Text="Game invites" FontWeight="SemiBold" FontSize="13"/>
+                            <TextBlock Text="Game invites" FontWeight="SemiBold" FontFamily="{StaticResource AppFontSemiBold}" FontSize="13"/>
                             <TextBlock Text="Generate a fishstrap.app invite link for any place"
                                        Style="{DynamicResource TextSecondary}" FontSize="11.5" Margin="0,2,0,0"/>
                         </StackPanel>

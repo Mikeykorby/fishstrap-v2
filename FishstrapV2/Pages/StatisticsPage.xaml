@@ -27,7 +27,7 @@
                     <TextBlock Text="{Binding Binary}" FontSize="10.5" FontFamily="{StaticResource MonoFont}"
                                Foreground="{DynamicResource BrushInfo}"/>
                 </Border>
-                <TextBlock Grid.Column="2" Text="{Binding DurationText}" FontSize="12" FontWeight="SemiBold"
+                <TextBlock Grid.Column="2" Text="{Binding DurationText}" FontSize="12" FontWeight="SemiBold" FontFamily="{StaticResource AppFontSemiBold}"
                            VerticalAlignment="Center"/>
             </Grid>
         </DataTemplate>

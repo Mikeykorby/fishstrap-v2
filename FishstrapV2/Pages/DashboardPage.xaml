@@ -15,7 +15,7 @@
                            RenderOptions.BitmapScalingMode="HighQuality" VerticalAlignment="Center"/>
                     <StackPanel VerticalAlignment="Center" Margin="14,0,0,0">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Fishstrap" FontSize="24" FontWeight="Bold"/>
+                            <TextBlock Text="Fishstrap" FontSize="24" FontWeight="Bold" FontFamily="{StaticResource AppFontBold}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
                             <TextBlock x:Name="VersionText" Text="Version 3.0.4"

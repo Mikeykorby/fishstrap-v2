@@ -8,6 +8,7 @@ using FishstrapV2.UI;
 using FishstrapV2.UI.Controls;
 using FishstrapV2.Pages;
 using System.Windows.Documents;
+using System.Windows.Automation;
 using WS = System.Windows.Shell;
 
 namespace FishstrapV2;
@@ -77,6 +78,8 @@ public partial class MainWindow : Window
             var button = new Button();
             button.SetResourceReference(Button.StyleProperty, "NavButton");
             button.Tag = "";
+            button.SetValue(AutomationProperties.AutomationIdProperty, "Nav-" + def.Title);
+            button.SetValue(AutomationProperties.NameProperty, def.Title);
             var content = new StackPanel { Orientation = Orientation.Horizontal };
             var glyph = new IconGlyph
             {

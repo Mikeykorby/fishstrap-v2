@@ -24,12 +24,16 @@
 
   <ItemGroup>
     <None Remove="Assets/*.png" />
+    <None Remove="Assets/Fonts/*.ttf" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Assets/Bloxstrap.png" />
     <Resource Include="Assets/Bloxstrap-full-dark.png" />
     <Resource Include="Assets/Bloxstrap-full-light.png" />
+    <Resource Include="Assets/Fonts/Inter-Regular.ttf" />
+    <Resource Include="Assets/Fonts/Inter-SemiBold.ttf" />
+    <Resource Include="Assets/Fonts/Inter-Bold.ttf" />
   </ItemGroup>
 
 </Project>

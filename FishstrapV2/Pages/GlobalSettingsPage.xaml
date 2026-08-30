@@ -26,7 +26,7 @@
                             VerticalAlignment="Center" ValueChanged="FpsSlider_Changed"
                             IsSnapToTickEnabled="True" TickFrequency="5"/>
                     <TextBlock x:Name="FpsValue" Text="240" Style="{StaticResource Mono}" FontSize="14"
-                               VerticalAlignment="Center" Margin="16,0,0,0" FontWeight="SemiBold"/>
+                               VerticalAlignment="Center" Margin="16,0,0,0" FontWeight="SemiBold" FontFamily="{StaticResource AppFontSemiBold}"/>
                 </StackPanel>
             </Border>
 
@@ -113,7 +113,7 @@
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Text="{Binding Name}" FontSize="12.5" VerticalAlignment="Center"
-                                               FontWeight="SemiBold"/>
+                                               FontWeight="SemiBold" FontFamily="{StaticResource AppFontSemiBold}"/>
                                     <StackPanel Grid.Column="1" Orientation="Horizontal">
                                         <Button Content="Apply" Style="{StaticResource GhostButton}"
                                                 Click="ProfileApply_Click" Tag="{Binding}"/>

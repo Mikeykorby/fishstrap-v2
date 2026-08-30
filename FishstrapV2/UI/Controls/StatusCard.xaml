@@ -12,7 +12,7 @@
             <TextBlock Text="{Binding Label, RelativeSource={RelativeSource AncestorType=UserControl}}"
                        Style="{DynamicResource TextSecondary}" FontSize="11.5" Margin="0,10,0,0"/>
             <TextBlock x:Name="ValueText"
-                       Style="{DynamicResource Mono}" FontSize="14.5" FontWeight="SemiBold"
+                       Style="{DynamicResource Mono}" FontSize="14.5" FontWeight="SemiBold" FontFamily="{StaticResource AppFontSemiBold}"
                        Margin="0,3,0,0" TextTrimming="CharacterEllipsis"
                        Foreground="{Binding ValueBrush, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
         </StackPanel>

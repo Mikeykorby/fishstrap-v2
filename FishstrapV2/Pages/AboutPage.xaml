@@ -14,7 +14,7 @@
                            Visibility="Collapsed"/>
                 </Grid>
                 <StackPanel VerticalAlignment="Center" Margin="14,0,0,0">
-                    <TextBlock Text="Fishstrap V2" FontSize="20" FontWeight="Bold"/>
+                    <TextBlock Text="Fishstrap V2" FontSize="20" FontWeight="Bold" FontFamily="{StaticResource AppFontBold}"/>
                     <StackPanel Orientation="Horizontal" Margin="0,3,0,0">
                         <TextBlock x:Name="VersionText" Style="{StaticResource Mono}"
                                    Foreground="{DynamicResource BrushTextSecondary}" FontSize="12.5"/>
@@ -49,7 +49,7 @@
             <TextBlock Text="Licenses" Style="{StaticResource H2}" Margin="0,26,0,10"/>
             <Border Style="{StaticResource Card}">
                 <StackPanel>
-                    <TextBlock Text="Fishstrap V2 — MIT License" FontWeight="SemiBold" FontSize="13"/>
+                    <TextBlock Text="Fishstrap V2 — MIT License" FontWeight="SemiBold" FontFamily="{StaticResource AppFontSemiBold}" FontSize="13"/>
                     <TextBlock TextWrapping="Wrap" Style="{DynamicResource TextSecondary}" FontSize="12"
                                Margin="0,6,0,0"
                                Text="Copyright (c) 2026 Mikeykorby. Fishstrap V2 is a fork of Fishstrap (MIT, Copyright (c) 2025 returnrqt), which is based on Bloxstrap by pizzaboxer (MIT). This project builds on the ideas of both and is distributed under the MIT license."/>
