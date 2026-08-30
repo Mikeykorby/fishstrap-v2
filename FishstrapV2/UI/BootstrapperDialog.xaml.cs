@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.IO;
+using System.Windows.Media.Imaging;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -40,10 +41,55 @@ public partial class BootstrapperDialog : Window, RobloxDeployClient.IProgressHo
         _progress = Progress;
 
         ApplyBloxnifiedTheme();
+        if (!_themed)
+            ApplyFishstrapStyle();
         ApplyLogoAnimation();
+    }
 
-        if (ThemeManager.IsLight)
-            Background = new SolidColorBrush(Color.FromRgb(0xF2, 0xF2, 0xF4));
+    /// <summary>Fishstrap's original dialog styles, re-created natively.</summary>
+    private void ApplyFishstrapStyle()
+    {
+        var light = ThemeManager.IsLight;
+        switch (SettingsStore.Settings.Launcher.BootstrapperStyle)
+        {
+            case "Classic Fluent":
+                Width = 420;
+                Height = 190;
+                DefaultPanel.Visibility = Visibility.Collapsed;
+                ClassicFluentPanel.Visibility = Visibility.Visible;
+                _status = ClassicFluentStatus;
+                _progress = ClassicFluentProgress;
+                break;
+
+            case "Terminal":
+                Width = 800;
+                Height = 520;
+                Background = new SolidColorBrush(Color.FromRgb(0x0C, 0x0C, 0x0C));
+                DefaultPanel.Visibility = Visibility.Collapsed;
+                TerminalPanel.Visibility = Visibility.Visible;
+                TerminalLaunchArgs.Text = "roblox-player:";
+                _status = TerminalStatus;
+                _progress = null; // the console reports progress as messages only
+                _squareCorners = true;
+                break;
+
+            case "TwentyFive":
+                Width = 576;
+                Height = 482;
+                Background = Brushes.Black;
+                DefaultPanel.Visibility = Visibility.Collapsed;
+                TwentyFivePanel.Visibility = Visibility.Visible;
+                _status = TwentyFiveStatus; // the 2025 launcher shows progress only
+                _progress = TwentyFiveProgress;
+                _squareCorners = true;
+                break;
+
+            default:
+                // Fishstrap fluent dialog (the DefaultPanel above).
+                if (light)
+                    Background = new SolidColorBrush(Color.FromRgb(0xF2, 0xF2, 0xF4));
+                break;
+        }
     }
 
     private void ApplyBloxnifiedTheme()
@@ -149,7 +195,8 @@ public partial class BootstrapperDialog : Window, RobloxDeployClient.IProgressHo
 
     private void ApplyLogoAnimation()
     {
-        if (_themed) return; // themes bring their own assets (GIFs animate via the loader)
+        if (_themed || DefaultPanel.Visibility != Visibility.Visible)
+            return; // themes and other styles bring their own visuals
 
         var s = SettingsStore.Settings.Launcher;
         if (s.BootstrapperAnimation == "Spin")

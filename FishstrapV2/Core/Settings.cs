@@ -20,7 +20,7 @@ public class LauncherSettings
     public bool AutoCloseAfterLaunch { get; set; } = false;
     public bool CreateShortcutsOnInstall { get; set; } = true;
     public string LaunchArgs { get; set; } = "";
-    /// <summary>Bootstrapper progress dialog: "Fishstrap" (default), "Disabled", or a Bloxnified/imported theme name.</summary>
+    /// <summary>Bootstrapper progress dialog: "Fishstrap" (default), "Disabled", a fishstrap original style ("Classic Fluent", "Terminal", "TwentyFive"), Bloxnified V2, or an imported theme name.</summary>
     public string BootstrapperStyle { get; set; } = "Fishstrap";
     public string BootstrapperTitle { get; set; } = "Fishstrap V2";
     /// <summary>Bootstrapper logo animation: "None" (static), "Spin", or "Custom".</summary>

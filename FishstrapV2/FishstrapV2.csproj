@@ -39,6 +39,8 @@
   <ItemGroup>
     <None Remove="Assets/Bloxnified/**/*" />
     <Content Include="Assets/Bloxnified/**/*" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="Assets/FishstrapStyles/**/*" />
+    <Content Include="Assets/FishstrapStyles/**/*" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>

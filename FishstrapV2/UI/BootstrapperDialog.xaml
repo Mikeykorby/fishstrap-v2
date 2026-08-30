@@ -23,7 +23,110 @@
 
             <Button x:Name="BtnCancel" Content="Cancel" Width="120" FontSize="13"
                     Style="{StaticResource CmdButton}" HorizontalAlignment="Center"
-                    IsEnabled="False" Click="BtnCancel_Click"/>
+                    Click="BtnCancel_Click"/>
         </StackPanel>
+
+        <!-- Classic Fluent (fishstrap): icon + message + progress, footer with cancel -->
+        <Grid x:Name="ClassicFluentPanel" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid Margin="16,0,16,0" VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Image Width="48" Height="48" Source="/Assets/Bloxstrap.png" VerticalAlignment="Top"
+                       Margin="0,12,0,0" RenderOptions.BitmapScalingMode="HighQuality"/>
+                <StackPanel Grid.Column="1">
+                    <TextBlock x:Name="ClassicFluentStatus" Margin="16,8,0,0" FontSize="20" TextWrapping="Wrap"/>
+                    <ProgressBar x:Name="ClassicFluentProgress" Margin="16,16,0,16" Height="8" IsIndeterminate="True"/>
+                </StackPanel>
+            </Grid>
+            <Border Grid.Row="1" Background="#2B2B31" Padding="15">
+                <Button x:Name="ClassicFluentCancel" Content="Cancel" Width="120" HorizontalAlignment="Right"
+                        Style="{StaticResource CmdButton}" Click="BtnCancel_Click"/>
+            </Border>
+        </Grid>
+
+        <!-- Terminal (fishstrap): PowerShell-style console -->
+        <Grid x:Name="TerminalPanel" Visibility="Collapsed" Background="#0C0C0C">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Height="40" Background="#2B2B2B">
+                <Border Width="220" Height="32" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                        Background="#0C0C0C" CornerRadius="8,8,0,0" Margin="12,0,0,0">
+                    <Grid Margin="8,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Source="/Assets/FishstrapStyles/TerminalDialog/Powershell.png" Height="18"
+                               Margin="0,0,6,0" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Text="Windows Powershell" Foreground="White" FontSize="12"
+                                   VerticalAlignment="Center" Margin="0,0,8,1" TextTrimming="CharacterEllipsis"/>
+                        <Button x:Name="TerminalClose" Grid.Column="2" Content="&#x2715;" Width="28" Height="24"
+                                Background="Transparent" BorderThickness="0" Foreground="White" FontSize="12"
+                                VerticalAlignment="Center" Margin="0,0,2,0" Click="BtnCancel_Click"/>
+                    </Grid>
+                </Border>
+            </Grid>
+            <ScrollViewer Grid.Row="1" Margin="12" FontSize="16" VerticalScrollBarVisibility="Auto"
+                          FontFamily="Cascadia Mono, Consolas">
+                <StackPanel>
+                    <TextBlock Text="Windows Powershell" Foreground="White" Opacity="0.95" TextWrapping="Wrap"/>
+                    <TextBlock Text="Copyright (C) Microsoft Corporation. All rights reserved." Foreground="White" Opacity="0.95" TextWrapping="Wrap"/>
+                    <TextBlock/>
+                    <TextBlock Text="Try the new cross-platform PowerShell https://aka.ms/pscore6" Foreground="White" Opacity="0.95" TextWrapping="Wrap"/>
+                    <TextBlock/>
+                    <TextBlock x:Name="TerminalLaunchArgs" Foreground="White" Opacity="0.95" TextWrapping="Wrap"/>
+                    <TextBlock/>
+                    <TextBlock x:Name="TerminalStatus" Foreground="White" Opacity="0.95" TextWrapping="Wrap"/>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+
+        <!-- TwentyFive (fishstrap): 2025 Roblox launcher -->
+        <Grid x:Name="TwentyFivePanel" Visibility="Collapsed" Background="#000000">
+            <Image Height="254" Width="254" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,60,0,0"
+                   Source="/Assets/FishstrapStyles/TwentyFiveDialog/PlayerLogo.png"
+                   RenderOptions.BitmapScalingMode="HighQuality"/>
+            <TextBlock x:Name="TwentyFiveStatus" Visibility="Collapsed"/>
+            <Grid VerticalAlignment="Bottom" Background="#191A1F" Height="91">
+                <ProgressBar x:Name="TwentyFiveProgress" Height="6" Width="576" HorizontalAlignment="Center"
+                             VerticalAlignment="Top" BorderThickness="0" Foreground="White" IsIndeterminate="True"/>
+                <Image Height="32" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30,0,0,0"
+                       Source="/Assets/FishstrapStyles/TwentyFiveDialog/Roblox.png"/>
+                <Button x:Name="TwentyFiveCancel" Margin="0,0,32,0" MinWidth="96" Height="38" Padding="16,0"
+                        Background="#2F3139" Foreground="White" Content="Cancel" FontSize="12.5"
+                        HorizontalAlignment="Right" VerticalAlignment="Center"
+                        Click="BtnCancel_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <Border x:Name="Root" Background="{TemplateBinding Background}" CornerRadius="6"/>
+                                <Border x:Name="Hover" Background="#42464F" Opacity="0" CornerRadius="6"/>
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Hover" Property="Opacity" Value="1"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="Root" Property="Opacity" Value="0.85"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Opacity" Value="0.45"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>
