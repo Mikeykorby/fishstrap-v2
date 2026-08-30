@@ -1,0 +1,59 @@
+<local:FishstrapPage x:Class="FishstrapV2.Pages.BootstrapperPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:FishstrapV2.UI"
+        xmlns:ctrl="clr-namespace:FishstrapV2.UI.Controls">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="32,22,32,28">
+
+            <TextBlock Text="Bootstrapper" Style="{StaticResource H1}" Margin="0,0,0,6"/>
+            <TextBlock Text="How Fishstrap V2 behaves while installing and launching Roblox."
+                       Style="{StaticResource TextSecondary}" Margin="0,0,0,22"/>
+
+            <StackPanel Margin="0,0,0,0">
+                <ctrl:SettingRow x:Name="RowAutoClose" Icon="&#xE73E;" IconTint="#2E2E38"
+                                 Title="Close after launching" Subtitle="Close the bootstrapper once Roblox starts">
+                    <ctrl:SettingRow.RowContent>
+                        <CheckBox x:Name="ChkAutoClose" Style="{StaticResource ModernToggle}"
+                                  Checked="Toggle_Changed" Unchecked="Toggle_Changed"/>
+                    </ctrl:SettingRow.RowContent>
+                </ctrl:SettingRow>
+                <ctrl:SettingRow x:Name="RowShortcuts" Icon="&#xE71B;" IconTint="#2E2E38"
+                                 Title="Create shortcuts on install" Subtitle="Desktop and Start Menu shortcuts are created when Roblox installs"
+                                 Margin="0,10,0,0">
+                    <ctrl:SettingRow.RowContent>
+                        <CheckBox x:Name="ChkShortcuts" Style="{StaticResource ModernToggle}"
+                                  Checked="Toggle_Changed" Unchecked="Toggle_Changed"/>
+                    </ctrl:SettingRow.RowContent>
+                </ctrl:SettingRow>
+                <ctrl:SettingRow x:Name="RowRegister" Icon="&#xE946;" IconTint="#2E2E38"
+                                 Title="Register as system launcher" Subtitle="Route the official Roblox launcher through Fishstrap V2"
+                                 Margin="0,10,0,0">
+                    <ctrl:SettingRow.RowContent>
+                        <CheckBox x:Name="ChkRegister" Style="{StaticResource ModernToggle}"
+                                  Checked="Register_Changed" Unchecked="Register_Changed"/>
+                    </ctrl:SettingRow.RowContent>
+                </ctrl:SettingRow>
+            </StackPanel>
+
+            <Border Style="{StaticResource Card}" Margin="0,12,0,0">
+                <StackPanel>
+                    <TextBlock Text="Launch arguments" FontWeight="SemiBold" FontSize="13"/>
+                    <TextBlock Text="Extra arguments passed to RobloxPlayerBeta.exe at launch"
+                               Style="{DynamicResource TextSecondary}" FontSize="11.5" Margin="0,2,0,10"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox x:Name="TxtLaunchArgs" Width="420" FontSize="12.5"
+                                 FontFamily="{StaticResource MonoFont}" LostFocus="Args_LostFocus"/>
+                        <Button x:Name="BtnSetup" Content="Run initial setup again" Style="{StaticResource CmdButton}"
+                                Margin="12,0,0,0" Click="BtnSetup_Click"/>
+                    </StackPanel>
+
+                    <StackPanel x:Name="ProgressPanel" Margin="0,14,0,0" Visibility="Collapsed">
+                        <TextBlock x:Name="ProgressText" Style="{StaticResource TextSecondary}" FontSize="12"/>
+                        <ProgressBar x:Name="Progress" IsIndeterminate="True" Margin="0,8,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</local:FishstrapPage>

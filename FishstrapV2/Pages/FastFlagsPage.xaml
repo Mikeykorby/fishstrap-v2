@@ -1,0 +1,121 @@
+<local:FishstrapPage x:Class="FishstrapV2.Pages.FastFlagsPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:FishstrapV2.UI"
+        xmlns:ctrl="clr-namespace:FishstrapV2.UI.Controls">
+    <local:FishstrapPage.Resources>
+        <DataTemplate x:Key="FlagRowTemplate">
+            <Grid Margin="0,3,0,3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="42*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="58*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         LostFocus="FlagName_LostFocus" KeyDown="FlagRow_KeyDown"
+                         FontFamily="{StaticResource MonoFont}" FontSize="12"
+                         ToolTip="Flag name"/>
+                <TextBlock Grid.Column="1" Text="=" FontSize="12"
+                           Foreground="{DynamicResource BrushTextTertiary}"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBox Grid.Column="2" Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         LostFocus="FlagValue_LostFocus" KeyDown="FlagRow_KeyDown"
+                         FontFamily="{StaticResource MonoFont}" FontSize="12"
+                         ToolTip="Flag value (bool, number or string)"/>
+                <Button Grid.Column="3" Style="{StaticResource IconButton}" Click="FlagDelete_Click" Tag="{Binding}"
+                        ToolTip="Delete flag" Margin="6,0,0,0">
+                    <TextBlock Text="&#xE74D;" FontFamily="{StaticResource IconFont}" FontSize="11"/>
+                </Button>
+            </Grid>
+        </DataTemplate>
+    </local:FishstrapPage.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="32,22,32,28">
+
+            <TextBlock Text="FastFlags" Style="{StaticResource H1}" Margin="0,0,0,6"/>
+            <TextBlock Text="Unhidden FastFlags editor — tweak hidden engine settings of the Roblox client."
+                       Style="{StaticResource TextSecondary}" Margin="0,0,0,18"/>
+
+            <Border x:Name="AllowlistBanner" Background="#33FBBF24" CornerRadius="10" Padding="14,10"
+                    BorderBrush="#4DFBBF24" BorderThickness="1" Margin="0,0,0,14">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="&#xE7BA;" FontFamily="{StaticResource IconFont}" FontSize="14"
+                               Foreground="{DynamicResource BrushWarning}" VerticalAlignment="Center"/>
+                    <TextBlock FontSize="12" Margin="10,0,0,0" TextWrapping="Wrap"
+                               Foreground="#EADFA8" MaxWidth="1000" VerticalAlignment="Center"
+                               Text="Allowlist enforced: flags that are not present in the Fishstrap allowlist cannot be applied. This protects you from flags that break the client. You can disable the restriction below."/>
+                    <CheckBox x:Name="ChkEnforce" Style="{StaticResource ModernToggle}"
+                              VerticalAlignment="Center" Margin="14,0,0,0"
+                              Checked="Enforce_Changed" Unchecked="Enforce_Changed"
+                              ToolTip="Toggle allowlist restriction"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Toolbar -->
+            <Grid Margin="0,0,0,12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox x:Name="ChkFlagsEnabled" Style="{StaticResource ModernToggle}" VerticalAlignment="Center"
+                              Checked="FlagsEnabled_Changed" Unchecked="FlagsEnabled_Changed"/>
+                    <TextBlock Text="FastFlags enabled" FontSize="13" VerticalAlignment="Center" Margin="10,0,14,0"/>
+                </StackPanel>
+                <TextBox x:Name="TxtSearch" Grid.Column="1" MaxWidth="380" HorizontalAlignment="Left"
+                         Tag="Search flags&#8230;" TextChanged="Search_TextChanged"/>
+                <StackPanel Grid.Column="2" Orientation="Horizontal">
+                    <ComboBox x:Name="CmbPresets" Width="170" SelectionChanged="Preset_Changed">
+                        <ComboBoxItem Content="Presets&#8230;" IsSelected="True"/>
+                        <ComboBoxItem Content="Unlock FPS (240)"/>
+                        <ComboBoxItem Content="Reduce effects"/>
+                        <ComboBoxItem Content="Force Vulkan"/>
+                        <ComboBoxItem Content="Force Direct3D 11"/>
+                        <ComboBoxItem Content="Block telemetry"/>
+                    </ComboBox>
+                    <Button Content="Add flag" Style="{StaticResource PrimaryButton}" Margin="10,0,0,0"
+                            Click="BtnAdd_Click"/>
+                    <Button Content="Import" Style="{StaticResource CmdButton}" Margin="10,0,0,0"
+                            Click="BtnImport_Click"/>
+                    <Button Content="Export" Style="{StaticResource CmdButton}" Margin="10,0,0,0"
+                            Click="BtnExport_Click"/>
+                    <Button Content="Clear all" Style="{StaticResource DangerButton}" Margin="10,0,0,0"
+                            Click="BtnClear_Click"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- Header -->
+            <Grid Margin="2,0,14,4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="42*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="58*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Name" Style="{DynamicResource TextTertiary}" FontSize="11.5" Margin="10,0,0,0"/>
+                <TextBlock Grid.Column="2" Text="Value" Style="{DynamicResource TextTertiary}" FontSize="11.5" Margin="10,0,0,0"/>
+            </Grid>
+
+            <!-- Flags -->
+            <Border Style="{StaticResource Card}" Padding="10,10,14,10">
+                <ScrollViewer MaxHeight="430" VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <ItemsControl x:Name="FlagsList" ItemTemplate="{StaticResource FlagRowTemplate}"/>
+                        <TextBlock x:Name="NoFlags" Text="No FastFlags configured. Add one or pick a preset."
+                                   Style="{DynamicResource TextSecondary}" FontSize="12.5" Margin="10,8,0,8"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+
+            <Grid Margin="0,10,0,0">
+                <TextBlock x:Name="FlagCount" Style="{DynamicResource TextTertiary}" FontSize="12"
+                           HorizontalAlignment="Left"/>
+                <TextBlock Style="{DynamicResource TextTertiary}" FontSize="12" HorizontalAlignment="Right"
+                           Text="Written to ClientAppSettings.json on launch"/>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</local:FishstrapPage>

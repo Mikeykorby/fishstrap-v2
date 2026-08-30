@@ -1,0 +1,117 @@
+<Window x:Class="FishstrapV2.MainWindow"
+        AutomationProperties.AutomationId="FishstrapMainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
+        Title="Fishstrap Settings"
+        Icon="/Assets/Bloxstrap.png"
+        Width="1600" Height="880" MinWidth="1100" MinHeight="640"
+        WindowStartupLocation="CenterScreen" ShowActivated="True"
+        WindowStyle="None" ResizeMode="CanResize"
+        Background="{DynamicResource BrushBg}"
+        FontFamily="Segoe UI"
+        UseLayoutRounding="True" SnapsToDevicePixels="True" TextOptions.TextFormattingMode="Ideal">
+    <shell:WindowChrome.WindowChrome>
+        <shell:WindowChrome CaptionHeight="44"
+                            ResizeBorderThickness="8"
+                            GlassFrameThickness="0"
+                            CornerRadius="0"
+                            UseAeroCaptionButtons="False"/>
+    </shell:WindowChrome.WindowChrome>
+
+    <Grid x:Name="RootGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="44"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="56"/>
+        </Grid.RowDefinitions>
+
+        <!-- ============ Title bar ============ -->
+        <Grid Grid.Row="0" Background="{DynamicResource BrushBg}">
+            <StackPanel Orientation="Horizontal" Margin="14,0,0,0" VerticalAlignment="Center">
+                <Image Source="/Assets/Bloxstrap.png" Width="22" Height="22"
+                       RenderOptions.BitmapScalingMode="HighQuality" VerticalAlignment="Center"/>
+                <TextBlock Text="Fishstrap Settings" FontSize="12.5" FontWeight="SemiBold"
+                           Margin="10,0,0,0" VerticalAlignment="Center"/>
+                <Border x:Name="TestModeChip" Style="{StaticResource Chip}" VerticalAlignment="Center"
+                        Margin="12,0,0,0" Visibility="Collapsed" Background="#33FBBF24">
+                    <TextBlock Text="TEST MODE" FontSize="10" FontWeight="SemiBold"
+                               Foreground="{DynamicResource BrushWarning}" FontFamily="{StaticResource MonoFont}"/>
+                </Border>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal"
+                        shell:WindowChrome.IsHitTestVisibleInChrome="True">
+                <Button x:Name="BtnMinimize" Style="{StaticResource TitleBarButton}"
+                        Click="BtnMinimize_Click" ToolTip="Minimize">
+                    <TextBlock Text="&#xE921;" FontFamily="{StaticResource IconFont}" FontSize="10"/>
+                </Button>
+                <Button x:Name="BtnMaximize" Style="{StaticResource TitleBarButton}"
+                        Click="BtnMaximize_Click" ToolTip="Maximize">
+                    <TextBlock x:Name="MaximizeGlyph" Text="&#xE922;" FontFamily="{StaticResource IconFont}" FontSize="10"/>
+                </Button>
+                <Button x:Name="BtnClose" Style="{StaticResource TitleBarCloseButton}"
+                        Click="BtnClose_Click" ToolTip="Close">
+                    <TextBlock Text="&#xE8BB;" FontFamily="{StaticResource IconFont}" FontSize="10"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        <!-- ============ Body ============ -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="248"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" Background="{DynamicResource BrushSidebar}"
+                    BorderBrush="{DynamicResource BrushDivider}" BorderThickness="0,0,1,0">
+                <DockPanel>
+                    <Border DockPanel.Dock="Bottom" Margin="12,4,12,14" Padding="12,10"
+                            Background="{DynamicResource BrushCard}" CornerRadius="10"
+                            BorderBrush="{DynamicResource BrushCardBorder}" BorderThickness="1">
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox x:Name="ChkTestMode" Style="{StaticResource ModernToggle}"
+                                      Checked="TestMode_Changed" Unchecked="TestMode_Changed"/>
+                            <TextBlock Text="Test mode" FontSize="12.5" VerticalAlignment="Center" Margin="12,0,0,0"/>
+                        </StackPanel>
+                    </Border>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0,4,0,0">
+                        <StackPanel x:Name="NavList" Margin="10,4,10,10"/>
+                    </ScrollViewer>
+                </DockPanel>
+            </Border>
+
+            <ContentControl x:Name="PageHost" Grid.Column="1" Focusable="False"/>
+        </Grid>
+
+        <!-- ============ Command bar ============ -->
+        <Border Grid.Row="2" Background="{DynamicResource BrushBgAlt}"
+                BorderBrush="{DynamicResource BrushDivider}" BorderThickness="0,1,0,0" Padding="16,0">
+            <Grid>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock x:Name="SavedLabel" Text="All changes saved"
+                               Style="{DynamicResource TextTertiary}" FontSize="12" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="PendingLabel" Visibility="Collapsed" FontSize="12"
+                               Foreground="{DynamicResource BrushWarning}" VerticalAlignment="Center"
+                               Text="Test mode — press Save to apply changes"/>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Button x:Name="BtnSaveLaunch" Content="Save and Launch" Style="{StaticResource CmdButton}"
+                            Click="BtnSaveLaunch_Click"/>
+                    <Button x:Name="BtnSave" Content="Save" Style="{StaticResource CmdButton}"
+                            Margin="10,0,0,0" Click="BtnSave_Click"/>
+                    <Button x:Name="BtnCloseBar" Content="Close" Style="{StaticResource CmdButton}"
+                            Margin="10,0,0,0" Click="BtnClose_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- ============ Toast ============ -->
+        <Border x:Name="Toast" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                Margin="0,0,0,64" Padding="16,10" CornerRadius="10"
+                Background="{DynamicResource BrushPopup}" BorderBrush="{DynamicResource BrushCardBorder}"
+                BorderThickness="1" Visibility="Hidden">
+            <TextBlock x:Name="ToastText" FontSize="12.5"/>
+        </Border>
+    </Grid>
+</Window>

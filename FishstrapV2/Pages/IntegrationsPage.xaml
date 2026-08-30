@@ -1,0 +1,112 @@
+<local:FishstrapPage x:Class="FishstrapV2.Pages.IntegrationsPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:FishstrapV2.UI"
+        xmlns:ctrl="clr-namespace:FishstrapV2.UI.Controls">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="32,22,32,28">
+
+            <TextBlock Text="Integrations" Style="{StaticResource H1}" Margin="0,0,0,6"/>
+            <TextBlock Text="Connect Fishstrap V2 with the rest of your system." Style="{StaticResource TextSecondary}"
+                       Margin="0,0,0,22"/>
+
+            <ctrl:SettingRow x:Name="RowRpc" Icon="&#xE8BD;" IconTint="#3A3A70"
+                             Title="Discord Rich Presence" Subtitle="Show what you're playing in Discord">
+                <ctrl:SettingRow.RowContent>
+                    <CheckBox x:Name="ChkRpc" Style="{StaticResource ModernToggle}"
+                              Checked="Rpc_Changed" Unchecked="Rpc_Changed"/>
+                </ctrl:SettingRow.RowContent>
+            </ctrl:SettingRow>
+
+            <Border x:Name="RpcPanel" Style="{StaticResource Card}" Margin="0,12,0,0">
+                <StackPanel>
+                    <TextBlock Text="Presence text" FontWeight="SemiBold" FontSize="13"/>
+                    <Grid Margin="0,10,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Details" Style="{StaticResource TextSecondary}" VerticalAlignment="Center"
+                                   Margin="0,0,12,0" Width="70"/>
+                        <TextBox x:Name="TxtDetails" Grid.Column="1" TextChanged="Presence_TextChanged"/>
+                        <TextBlock Grid.Row="1" Text="State" Style="{StaticResource TextSecondary}" VerticalAlignment="Center"
+                                   Margin="0,0,12,10" Width="70"/>
+                        <TextBox x:Name="TxtState" Grid.Column="1" Grid.Row="1" Margin="0,0,0,10"
+                                 TextChanged="Presence_TextChanged"/>
+                        <TextBlock Grid.Row="2" Text="Elapsed" Style="{StaticResource TextSecondary}" VerticalAlignment="Center"
+                                   Margin="0,0,12,0" Width="70"/>
+                        <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal">
+                            <CheckBox x:Name="ChkElapsed" Style="{StaticResource ModernToggle}"
+                                      Checked="Elapsed_Changed" Unchecked="Elapsed_Changed"/>
+                            <TextBlock Text="Show time played in the presence" Style="{StaticResource TextSecondary}"
+                                       VerticalAlignment="Center" Margin="12,0,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                    <TextBlock Text="Tip: use {game} as a placeholder for the game you're playing."
+                               Style="{StaticResource TextTertiary}" FontSize="11.5" Margin="0,10,0,0"/>
+
+                    <Border Style="{StaticResource SubCard}" Margin="0,14,0,0">
+                        <StackPanel Orientation="Horizontal">
+                            <Border Width="44" Height="44" CornerRadius="10" Background="{DynamicResource BrushAccentSubtle}">
+                                <TextBlock Text="&#xE7F4;" FontFamily="{StaticResource IconFont}" FontSize="18"
+                                           Foreground="{DynamicResource BrushAccent}"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
+                                <TextBlock x:Name="PreviewDetails" Text="Playing {game}" FontWeight="SemiBold" FontSize="12.5"/>
+                                <TextBlock x:Name="PreviewState" Text="via Fishstrap V2" Style="{StaticResource TextSecondary}"
+                                           FontSize="11.5" Margin="0,2,0,0"/>
+                            </StackPanel>
+                            <Border Width="60" Height="14" CornerRadius="7" Background="{DynamicResource BrushField}"
+                                    BorderBrush="{DynamicResource BrushCardBorder}" BorderThickness="1"
+                                    VerticalAlignment="Center" Margin="16,0,0,0">
+                                <TextBlock x:Name="PreviewTimer" Text="12:34" Style="{StaticResource Mono}" FontSize="8.5"
+                                           Foreground="{DynamicResource BrushTextSecondary}"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <ctrl:SettingRow x:Name="RowActivity" Icon="&#xE823;" IconTint="#2E5C44"
+                             Title="Activity Tracking" Subtitle="Record launches and play time for statistics"
+                             Margin="0,12,0,0">
+                <ctrl:SettingRow.RowContent>
+                    <CheckBox x:Name="ChkActivity" Style="{StaticResource ModernToggle}"
+                              Checked="Activity_Changed" Unchecked="Activity_Changed"/>
+                </ctrl:SettingRow.RowContent>
+            </ctrl:SettingRow>
+
+            <!-- Game invites -->
+            <Border Style="{StaticResource Card}" Margin="0,12,0,0">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Border Width="34" Height="34" CornerRadius="8" Background="#33456E">
+                            <TextBlock Text="&#xE71B;" FontFamily="{StaticResource IconFont}" FontSize="14"
+                                       Foreground="#E6E6F0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
+                            <TextBlock Text="Game invites" FontWeight="SemiBold" FontSize="13"/>
+                            <TextBlock Text="Generate a fishstrap.app invite link for any place"
+                                       Style="{DynamicResource TextSecondary}" FontSize="11.5" Margin="0,2,0,0"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+                        <TextBox x:Name="TxtPlaceId" Width="220" VerticalAlignment="Center"
+                                 ToolTip="Place ID (the number in the game URL)"/>
+                        <Button x:Name="BtnGenerate" Content="Generate link" Style="{StaticResource PrimaryButton}"
+                                Margin="10,0,0,0" Click="BtnGenerate_Click"/>
+                        <TextBlock x:Name="InviteStatus" Style="{StaticResource TextSecondary}"
+                                   VerticalAlignment="Center" Margin="12,0,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</local:FishstrapPage>
