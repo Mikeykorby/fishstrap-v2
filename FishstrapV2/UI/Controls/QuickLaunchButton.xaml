@@ -1,6 +1,7 @@
 <UserControl x:Class="FishstrapV2.UI.Controls.QuickLaunchButton"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ctrl="clr-namespace:FishstrapV2.UI.Controls">
     <Border x:Name="Root" Background="{DynamicResource BrushCard}"
             BorderBrush="{DynamicResource BrushCardBorder}"
             BorderThickness="1" CornerRadius="12" Padding="16,14" Cursor="Hand"
@@ -16,19 +17,16 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <Border Width="40" Height="40" CornerRadius="10"
-                        Background="{Binding IconTint, RelativeSource={RelativeSource AncestorType=UserControl}}">
-                    <TextBlock Text="{Binding Icon, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                               FontFamily="{StaticResource IconFont}" FontSize="17"
-                               Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </Border>
+                <ctrl:IconGlyph Icon="{Binding Icon, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                           Size="20" Foreground="{Binding IconTint, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                           VerticalAlignment="Center"/>
                 <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="14,0,13,0">
                     <TextBlock Text="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                FontSize="14" FontWeight="SemiBold"/>
                     <TextBlock Text="{Binding Subtitle, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                Style="{DynamicResource TextSecondary}" FontSize="11.5" Margin="0,2,0,0"/>
                 </StackPanel>
-                <TextBlock Grid.Column="2" Text="&#xE76C;" FontFamily="{StaticResource IconFont}" FontSize="11"
+                <ctrl:IconGlyph Grid.Column="2" Icon="chevron-right" Size="12"
                            Foreground="{DynamicResource BrushTextTertiary}" VerticalAlignment="Center"/>
             </Grid>
         </Grid>

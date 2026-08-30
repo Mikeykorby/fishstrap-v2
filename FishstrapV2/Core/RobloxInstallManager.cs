@@ -107,9 +107,9 @@ public static class RobloxInstallManager
             progress?.Report($"Downloading Roblox {info.Version}…");
             await RobloxDeployClient.DownloadVersionAsync(info.VersionHash, dir, progress);
             progress?.Report("Applying settings…");
+            EnsureAppSettings(dir);
             FastFlagManager.ApplyToVersion(dir, SettingsStore.Settings);
             ModManager.ApplyAll(dir);
-            EnsureWebView2Runtime(dir);
             if (SettingsStore.Settings.Launcher.CreateShortcutsOnInstall)
                 ShortcutManager.CreateAppShortcuts();
         }
@@ -175,42 +175,21 @@ public static class RobloxInstallManager
     private static bool IsComplete(string dir, string exeName) =>
         File.Exists(Path.Combine(dir, ".fishstrap.json")) && File.Exists(Path.Combine(dir, exeName));
 
-    /// <summary>Roblox needs the WebView2 runtime; bootstrap it from the offline installer if absent.</summary>
-    private static void EnsureWebView2Runtime(string dir)
+    /// <summary>Roblox's client requires AppSettings.xml to find its content folder; it ships in no package, so write it.</summary>
+    public static void EnsureAppSettings(string dir)
     {
-        const string clientGuid = "{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}";
-
-        foreach (var root in new[] { Microsoft.Win32.RegistryHive.LocalMachine, Microsoft.Win32.RegistryHive.CurrentUser })
-        foreach (var view in new[] { Microsoft.Win32.RegistryView.Registry64, Microsoft.Win32.RegistryView.Registry32 })
-        {
-            using var baseKey = Microsoft.Win32.RegistryKey.OpenBaseKey(root, view);
-            using var key = baseKey.OpenSubKey($@"SOFTWARE\Microsoft\EdgeUpdate\Clients\{clientGuid}");
-            if (key?.GetValue("pv") is string pv && pv.Length > 1)
-                return;
-        }
-
-        var setup = Path.Combine(dir, "MicrosoftEdgeWebview2Setup.exe");
-        if (!File.Exists(setup))
-        {
-            Logger.Warn("WebView2 runtime not found and no offline installer present");
-            return;
-        }
-
-        Logger.Info("Installing the WebView2 runtime…");
         try
         {
-            using var proc = Process.Start(new ProcessStartInfo
-            {
-                FileName = setup,
-                Arguments = "/silent /install",
-                UseShellExecute = true,
-            });
-            proc?.WaitForExit(120_000);
-            Logger.Info("WebView2 runtime install finished");
+            var path = Path.Combine(dir, "AppSettings.xml");
+            if (File.Exists(path))
+                return;
+
+            File.WriteAllText(path,
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<Settings>\r\n\t<ContentFolder>content</ContentFolder>\r\n\t<BaseUrl>http://www.roblox.com</BaseUrl>\r\n</Settings>\r\n");
         }
         catch (Exception ex)
         {
-            Logger.Error("WebView2 runtime install failed", ex);
+            Logger.Warn("Failed to write AppSettings.xml: " + ex.Message);
         }
     }
 

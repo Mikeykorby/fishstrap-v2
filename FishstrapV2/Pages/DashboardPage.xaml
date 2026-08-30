@@ -32,24 +32,24 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
                     <Button x:Name="BtnRefresh" Style="{StaticResource IconButton}" Click="BtnRefresh_Click"
                             ToolTip="Refresh status">
-                        <TextBlock Text="&#xE72C;" FontFamily="{StaticResource IconFont}" FontSize="14"/>
+                        <ctrl:IconGlyph Icon="refresh-cw" Size="14"/>
                     </Button>
                     <Button x:Name="BtnUpdate" Style="{StaticResource IconButton}" Click="BtnUpdate_Click"
                             ToolTip="Check for updates" Margin="4,0,0,0">
-                        <TextBlock Text="&#xE896;" FontFamily="{StaticResource IconFont}" FontSize="14"/>
+                        <ctrl:IconGlyph Icon="download" Size="14"/>
                     </Button>
                 </StackPanel>
             </Grid>
 
             <!-- Status cards -->
             <UniformGrid Columns="4">
-                <ctrl:StatusCard x:Name="CardVersion" Icon="&#xE8B7;" Label="Roblox Version"
+                <ctrl:StatusCard x:Name="CardVersion" Icon="tag" Label="Roblox Version"
                                  IconTint="#33456E" Value="Checking&#8230;" Margin="0,0,12,0"/>
-                <ctrl:StatusCard x:Name="CardChannel" Icon="&#xE753;" Label="Channel"
+                <ctrl:StatusCard x:Name="CardChannel" Icon="globe" Label="Channel"
                                  IconTint="#4A3A70" Value="production" Margin="0,0,12,0"/>
-                <ctrl:StatusCard x:Name="CardInstalled" Icon="&#xE787;" Label="Installed"
+                <ctrl:StatusCard x:Name="CardInstalled" Icon="hard-drive" Label="Installed"
                                  IconTint="#2E5C44" Value="Not installed" Margin="0,0,12,0"/>
-                <ctrl:StatusCard x:Name="CardStatus" Icon="&#xE73E;" Label="Status"
+                <ctrl:StatusCard x:Name="CardStatus" Icon="activity" Label="Status"
                                  IconTint="#6E3333" Value="Not installed"/>
             </UniformGrid>
 
@@ -61,10 +61,10 @@
                     <ColumnDefinition Width="14"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <ctrl:QuickLaunchButton x:Name="LaunchPlayer" Grid.Column="0" Icon="&#xE7F4;"
+                <ctrl:QuickLaunchButton x:Name="LaunchPlayer" Grid.Column="0" Icon="play"
                                         IconTint="#4C3F8F" Title="Launch Roblox Player"
                                         Subtitle="Play games with your custom setup"/>
-                <ctrl:QuickLaunchButton x:Name="LaunchStudio" Grid.Column="2" Icon="&#xE70F;"
+                <ctrl:QuickLaunchButton x:Name="LaunchStudio" Grid.Column="2" Icon="hammer"
                                         IconTint="#3A5C74" Title="Launch Roblox Studio"
                                         Subtitle="Create and test your experiences"/>
             </Grid>
@@ -79,21 +79,21 @@
                 <StackPanel Grid.Column="0">
                     <TextBlock Text="Quick Settings" Style="{StaticResource H2}" Margin="0,0,0,12"/>
                     <StackPanel>
-                        <ctrl:SettingRow x:Name="RowActivity" Icon="&#xE823;" IconTint="#2E2E38"
+                        <ctrl:SettingRow x:Name="RowActivity" Icon="activity" IconTint="#2E2E38"
                                          Title="Activity Tracking" Subtitle="Log sessions and playtime">
                             <ctrl:SettingRow.RowContent>
                                 <CheckBox x:Name="ChkActivity" Style="{StaticResource ModernToggle}"
                                           Checked="QuickSetting_Changed" Unchecked="QuickSetting_Changed"/>
                             </ctrl:SettingRow.RowContent>
                         </ctrl:SettingRow>
-                        <ctrl:SettingRow x:Name="RowRpc" Icon="&#xE8BD;" IconTint="#2E2E38"
+                        <ctrl:SettingRow x:Name="RowRpc" Icon="message-circle" IconTint="#2E2E38"
                                          Title="Discord RPC" Subtitle="Show your game in Discord" Margin="0,10,0,0">
                             <ctrl:SettingRow.RowContent>
                                 <CheckBox x:Name="ChkRpc" Style="{StaticResource ModernToggle}"
                                           Checked="QuickSetting_Changed" Unchecked="QuickSetting_Changed"/>
                             </ctrl:SettingRow.RowContent>
                         </ctrl:SettingRow>
-                        <ctrl:SettingRow x:Name="RowFlags" Icon="&#xE7C3;" IconTint="#2E2E38"
+                        <ctrl:SettingRow x:Name="RowFlags" Icon="flag" IconTint="#2E2E38"
                                          Title="Fast Flags" Subtitle="Apply custom engine flags" Margin="0,10,0,0">
                             <ctrl:SettingRow.RowContent>
                                 <CheckBox x:Name="ChkFlags" Style="{StaticResource ModernToggle}"
@@ -105,19 +105,19 @@
                 <StackPanel Grid.Column="2">
                     <TextBlock Text="Quick Links" Style="{StaticResource H2}" Margin="0,0,0,12"/>
                     <StackPanel>
-                        <ctrl:SettingRow x:Name="LinkIntegrations" Icon="&#xE710;" IconTint="#2E2E38"
+                        <ctrl:SettingRow x:Name="LinkIntegrations" Icon="plug" IconTint="#2E2E38"
                                          Title="Integrations" Subtitle="Discord, activity tracking"
                                          IsClickable="True"/>
-                        <ctrl:SettingRow x:Name="LinkMods" Icon="&#xE90F;" IconTint="#2E2E38"
+                        <ctrl:SettingRow x:Name="LinkMods" Icon="puzzle" IconTint="#2E2E38"
                                          Title="Mods" Subtitle="Cursors, sounds, custom font"
                                          IsClickable="True" Margin="0,10,0,0"/>
-                        <ctrl:SettingRow x:Name="LinkFlags" Icon="&#xE7C3;" IconTint="#2E2E38"
+                        <ctrl:SettingRow x:Name="LinkFlags" Icon="flag" IconTint="#2E2E38"
                                          Title="Fast Flags" Subtitle="Performance and quality settings"
                                          IsClickable="True" Margin="0,10,0,0"/>
-                        <ctrl:SettingRow x:Name="LinkAppearance" Icon="&#xE790;" IconTint="#2E2E38"
+                        <ctrl:SettingRow x:Name="LinkAppearance" Icon="palette" IconTint="#2E2E38"
                                          Title="Appearance" Subtitle="Themes, colors, custom icon"
                                          IsClickable="True" Margin="0,10,0,0"/>
-                        <ctrl:SettingRow x:Name="LinkDeployment" Icon="&#xE753;" IconTint="#2E2E38"
+                        <ctrl:SettingRow x:Name="LinkDeployment" Icon="cloud-download" IconTint="#2E2E38"
                                          Title="Deployment" Subtitle="Change version channel"
                                          IsClickable="True" Margin="0,10,0,0"/>
                     </StackPanel>
@@ -127,11 +127,11 @@
             <!-- Statistics -->
             <TextBlock Text="Statistics" Style="{StaticResource H2}" Margin="0,26,0,12"/>
             <UniformGrid Columns="3">
-                <ctrl:StatusCard x:Name="StatLaunches" Icon="&#xE787;" Label="Total launches"
+                <ctrl:StatusCard x:Name="StatLaunches" Icon="rocket" Label="Total launches"
                                  IconTint="#2E2E38" Value="0" Margin="0,0,12,0"/>
-                <ctrl:StatusCard x:Name="StatPlaytime" Icon="&#xE823;" Label="Total playtime"
+                <ctrl:StatusCard x:Name="StatPlaytime" Icon="clock" Label="Total playtime"
                                  IconTint="#2E2E38" Value="0s" Margin="0,0,12,0"/>
-                <ctrl:StatusCard x:Name="StatWeek" Icon="&#xE72C;" Label="Last 7 days"
+                <ctrl:StatusCard x:Name="StatWeek" Icon="calendar" Label="Last 7 days"
                                  IconTint="#2E2E38" Value="0 launches"/>
             </UniformGrid>
         </StackPanel>

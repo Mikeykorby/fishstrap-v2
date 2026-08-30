@@ -5,7 +5,9 @@ using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using FishstrapV2.Core;
 using FishstrapV2.UI;
+using FishstrapV2.UI.Controls;
 using FishstrapV2.Pages;
+using System.Windows.Documents;
 using WS = System.Windows.Shell;
 
 namespace FishstrapV2;
@@ -18,7 +20,7 @@ public partial class MainWindow : Window
     private Button? _activeNavButton;
     private DispatcherTimer? _toastTimer;
 
-    public record NavDefinition(string Glyph, string Title, Func<FishstrapPage> CreatePage);
+    public record NavDefinition(string Icon, string Title, Func<FishstrapPage> CreatePage);
 
     public MainWindow()
     {
@@ -32,17 +34,17 @@ public partial class MainWindow : Window
         MinWidth = Math.Min(1100, Width);
         MinHeight = Math.Min(640, Height);
 
-        _nav.Add(new("\uE80F", "Dashboard", () => new DashboardPage()));
-        _nav.Add(new("\uE710", "Integrations", () => new IntegrationsPage()));
-        _nav.Add(new("\uE8EC", "Bootstrapper", () => new BootstrapperPage()));
-        _nav.Add(new("\uE753", "Deployment", () => new DeploymentPage()));
-        _nav.Add(new("\uE90F", "Mods", () => new ModsPage()));
-        _nav.Add(new("\uE7C3", "FastFlags", () => new FastFlagsPage()));
-        _nav.Add(new("\uE713", "Global Settings", () => new GlobalSettingsPage()));
-        _nav.Add(new("\uE790", "Appearance", () => new AppearancePage()));
-        _nav.Add(new("\uE71B", "Shortcuts", () => new ShortcutsPage()));
-        _nav.Add(new("\uE787", "Statistics", () => new StatisticsPage()));
-        _nav.Add(new("\uE946", "About", () => new AboutPage()));
+        _nav.Add(new("house", "Dashboard", () => new DashboardPage()));
+        _nav.Add(new("plug", "Integrations", () => new IntegrationsPage()));
+        _nav.Add(new("rocket", "Bootstrapper", () => new BootstrapperPage()));
+        _nav.Add(new("cloud-download", "Deployment", () => new DeploymentPage()));
+        _nav.Add(new("puzzle", "Mods", () => new ModsPage()));
+        _nav.Add(new("flag", "FastFlags", () => new FastFlagsPage()));
+        _nav.Add(new("settings", "Global Settings", () => new GlobalSettingsPage()));
+        _nav.Add(new("palette", "Appearance", () => new AppearancePage()));
+        _nav.Add(new("mouse-pointer-click", "Shortcuts", () => new ShortcutsPage()));
+        _nav.Add(new("chart-column", "Statistics", () => new StatisticsPage()));
+        _nav.Add(new("info", "About", () => new AboutPage()));
 
         Loaded += (_, _) =>
         {
@@ -52,8 +54,8 @@ public partial class MainWindow : Window
 
         StateChanged += (_, _) =>
         {
-            MaximizeGlyph.Text =
-                WindowState == WindowState.Maximized ? "\uE923" : "\uE922";
+            MaximizeGlyph.Icon =
+                WindowState == WindowState.Maximized ? "copy" : "square";
 
             // Borderless windows bleed the resize border off-screen when maximized;
             // pad the content so the command bar and edges stay fully visible.
@@ -76,15 +78,15 @@ public partial class MainWindow : Window
             button.SetResourceReference(Button.StyleProperty, "NavButton");
             button.Tag = "";
             var content = new StackPanel { Orientation = Orientation.Horizontal };
-            var glyph = new TextBlock
+            var glyph = new IconGlyph
             {
-                Text = def.Glyph,
-                FontSize = 15,
+                Icon = def.Icon,
+                Size = 15,
                 Width = 30,
+                HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center,
             };
-            glyph.SetResourceReference(TextBlock.FontFamilyProperty, "IconFont");
-            glyph.SetResourceReference(TextBlock.ForegroundProperty, "BrushTextSecondary");
+            glyph.SetResourceReference(TextElement.ForegroundProperty, "BrushTextSecondary");
             var label = new TextBlock
             {
                 Text = def.Title,

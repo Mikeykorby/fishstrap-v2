@@ -25,7 +25,7 @@
                          ToolTip="Flag value (bool, number or string)"/>
                 <Button Grid.Column="3" Style="{StaticResource IconButton}" Click="FlagDelete_Click" Tag="{Binding}"
                         ToolTip="Delete flag" Margin="6,0,0,0">
-                    <TextBlock Text="&#xE74D;" FontFamily="{StaticResource IconFont}" FontSize="11"/>
+                    <ctrl:IconGlyph Icon="trash-2" Size="12"/>
                 </Button>
             </Grid>
         </DataTemplate>
@@ -41,7 +41,7 @@
             <Border x:Name="AllowlistBanner" Background="#33FBBF24" CornerRadius="10" Padding="14,10"
                     BorderBrush="#4DFBBF24" BorderThickness="1" Margin="0,0,0,14">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="&#xE7BA;" FontFamily="{StaticResource IconFont}" FontSize="14"
+                    <ctrl:IconGlyph Icon="triangle-alert" Size="14"
                                Foreground="{DynamicResource BrushWarning}" VerticalAlignment="Center"/>
                     <TextBlock FontSize="12" Margin="10,0,0,0" TextWrapping="Wrap"
                                Foreground="#EADFA8" MaxWidth="1000" VerticalAlignment="Center"

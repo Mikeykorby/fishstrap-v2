@@ -40,7 +40,6 @@
     <SolidColorBrush x:Key="BrushChip" Color="#20202A"/>
 
     <!-- ================= Fonts ================= -->
-    <FontFamily x:Key="IconFont">Segoe Fluent Icons, Segoe MDL2 Assets</FontFamily>
     <FontFamily x:Key="MonoFont">Consolas</FontFamily>
 
     <!-- ================= Text ================= -->
@@ -64,10 +63,6 @@
     </Style>
     <Style x:Key="Mono" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
         <Setter Property="FontFamily" Value="{StaticResource MonoFont}"/>
-    </Style>
-    <Style x:Key="Glyph" TargetType="TextBlock">
-        <Setter Property="FontFamily" Value="{StaticResource IconFont}"/>
-        <Setter Property="FontSize" Value="15"/>
     </Style>
 
     <!-- ================= Surfaces ================= -->
@@ -545,7 +540,7 @@
                         <TextBlock x:Name="Placeholder" Text="{TemplateBinding Tag}" Visibility="Collapsed"
                                    Margin="{TemplateBinding Padding}" VerticalAlignment="Center"
                                    Foreground="{DynamicResource BrushTextTertiary}" IsHitTestVisible="False"/>
-                        <TextBlock Text="&#xE70D;" FontFamily="{StaticResource IconFont}" FontSize="10"
+                        <ctrl:IconGlyph Icon="chevron-down" Size="10"
                                    HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,12,0"
                                    Foreground="{DynamicResource BrushTextSecondary}" IsHitTestVisible="False"/>
                         <Popup x:Name="PART_Popup" AllowsTransparency="True"
@@ -680,12 +675,8 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <Border Width="34" Height="34" CornerRadius="8" VerticalAlignment="Center"
-                                    Background="{TemplateBinding IconTint}">
-                                <TextBlock Text="{TemplateBinding Icon}" FontFamily="{StaticResource IconFont}"
-                                           FontSize="14" Foreground="#E6E6F0" Opacity="0.9"
-                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
+                            <ctrl:IconGlyph Icon="{TemplateBinding Icon}" Size="15" Foreground="{TemplateBinding IconTint}"
+                                           VerticalAlignment="Center" Margin="0,0,1,0"/>
                             <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="13,0,13,0">
                                 <TextBlock Text="{TemplateBinding Title}" FontSize="13" FontWeight="SemiBold"
                                            TextTrimming="CharacterEllipsis"/>

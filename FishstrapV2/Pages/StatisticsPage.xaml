@@ -45,11 +45,11 @@
                        Style="{StaticResource TextSecondary}" Margin="0,6,0,22"/>
 
             <UniformGrid Columns="3">
-                <ctrl:StatusCard x:Name="CardLaunches" Icon="&#xE787;" Label="Total launches"
+                <ctrl:StatusCard x:Name="CardLaunches" Icon="rocket" Label="Total launches"
                                  IconTint="#33456E" Value="0" Margin="0,0,12,0"/>
-                <ctrl:StatusCard x:Name="CardPlaytime" Icon="&#xE823;" Label="Total playtime"
+                <ctrl:StatusCard x:Name="CardPlaytime" Icon="clock" Label="Total playtime"
                                  IconTint="#4A3A70" Value="0s" Margin="0,0,12,0"/>
-                <ctrl:StatusCard x:Name="CardAverage" Icon="&#xE72C;" Label="Average session"
+                <ctrl:StatusCard x:Name="CardAverage" Icon="rotate-ccw" Label="Average session"
                                  IconTint="#2E5C44" Value="0s"/>
             </UniformGrid>
 

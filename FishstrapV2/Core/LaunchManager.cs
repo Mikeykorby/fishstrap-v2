@@ -5,7 +5,31 @@ namespace FishstrapV2.Core;
 
 public static class LaunchManager
 {
-    public static async Task<RobloxVersionEntry> LaunchPlayerAsync(string? extraArgs = null)
+    // One launch at a time: repeat clicks reuse a running launch, and a launch that finished less
+    // than 5 seconds ago is not repeated (stops duplicate Roblox processes from rapid clicks).
+    private static Task<RobloxVersionEntry>? _playerLaunch;
+    private static DateTime _playerLastLaunch = DateTime.MinValue;
+    private static Task<RobloxVersionEntry>? _studioLaunch;
+    private static DateTime _studioLastLaunch = DateTime.MinValue;
+
+    public static Task<RobloxVersionEntry> LaunchPlayerAsync(string? extraArgs = null)
+    {
+        if (_playerLaunch is { IsCompleted: false })
+        {
+            Logger.Info("Player launch already in progress — reusing it");
+            return _playerLaunch;
+        }
+        if (_playerLaunch is { IsCompletedSuccessfully: true } && DateTime.UtcNow - _playerLastLaunch < TimeSpan.FromSeconds(5))
+        {
+            Logger.Info("Player was just launched — ignoring repeat request");
+            return _playerLaunch;
+        }
+
+        _playerLaunch = LaunchPlayerCoreAsync(extraArgs);
+        return _playerLaunch;
+    }
+
+    private static async Task<RobloxVersionEntry> LaunchPlayerCoreAsync(string? extraArgs)
     {
         var progress = new Progress<string>(m => Logger.Info(m));
         var entry = await RobloxInstallManager.EnsurePlayerInstalledAsync(progress);
@@ -26,10 +50,28 @@ public static class LaunchManager
 
         Process.Start(psi);
         Logger.Info($"Launched Roblox Player ({entry.Hash})");
+        _playerLastLaunch = DateTime.UtcNow;
         return entry;
     }
 
-    public static RobloxVersionEntry LaunchStudio()
+    public static Task<RobloxVersionEntry> LaunchStudio()
+    {
+        if (_studioLaunch is { IsCompleted: false })
+        {
+            Logger.Info("Studio launch already in progress — reusing it");
+            return _studioLaunch;
+        }
+        if (_studioLaunch is { IsCompletedSuccessfully: true } && DateTime.UtcNow - _studioLastLaunch < TimeSpan.FromSeconds(5))
+        {
+            Logger.Info("Studio was just launched — ignoring repeat request");
+            return _studioLaunch;
+        }
+
+        _studioLaunch = LaunchStudioCoreAsync();
+        return _studioLaunch;
+    }
+
+    private static Task<RobloxVersionEntry> LaunchStudioCoreAsync()
     {
         var entry = RobloxInstallManager.GetActiveVersion("Studio")
                     ?? throw new InvalidOperationException(
@@ -50,7 +92,8 @@ public static class LaunchManager
         });
 
         Logger.Info($"Launched Roblox Studio ({entry.Hash})");
-        return entry;
+        _studioLastLaunch = DateTime.UtcNow;
+        return Task.FromResult(entry);
     }
 
     /// <summary>Opens the last played game page in the browser (join-last-server shortcut).</summary>
@@ -69,6 +112,7 @@ public static class LaunchManager
 
     private static void Prepare(string versionDir)
     {
+        RobloxInstallManager.EnsureAppSettings(versionDir);
         FastFlagManager.ApplyToVersion(versionDir, SettingsStore.Settings);
         ModManager.ApplyAll(versionDir);
     }

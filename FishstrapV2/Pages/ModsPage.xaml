@@ -15,7 +15,7 @@
                            Foreground="{DynamicResource BrushTextSecondary}"/>
                 <Button Grid.Column="1" Style="{StaticResource IconButton}" Click="BtnModDelete_Click" Tag="{Binding}"
                         ToolTip="Remove file">
-                    <TextBlock Text="&#xE74D;" FontFamily="{StaticResource IconFont}" FontSize="11"/>
+                    <ctrl:IconGlyph Icon="trash-2" Size="12"/>
                 </Button>
             </Grid>
         </DataTemplate>
@@ -47,10 +47,7 @@
                     <StackPanel>
                         <Grid>
                             <StackPanel Orientation="Horizontal">
-                                <Border Width="34" Height="34" CornerRadius="8" Background="#3A5C74">
-                                    <TextBlock Text="&#xE77B;" FontFamily="{StaticResource IconFont}" FontSize="14"
-                                               Foreground="#E6E6F0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
+                                <ctrl:IconGlyph Icon="mouse-pointer-2" Size="16" Foreground="#82B4DC" VerticalAlignment="Center"/>
                                 <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
                                     <TextBlock Text="Custom cursor" FontWeight="SemiBold" FontSize="13"/>
                                     <TextBlock Text="Replace the Roblox cursor" Style="{DynamicResource TextSecondary}"
@@ -74,10 +71,7 @@
                     <StackPanel>
                         <Grid>
                             <StackPanel Orientation="Horizontal">
-                                <Border Width="34" Height="34" CornerRadius="8" Background="#6E5C33">
-                                    <TextBlock Text="&#xE7F4;" FontFamily="{StaticResource IconFont}" FontSize="14"
-                                               Foreground="#E6E6F0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
+                                <ctrl:IconGlyph Icon="volume-2" Size="16" Foreground="#D9C67A" VerticalAlignment="Center"/>
                                 <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
                                     <TextBlock Text="Custom sounds" FontWeight="SemiBold" FontSize="13"/>
                                     <TextBlock Text="Replace hit, splat and other sounds" Style="{DynamicResource TextSecondary}"
@@ -101,10 +95,7 @@
                     <StackPanel>
                         <Grid>
                             <StackPanel Orientation="Horizontal">
-                                <Border Width="34" Height="34" CornerRadius="8" Background="#2E5C44">
-                                    <TextBlock Text="&#xE8D2;" FontFamily="{StaticResource IconFont}" FontSize="14"
-                                               Foreground="#E6E6F0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
+                                <ctrl:IconGlyph Icon="type" Size="16" Foreground="#7BD3A0" VerticalAlignment="Center"/>
                                 <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
                                     <TextBlock Text="Custom font" FontWeight="SemiBold" FontSize="13"/>
                                     <TextBlock Text="Replace client fonts (ttf/otf)" Style="{DynamicResource TextSecondary}"

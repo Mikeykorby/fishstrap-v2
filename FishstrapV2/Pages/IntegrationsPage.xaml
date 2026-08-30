@@ -10,7 +10,7 @@
             <TextBlock Text="Connect Fishstrap V2 with the rest of your system." Style="{StaticResource TextSecondary}"
                        Margin="0,0,0,22"/>
 
-            <ctrl:SettingRow x:Name="RowRpc" Icon="&#xE8BD;" IconTint="#3A3A70"
+            <ctrl:SettingRow x:Name="RowRpc" Icon="message-circle" IconTint="#3A3A70"
                              Title="Discord Rich Presence" Subtitle="Show what you're playing in Discord">
                 <ctrl:SettingRow.RowContent>
                     <CheckBox x:Name="ChkRpc" Style="{StaticResource ModernToggle}"
@@ -52,11 +52,7 @@
 
                     <Border Style="{StaticResource SubCard}" Margin="0,14,0,0">
                         <StackPanel Orientation="Horizontal">
-                            <Border Width="44" Height="44" CornerRadius="10" Background="{DynamicResource BrushAccentSubtle}">
-                                <TextBlock Text="&#xE7F4;" FontFamily="{StaticResource IconFont}" FontSize="18"
-                                           Foreground="{DynamicResource BrushAccent}"
-                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
+                            <ctrl:IconGlyph Icon="gamepad-2" Size="22" Foreground="{DynamicResource BrushAccent}" VerticalAlignment="Center"/>
                             <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
                                 <TextBlock x:Name="PreviewDetails" Text="Playing {game}" FontWeight="SemiBold" FontSize="12.5"/>
                                 <TextBlock x:Name="PreviewState" Text="via Fishstrap V2" Style="{StaticResource TextSecondary}"
@@ -74,7 +70,7 @@
                 </StackPanel>
             </Border>
 
-            <ctrl:SettingRow x:Name="RowActivity" Icon="&#xE823;" IconTint="#2E5C44"
+            <ctrl:SettingRow x:Name="RowActivity" Icon="activity" IconTint="#2E5C44"
                              Title="Activity Tracking" Subtitle="Record launches and play time for statistics"
                              Margin="0,12,0,0">
                 <ctrl:SettingRow.RowContent>
@@ -87,10 +83,7 @@
             <Border Style="{StaticResource Card}" Margin="0,12,0,0">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <Border Width="34" Height="34" CornerRadius="8" Background="#33456E">
-                            <TextBlock Text="&#xE71B;" FontFamily="{StaticResource IconFont}" FontSize="14"
-                                       Foreground="#E6E6F0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
+                        <ctrl:IconGlyph Icon="send" Size="16" Foreground="#8FA7E0" VerticalAlignment="Center"/>
                         <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
                             <TextBlock Text="Game invites" FontWeight="SemiBold" FontSize="13"/>
                             <TextBlock Text="Generate a fishstrap.app invite link for any place"

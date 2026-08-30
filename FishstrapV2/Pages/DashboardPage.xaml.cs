@@ -101,12 +101,12 @@ public partial class DashboardPage : FishstrapPage
         }
     }
 
-    private void LaunchStudioApp()
+    private async void LaunchStudioApp()
     {
         try
         {
-            LaunchManager.LaunchStudio();
             MainWindow.Current?.ShowToast("Launching Roblox Studio…");
+            await LaunchManager.LaunchStudio();
         }
         catch (Exception ex)
         {

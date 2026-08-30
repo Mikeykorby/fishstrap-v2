@@ -10,7 +10,7 @@
             <TextBlock Text="Make Fishstrap V2 look the way you like it."
                        Style="{StaticResource TextSecondary}" Margin="0,0,0,22"/>
 
-            <ctrl:SettingRow x:Name="RowTheme" Icon="&#xE790;" IconTint="#4A3A70"
+            <ctrl:SettingRow x:Name="RowTheme" Icon="sun-moon" IconTint="#4A3A70"
                              Title="Theme" Subtitle="Dark, light or follow Windows">
                 <ctrl:SettingRow.RowContent>
                     <ComboBox x:Name="CmbTheme" Width="140" SelectionChanged="Theme_Changed">

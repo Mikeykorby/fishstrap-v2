@@ -11,7 +11,7 @@
                        Style="{StaticResource TextSecondary}" Margin="0,0,0,22"/>
 
             <StackPanel>
-                <ctrl:SettingRow x:Name="RowChannel" Icon="&#xE753;" IconTint="#4A3A70"
+                <ctrl:SettingRow x:Name="RowChannel" Icon="git-branch" IconTint="#4A3A70"
                                  Title="Channel" Subtitle="Roblox release channel to track">
                     <ctrl:SettingRow.RowContent>
                         <StackPanel Orientation="Horizontal">
@@ -26,7 +26,7 @@
                         </StackPanel>
                     </ctrl:SettingRow.RowContent>
                 </ctrl:SettingRow>
-                <ctrl:SettingRow x:Name="RowWait" Icon="&#xE823;" IconTint="#2E2E38"
+                <ctrl:SettingRow x:Name="RowWait" Icon="hourglass" IconTint="#2E2E38"
                                  Title="Wait for latest version" Subtitle="Wait for the newest timestamped build before installing"
                                  Margin="0,10,0,0">
                     <ctrl:SettingRow.RowContent>
@@ -34,7 +34,7 @@
                                   Checked="Toggle_Changed" Unchecked="Toggle_Changed"/>
                     </ctrl:SettingRow.RowContent>
                 </ctrl:SettingRow>
-                <ctrl:SettingRow x:Name="RowServer" Icon="&#xE946;" IconTint="#2E2E38"
+                <ctrl:SettingRow x:Name="RowServer" Icon="server" IconTint="#2E2E38"
                                  Title="Download location" Subtitle="Preferred CDN region for downloads" Margin="0,10,0,0">
                     <ctrl:SettingRow.RowContent>
                         <ComboBox x:Name="CmbServer" Width="220" SelectionChanged="Server_Changed">
@@ -45,7 +45,7 @@
                         </ComboBox>
                     </ctrl:SettingRow.RowContent>
                 </ctrl:SettingRow>
-                <ctrl:SettingRow x:Name="RowKeep" Icon="&#xE787;" IconTint="#2E2E38"
+                <ctrl:SettingRow x:Name="RowKeep" Icon="archive" IconTint="#2E2E38"
                                  Title="Keep old versions" Subtitle="How many previous versions to keep on disk"
                                  Margin="0,10,0,0">
                     <ctrl:SettingRow.RowContent>
@@ -120,15 +120,15 @@
                                     <StackPanel Grid.Column="4" Orientation="Horizontal">
                                         <Button Style="{StaticResource IconButton}" Click="BtnOpen_Click" ToolTip="Open folder"
                                                 Tag="{Binding}">
-                                            <TextBlock Text="&#xE8B7;" FontFamily="{StaticResource IconFont}" FontSize="13"/>
+                                            <ctrl:IconGlyph Icon="folder" Size="13"/>
                                         </Button>
                                         <Button Style="{StaticResource IconButton}" Click="BtnPin_Click" ToolTip="Pin version"
                                                 Tag="{Binding}">
-                                            <TextBlock Text="&#xE718;" FontFamily="{StaticResource IconFont}" FontSize="13"/>
+                                            <ctrl:IconGlyph Icon="pin" Size="13"/>
                                         </Button>
                                         <Button Style="{StaticResource IconButton}" Click="BtnDelete_Click" ToolTip="Delete version"
                                                 Tag="{Binding}">
-                                            <TextBlock Text="&#xE74D;" FontFamily="{StaticResource IconFont}" FontSize="13"/>
+                                            <ctrl:IconGlyph Icon="trash-2" Size="13"/>
                                         </Button>
                                     </StackPanel>
                                 </Grid>
