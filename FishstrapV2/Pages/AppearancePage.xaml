@@ -128,6 +128,21 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <StackPanel>
+                            <TextBlock Text="Bootstrapper title" FontSize="12.5" FontWeight="SemiBold"
+                                       FontFamily="{StaticResource AppFontSemiBold}"/>
+                            <TextBlock Text="Shown in the install window's title bar."
+                                       Style="{DynamicResource TextSecondary}" FontSize="11.5" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <TextBox x:Name="TxtBootstrapperTitle" Grid.Column="1" Width="200"
+                                 LostFocus="BootstrapperTitle_LostFocus"/>
+                    </Grid>
+
+                    <Grid Margin="0,14,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
                             <TextBlock Text="Custom themes" FontSize="12.5" FontWeight="SemiBold"
                                        FontFamily="{StaticResource AppFontSemiBold}"/>
                             <TextBlock Text="Import any Bloxstrap-style theme folder (Theme.xml plus its assets)."

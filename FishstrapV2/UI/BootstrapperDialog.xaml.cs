@@ -7,7 +7,6 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using FishstrapV2.Core;
-
 namespace FishstrapV2.UI;
 
 /// <summary>
@@ -33,7 +32,9 @@ public partial class BootstrapperDialog : Window, RobloxDeployClient.IProgressHo
     public BootstrapperDialog()
     {
         InitializeComponent();
-        Title = AppInfo.ProductName;
+        Title = string.IsNullOrWhiteSpace(SettingsStore.Settings.Launcher.BootstrapperTitle)
+            ? AppInfo.ProductName
+            : SettingsStore.Settings.Launcher.BootstrapperTitle;
 
         _status = Message;
         _progress = Progress;
@@ -53,23 +54,88 @@ public partial class BootstrapperDialog : Window, RobloxDeployClient.IProgressHo
         var layout = Bloxnified.TryLoad(theme);
         if (layout is null) return;
 
-        _themed = true;
-        _squareCorners = layout.SquareCorners;
-        RootPanel.Children.Add(layout.Root);
-        DefaultPanel.Visibility = Visibility.Collapsed;
-
-        if (layout.Root.Width > 0) Width = layout.Root.Width;
-        if (layout.Root.Height > 0) Height = layout.Root.Height;
-
-        // Some themes (V3) have no StatusText; status updates then go to the hidden
-        // default label, matching how Bloxstrap renders these themes.
-        _status = layout.Status ?? Message;
-        _progress = layout.Progress;
-
-        if (layout.Cancel is not null)
+        var added = new List<UIElement>();
+        try
         {
-            layout.Cancel.Style = Application.Current.TryFindResource("CmdButton") as Style;
-            layout.Cancel.Click += BtnCancel_Click;
+            RootPanel.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            RootPanel.RowDefinitions.Add(new RowDefinition());
+
+            if (layout.ShowTitleBar)
+            {
+                // Bloxstrap renders a real window title bar for these themes; synthesize one.
+                var strip = new Border
+                {
+                    Height = 30,
+                    Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(layout.TitleBarColor)),
+                };
+                strip.MouseLeftButtonDown += (_, _) => { try { DragMove(); } catch { /* not draggable yet */ } };
+
+                var row = new Grid();
+                var title = new TextBlock
+                {
+                    Text = string.IsNullOrWhiteSpace(SettingsStore.Settings.Launcher.BootstrapperTitle)
+                        ? AppInfo.ProductName
+                        : SettingsStore.Settings.Launcher.BootstrapperTitle,
+                    FontSize = 11.5,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Margin = new Thickness(12, 0, 0, 0),
+                    Foreground = new SolidColorBrush(Color.FromRgb(0x9A, 0x9A, 0xA6)),
+                };
+                row.Children.Add(title);
+
+                if (layout.ShowCloseButton)
+                {
+                    var close = new Button
+                    {
+                        Content = "\u2715",
+                        Width = 40,
+                        Background = System.Windows.Media.Brushes.Transparent,
+                        BorderThickness = new Thickness(0),
+                        Foreground = new SolidColorBrush(Color.FromRgb(0x9A, 0x9A, 0xA6)),
+                        HorizontalAlignment = HorizontalAlignment.Right,
+                        FontSize = 12,
+                    };
+                    close.Click += (_, _) => _cts?.Cancel();
+                    row.Children.Add(close);
+                }
+
+                strip.Child = row;
+                Grid.SetRow(strip, 0);
+                RootPanel.Children.Add(strip);
+                added.Add(strip);
+            }
+
+            Grid.SetRow(layout.Root, 1);
+            RootPanel.Children.Add(layout.Root);
+            added.Add(layout.Root);
+
+            DefaultPanel.Visibility = Visibility.Collapsed;
+            if (layout.Root.Width > 0) Width = layout.Root.Width;
+            if (layout.Root.Height > 0) Height = layout.Root.Height + (layout.ShowTitleBar ? 30 : 0);
+
+            // Some themes (V3) have no StatusText; status updates then go to the hidden
+            // default label, matching how Bloxstrap renders these themes.
+            _status = layout.Status ?? Message;
+            _progress = layout.Progress;
+            _themed = true;
+            _squareCorners = layout.SquareCorners;
+
+            if (layout.Cancel is not null)
+            {
+                layout.Cancel.Style = Application.Current.TryFindResource("CmdButton") as Style;
+                layout.Cancel.Click += BtnCancel_Click;
+            }
+        }
+        catch (Exception ex)
+        {
+            // Never let a broken theme take an install down with it.
+            foreach (var element in added) RootPanel.Children.Remove(element);
+            RootPanel.RowDefinitions.Clear();
+            DefaultPanel.Visibility = Visibility.Visible;
+            _status = Message;
+            _progress = Progress;
+            _themed = false;
+            Logger.Warn($"Themed bootstrapper '{theme.Name}' fell back to the default dialog: {ex.GetBaseException().Message}");
         }
     }
 

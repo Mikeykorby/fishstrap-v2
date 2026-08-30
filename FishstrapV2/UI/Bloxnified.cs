@@ -59,11 +59,16 @@ public static class Bloxnified
         public ProgressBar? Progress;
         public Button? Cancel;
         public bool SquareCorners;
+        public bool ShowTitleBar;
+        public bool ShowCloseButton;
+        public string TitleBarColor = "#1B1B1F";
     }
 
     /// <summary>Parses the theme's Theme.xml; returns null (with a log entry) if unusable.</summary>
     public static Layout? TryLoad(Theme theme)
     {
+        for (var attempt = 0; ; attempt++)
+        {
         try
         {
             var dir = theme.Dir;
@@ -76,6 +81,14 @@ public static class Bloxnified
             var kept = Regex.Replace(attrs,
                 "(Version|AllowTransparency|WindowBackdropType|WindowCornerPreference|IgnoreTitleBarInset|Theme|Margin)\\s*=\\s*\"[^\"]*\"", "");
             var squareCorners = Regex.IsMatch(attrs, "WindowCornerPreference\\s*=\\s*\"DoNotRound\"");
+
+            // TitleBar metadata (the element itself is dropped below).
+            var titleBar = Regex.Match(xml, "<TitleBar\\b([^>]*)/?>");
+            var tbAttrs = titleBar.Success ? titleBar.Groups[1].Value : "";
+            var showTitleBar = titleBar.Success && !Regex.IsMatch(tbAttrs, "Visibility\\s*=\\s*\"Collapsed\"");
+            var showClose = Regex.IsMatch(tbAttrs, "ShowClose\\s*=\\s*\"True\"");
+            var tbColorMatch = Regex.Match(attrs, "Background\\s*=\\s*\"(#[0-9A-Fa-f]{6,8})\"");
+            var titleBarColor = tbColorMatch.Success ? tbColorMatch.Groups[1].Value : "#1B1B1F";
 
             // Rename property elements and the root element to a WPF Grid.
             xml = Regex.Replace(xml, "<BloxstrapCustomBootstrapper\\.([A-Za-z0-9.]+)>", "<Grid.$1>");
@@ -106,6 +119,9 @@ public static class Bloxnified
             {
                 Root = root,
                 SquareCorners = squareCorners,
+                ShowTitleBar = showTitleBar,
+                ShowCloseButton = showClose,
+                TitleBarColor = titleBarColor,
                 Status = root.FindName("StatusText") as TextBlock,
                 Progress = root.FindName("PrimaryProgressBar") as ProgressBar,
                 Cancel = root.FindName("CancelButton") as Button,
@@ -113,8 +129,11 @@ public static class Bloxnified
         }
         catch (Exception ex)
         {
-            Logger.Warn($"Bloxnified theme '{theme.Name}' could not be loaded: {ex.Message}");
+            // Transient image locks (e.g. antivirus scans) can fail the first parse; retry once.
+            if (attempt == 0) continue;
+            Logger.Warn($"Bloxnified theme '{theme.Name}' could not be loaded: {ex.GetBaseException().Message}");
             return null;
+        }
         }
     }
 

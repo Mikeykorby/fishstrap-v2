@@ -1,3 +1,4 @@
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using FishstrapV2.Core;
@@ -166,5 +167,22 @@ public partial class GlobalSettingsPage : FishstrapPage
         ProfileStore.Delete(row.Name);
         RefreshProfiles();
         MainWindow.Current?.ShowToast($"Profile '{row.Name}' deleted");
+    }
+
+    private void ClearCache_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            if (Directory.Exists(Paths.RobloxHttpCache)) Directory.Delete(Paths.RobloxHttpCache, true);
+            if (Directory.Exists(Paths.RobloxLogsDir))
+                foreach (var file in Directory.GetFiles(Paths.RobloxLogsDir))
+                    File.Delete(file);
+            Logger.Info("Cleared Roblox http cache and logs");
+            MainWindow.Current?.ShowToast("Roblox cache cleared");
+        }
+        catch (Exception ex)
+        {
+            MainWindow.Current?.ShowToast("Could not clear cache: " + ex.Message, true);
+        }
     }
 }

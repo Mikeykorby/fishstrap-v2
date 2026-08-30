@@ -653,13 +653,36 @@
         <Setter Property="Background" Value="{DynamicResource BrushField}"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="ProgressBar">
-                    <Grid>
-                        <Border x:Name="PART_Track" Background="{TemplateBinding Background}" CornerRadius="3"/>
-                        <Border x:Name="PART_Indicator" Background="{TemplateBinding Foreground}"
-                                CornerRadius="3" HorizontalAlignment="Left"/>
-                    </Grid>
-                </ControlTemplate>
+            <ControlTemplate TargetType="ProgressBar">
+                <Grid ClipToBounds="True">
+                    <Border x:Name="PART_Track" Background="{TemplateBinding Background}" CornerRadius="3"/>
+                    <Border x:Name="PART_Indicator" Background="{TemplateBinding Foreground}"
+                            CornerRadius="3" HorizontalAlignment="Left"/>
+                    <Border x:Name="IndeterminateBar" Background="{TemplateBinding Foreground}" CornerRadius="3"
+                            Width="72" HorizontalAlignment="Left" Visibility="Collapsed">
+                        <Border.RenderTransform>
+                            <TranslateTransform x:Name="IndTranslate" X="-72"/>
+                        </Border.RenderTransform>
+                    </Border>
+                </Grid>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsIndeterminate" Value="True">
+                        <Setter TargetName="PART_Indicator" Property="Visibility" Value="Collapsed"/>
+                        <Setter TargetName="IndeterminateBar" Property="Visibility" Value="Visible"/>
+                        <Trigger.EnterActions>
+                            <BeginStoryboard x:Name="IndStory">
+                                <Storyboard RepeatBehavior="Forever">
+                                    <DoubleAnimation Storyboard.TargetName="IndTranslate" Storyboard.TargetProperty="X"
+                                                     From="-72" To="600" Duration="0:0:1.1"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </Trigger.EnterActions>
+                        <Trigger.ExitActions>
+                            <RemoveStoryboard BeginStoryboardName="IndStory"/>
+                        </Trigger.ExitActions>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>

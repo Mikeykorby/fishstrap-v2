@@ -37,6 +37,7 @@ public partial class AppearancePage : FishstrapPage
             .FirstOrDefault(i => i.Content as string == s.Launcher.BootstrapperAnimation)
             ?? CmbBootstrapperAnimation.Items[0];
         UpdateLogoPickerVisibility();
+        TxtBootstrapperTitle.Text = s.Launcher.BootstrapperTitle;
 
         _suppress = false;
 
@@ -164,6 +165,13 @@ public partial class AppearancePage : FishstrapPage
             File.Copy(file, Path.Combine(target, Path.GetFileName(file)), true);
         foreach (var dir in Directory.GetDirectories(source))
             CopyDirectory(dir, Path.Combine(target, Path.GetFileName(dir)!));
+    }
+
+    private void BootstrapperTitle_LostFocus(object sender, RoutedEventArgs e)
+    {
+        if (!IsLoaded || _suppress) return;
+        SettingsStore.Settings.Launcher.BootstrapperTitle = TxtBootstrapperTitle.Text.Trim();
+        Persist();
     }
 
     private async void BtnPreviewBootstrapper_Click(object sender, RoutedEventArgs e)

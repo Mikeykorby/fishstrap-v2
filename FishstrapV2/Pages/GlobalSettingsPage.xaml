@@ -80,6 +80,14 @@
                 </ctrl:SettingRow>
             </StackPanel>
 
+            <!-- Maintenance -->
+            <ctrl:SettingRow x:Name="RowCache" Icon="trash-2" IconTint="{DynamicResource BrushTextSecondary}"
+                             Title="Clear Roblox cache" Subtitle="Removes the HTTP cache and Roblox logs" Margin="0,12,0,0">
+                <ctrl:SettingRow.RowContent>
+                    <Button Content="Clear" Style="{StaticResource CmdButton}" Click="ClearCache_Click"/>
+                </ctrl:SettingRow.RowContent>
+            </ctrl:SettingRow>
+
             <!-- Effective flags -->
             <Border Style="{StaticResource Card}" Margin="0,14,0,0">
                 <StackPanel Orientation="Horizontal">
