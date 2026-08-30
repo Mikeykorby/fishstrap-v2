@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:FishstrapV2.UI">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel Margin="32,22,32,28">
+        <StackPanel Margin="32,34,32,28">
 
             <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
                 <Grid Height="64" MinWidth="300">

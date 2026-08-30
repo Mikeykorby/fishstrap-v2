@@ -21,7 +21,7 @@
         </DataTemplate>
     </local:FishstrapPage.Resources>
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel Margin="32,22,32,28">
+        <StackPanel Margin="32,34,32,28">
 
             <TextBlock Text="Mods" Style="{StaticResource H1}" Margin="0,0,0,6"/>
             <TextBlock Text="Customize the Roblox client with your own cursors, sounds and fonts."
