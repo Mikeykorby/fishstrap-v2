@@ -4,10 +4,9 @@ using System.Text.Json;
 namespace FishstrapV2.Core;
 
 /// <summary>
-/// Server-information lookups against apis.rovalra.com (fishstrap parity).
-/// Every call fails soft: any error or unknown IP returns null, never throws.
-/// Only the UI queries this — it is never on the launch path, so a lookup
-/// outage cannot block or break a launch.
+/// RoValra server-information lookups (fishstrap parity). Every call fails
+/// soft: any error or unknown IP returns null, never throws. Only the UI
+/// queries this — never the launch path.
 /// </summary>
 public static class RoValra
 {
@@ -28,12 +27,6 @@ public static class RoValra
         await Gate.WaitAsync();
         try
         {
-            lock (Cache)
-            {
-                if (Cache.TryGetValue(address, out var hit))
-                    return hit.Length > 0 ? hit : null;
-            }
-
             try
             {
                 using var http = new HttpClient { Timeout = TimeSpan.FromSeconds(10) };

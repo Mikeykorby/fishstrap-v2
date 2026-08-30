@@ -6,10 +6,9 @@ using System.Text.RegularExpressions;
 namespace FishstrapV2.Core;
 
 /// <summary>
-/// Tails the newest Roblox client log and exposes the live game session —
-/// the same log entries Bloxstrap/Fishstrap parse ("! Joining game", UDMUX,
-/// serverId, Server Prefix, disconnect). One watcher serves both Discord RPC
-/// and the server-information card; it never touches the network itself.
+/// Tails the newest Roblox client log (the same entries Bloxstrap/Fishstrap
+/// parse) and exposes the live session. One watcher serves Discord RPC and
+/// the server-information card; it never touches the network itself.
 /// </summary>
 public static class SessionWatcher
 {
@@ -26,9 +25,7 @@ public static class SessionWatcher
     private static readonly Regex JoinRegex =
         new(@"! Joining game '([0-9a-f\-]{36})' place ([0-9]+) at ([0-9\.]+)", RegexOptions.Compiled);
     private static readonly Regex UdmuxRegex =
-        new(@"UDMUX Address = ([0-9\.]+), Port = [0-9]+ \| RCC Server Address = ([0-9\.]+), Port = [0-9]+", RegexOptions.Compiled);
-    private static readonly Regex ServerIdRegex =
-        new(@"serverId: ([0-9\.]+)\|[0-9]+", RegexOptions.Compiled);
+        new(@"UDMUX Address = ([0-9\.]+), Port = [0-9]+", RegexOptions.Compiled);
     private static readonly Regex ServerPrefixRegex =
         new(@"Server Prefix:.+_([0-9]{8}T[0-9]{6}Z)_RCC_[0-9a-z]+", RegexOptions.Compiled);
 
@@ -81,14 +78,6 @@ public static class SessionWatcher
                     if (udmux.Success)
                     {
                         Current.ServerAddress = udmux.Groups[1].Value;
-                        Changed?.Invoke();
-                        continue;
-                    }
-
-                    var serverId = ServerIdRegex.Match(line);
-                    if (serverId.Success && Current.ServerAddress.Length == 0)
-                    {
-                        Current.ServerAddress = serverId.Groups[1].Value;
                         Changed?.Invoke();
                         continue;
                     }
@@ -204,12 +193,16 @@ public static class SessionWatcher
 
     private static void ApplyGameName(string placeId, string name)
     {
+        var applied = false;
         lock (Gate)
         {
             if (Current is { PlaceId: var pid } && pid == placeId)
+            {
                 Current.GameName = name;
+                applied = true;
+            }
         }
-        Changed?.Invoke();
+        if (applied) Changed?.Invoke();
     }
 
     private static readonly Dictionary<string, string> Cache = new();

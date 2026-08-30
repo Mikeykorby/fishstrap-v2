@@ -78,8 +78,7 @@
 
                         <TextBlock Grid.Row="2" Text="Instance ID" Style="{StaticResource TextSecondary}" FontSize="12"/>
                         <TextBlock x:Name="TxtSessionInstance" Grid.Row="2" Grid.Column="1" FontSize="12"
-                                   FontFamily="{StaticResource MonoFont}" Foreground="{DynamicResource BrushTextPrimary}"
-                                   TextTrimming="CharacterEllipsis"/>
+                                   FontFamily="{StaticResource MonoFont}" TextTrimming="CharacterEllipsis"/>
 
                         <TextBlock Grid.Row="3" Text="Uptime" Style="{StaticResource TextSecondary}" FontSize="12"/>
                         <TextBlock x:Name="TxtSessionUptime" Grid.Row="3" Grid.Column="1" FontWeight="SemiBold" FontSize="12.5"
