@@ -1,3 +1,8 @@
+> [!CAUTION]
+> The only official place to download Fishstrap V2 is this GitHub repository.
+> Any other websites offering downloads or claiming to be us are not controlled
+> by us, do not download from them.
+
 <div align="center">
 
 ![][banner-light]
@@ -13,40 +18,37 @@
 
 </div>
 
-> [!CAUTION]
-> The only official place to download Fishstrap V2 is this GitHub repository.
-> Any other websites offering downloads or claiming to be us are not controlled
-> by us — do not download from them.
-
-Fishstrap V2 (pronounced fish-strap two) is a custom bootstrapper for Roblox,
-rebuilt from the ground up as a fork of [Fishstrap][fishstrap] — which is based
-on [Bloxstrap][bloxstrap] — with a fully redesigned dark interface and a set of
-new quality-of-life features.
+Fishstrap V2 (pronounced fish-strap two) is a custom bootstrapper for Roblox
+based on [Fishstrap][fishstrap] (pronounced fish-strap), which is based on
+[Bloxstrap][bloxstrap]. It is rebuilt from the ground up with a redesigned
+dark interface, and provides additional features to enhance your experience.
 
 If you found any bugs, please [open an issue here][repo-new-issue].
 
 > [!NOTE]
-> Fishstrap V2 is an application for **Windows 10 and above.**
+> Fishstrap V2 is an application for **Windows 10 and above.** The project is
+> under active development — some screens and features are still being polished.
 
 ## Features
 
-- Redesigned dashboard-first settings UI — quick launch, quick settings, quick
-  links and live statistics on one dark screen
 - Detailed server information using [RoValra][rovalra]'s API
 - Support for Roblox Studio
 - Unhidden FastFlags editor with search, presets and JSON import/export
   - You cannot apply FastFlags not present in the allowlist. This does not
     affect Roblox Studio. [Learn more][devforum-fflags]
-- Global basic settings editor — frame rate cap, lighting technology, graphics
-  backend, post effects, player shadows and telemetry blocking
-- Bootstrapper styles — Fishstrap, Classic Fluent, Terminal and TwentyFive
-  dialogs, the Bloxnified theme, or import any Bloxstrap-style custom theme
-- Roblox deployment management — channel switching, version history with
-  pinning, reinstall and old-version pruning
+- Global basic settings editor
+  - Ability to increase frame rate cap, switch lighting technology and graphics
+    backend, toggle post effects and player shadows, block telemetry and more
+- Fishstrap's own game invites
+- Multiple bootstrapper styles — the Fishstrap dialog, Classic Fluent, Terminal
+  and TwentyFive, the Bloxnified theme, or import any Bloxstrap-style custom
+  theme
+- Channel switcher, version pinning, reinstall and old-version pruning
+- Cache cleaner, desktop/Start menu shortcuts, flag profiles and one-click
+  backups
 - Mods — custom cursors, sounds and fonts, applied on every launch
-- Integrations — Discord Rich Presence, activity tracking and game invites
-- Cache cleaner, desktop/Start menu shortcuts, profiles and one-click backups
-- Statistics — launches per day, total playtime and a 14-day activity chart
+- Discord Rich Presence and activity tracking
+- Launch statistics with a 14-day activity chart
 
 <div align="center">
 
@@ -65,16 +67,18 @@ If you found any bugs, please [open an issue here][repo-new-issue].
 
 ## Building
 
-Requires the .NET 8 SDK (or newer; a .NET 9 SDK builds the net8.0-windows
-target fine):
+Requires the [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) or
+newer:
 
 ```
+git clone https://github.com/Mikeykorby/fishstrap-v2.git
+cd fishstrap-v2
 dotnet build FishstrapV2.sln
 ```
 
-Run the app from `FishstrapV2/bin/Debug/net8.0-windows/FishstrapV2.exe`.
-There are **no third-party NuGet dependencies** — everything is built on the
-base class libraries, so restore is instant and offline-friendly.
+The app builds to `FishstrapV2/bin/Debug/net8.0-windows/FishstrapV2.exe`.
+There are no third-party NuGet dependencies — everything is built on the base
+class libraries, so restore is instant and offline-friendly.
 
 ## Where things live
 

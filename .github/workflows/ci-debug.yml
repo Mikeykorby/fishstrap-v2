@@ -7,25 +7,22 @@ jobs:
 
     steps:
     - uses: actions/checkout@v6
-      with:
-        submodules: true
 
     - uses: actions/setup-dotnet@v5
       with:
-        dotnet-version: '6.0.x'
+        dotnet-version: '9.0.x'
 
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore FishstrapV2.sln
 
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build FishstrapV2.sln --no-restore
 
     - name: Publish
-      run: dotnet publish -p:PublishSingleFile=true -p:CommitHash=${{ github.sha }} -p:CommitRef=${{ github.ref_type }}/${{ github.ref_name }} -r win-x64 -c Debug --self-contained false .\Bloxstrap\Bloxstrap.csproj
+      run: dotnet publish -p:PublishSingleFile=true -r win-x64 -c Debug --self-contained false .\FishstrapV2\FishstrapV2.csproj
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v7
       with:
-        #name: Fishstrap (Debug) (${{ github.sha }})
-        path: .\Bloxstrap\bin\Debug\net6.0-windows\win-x64\publish\Fishstrap.exe
+        path: .\FishstrapV2\bin\Debug\net8.0-windows\win-x64\publish\FishstrapV2.exe
         archive: false

@@ -7,27 +7,24 @@ jobs:
 
     steps:
     - uses: actions/checkout@v6
-      with:
-        submodules: true
 
     - uses: actions/setup-dotnet@v5
       with:
-        dotnet-version: '6.0.x'
+        dotnet-version: '9.0.x'
 
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore FishstrapV2.sln
 
     - name: Build
-      run: dotnet build -c Release --no-restore
+      run: dotnet build FishstrapV2.sln -c Release --no-restore
 
     - name: Publish
-      run: dotnet publish -p:PublishSingleFile=true -p:CommitHash=${{ github.sha }} -p:CommitRef=${{ github.ref_type }}/${{ github.ref_name }} -r win-x64 -c Release --self-contained false .\Bloxstrap\Bloxstrap.csproj
+      run: dotnet publish -p:PublishSingleFile=true -r win-x64 -c Release --self-contained false .\FishstrapV2\FishstrapV2.csproj
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v7
       with:
-        #name: Fishstrap (Release) (${{ github.sha }})
-        path: .\Bloxstrap\bin\Release\net6.0-windows\win-x64\publish\Fishstrap.exe
+        path: .\FishstrapV2\bin\Release\net8.0-windows\win-x64\publish\FishstrapV2.exe
         archive: false
 
   release:
@@ -40,19 +37,13 @@ jobs:
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v8
-        #with:
-        #  name: Fishstrap (Release) (${{ github.sha }})
-        #  path: release
-
-      #- name: Rename binaries
-      #  run: mv release/Fishstrap.exe Fishstrap.exe
 
       - name: Create release
         uses: softprops/action-gh-release@v3
         with:
           draft: true
-          files: Fishstrap.exe
-          name: Fishstrap ${{ github.ref_name }}
+          files: FishstrapV2.exe
+          name: Fishstrap V2 ${{ github.ref_name }}
           fail_on_unmatched_files: true
 
   release-test:
@@ -65,17 +56,11 @@ jobs:
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v8
-        #with:
-        #  name: Fishstrap (Release) (${{ github.sha }})
-        #  path: release
-
-      #- name: Rename binaries
-      #  run: mv release/Fishstrap.exe Fishstrap.exe
 
       - name: Create release
         uses: softprops/action-gh-release@v3
         with:
           draft: true
-          files: Fishstrap.exe
-          name: Fishstrap ${{ github.ref_name }}
+          files: FishstrapV2.exe
+          name: Fishstrap V2 ${{ github.ref_name }}
           fail_on_unmatched_files: true
