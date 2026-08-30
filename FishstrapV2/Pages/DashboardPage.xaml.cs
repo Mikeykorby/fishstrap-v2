@@ -22,8 +22,7 @@ public partial class DashboardPage : FishstrapPage
         LinkIntegrations.RowClick += (_, _) => MainWindow.Current?.NavigateTo("Integrations");
         LinkMods.RowClick += (_, _) => MainWindow.Current?.NavigateTo("Mods");
         LinkFlags.RowClick += (_, _) => MainWindow.Current?.NavigateTo("FastFlags");
-        LinkAppearance.RowClick += (_, _) => MainWindow.Current?.NavigateTo("Appearance");
-        LinkDeployment.RowClick += (_, _) => MainWindow.Current?.NavigateTo("Deployment");
+
     }
 
     public override void OnShown()
