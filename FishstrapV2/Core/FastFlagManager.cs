@@ -43,7 +43,9 @@ public static class FastFlagManager
         if (e.FpsCapEnabled)
         {
             dict["FFlagTaskSchedulerLimitTargetFpsTo2402"] = Bool(true);
-            dict["DFIntTaskSchedulerTargetFps"] = Num(e.FpsCapValue);
+            // a cap below 1 breaks Roblox's renderer; treat it as unset so the default 240 cap applies
+            if (e.FpsCapValue >= 1)
+                dict["DFIntTaskSchedulerTargetFps"] = Num(e.FpsCapValue);
         }
 
         switch (e.Lighting)

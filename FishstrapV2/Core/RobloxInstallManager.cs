@@ -181,6 +181,7 @@ public static class RobloxInstallManager
         try
         {
             var path = Path.Combine(dir, "AppSettings.xml");
+            Directory.CreateDirectory(dir);
             if (File.Exists(path))
                 return;
 
