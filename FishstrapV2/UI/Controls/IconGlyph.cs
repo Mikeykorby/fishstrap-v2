@@ -49,7 +49,7 @@ public class IconGlyph : FrameworkElement
 
     // WPF does not clip OnRender output to the layout slot; clipping keeps a bad or
     // oversized geometry from bleeding outside the icon box.
-    protected IconGlyph() => ClipToBounds = true;
+    public IconGlyph() => ClipToBounds = true;
 
     protected override void OnRender(DrawingContext dc)
     {
