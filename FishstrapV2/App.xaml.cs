@@ -25,6 +25,7 @@ public partial class App : Application
         Core.Logger.Info($"Fishstrap V2 {Core.AppInfo.Version} starting");
         Core.SettingsStore.Load();
         Core.StatisticsStore.Load();
+        Core.SessionWatcher.Start();
 
         ThemeManager.ApplyAccent(Core.SettingsStore.Settings.Appearance.Accent);
         ThemeManager.ApplyTheme(Core.SettingsStore.Settings.Appearance.Theme);

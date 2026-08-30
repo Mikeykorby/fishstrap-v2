@@ -53,6 +53,41 @@
                                  IconTint="{DynamicResource BrushTextSecondary}" Value="0s"/>
             </UniformGrid>
 
+            <StackPanel x:Name="SessionPanel" Visibility="Collapsed">
+                <TextBlock Text="Current session" Style="{StaticResource H2}" Margin="0,24,0,12"/>
+                <Border Style="{StaticResource Card}" Padding="16,12">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="Game" Style="{StaticResource TextSecondary}" FontSize="12"/>
+                        <TextBlock x:Name="TxtSessionGame" Grid.Column="1" FontWeight="SemiBold" FontSize="12.5"
+                                   FontFamily="{StaticResource AppFontSemiBold}" TextTrimming="CharacterEllipsis"/>
+
+                        <TextBlock Grid.Row="1" Text="Server location" Style="{StaticResource TextSecondary}" FontSize="12"/>
+                        <TextBlock x:Name="TxtSessionLocation" Grid.Row="1" Grid.Column="1" FontWeight="SemiBold" FontSize="12.5"
+                                   FontFamily="{StaticResource AppFontSemiBold}" TextTrimming="CharacterEllipsis"/>
+
+                        <TextBlock Grid.Row="2" Text="Instance ID" Style="{StaticResource TextSecondary}" FontSize="12"/>
+                        <TextBlock x:Name="TxtSessionInstance" Grid.Row="2" Grid.Column="1" FontSize="12"
+                                   FontFamily="{StaticResource MonoFont}" Foreground="{DynamicResource BrushTextPrimary}"
+                                   TextTrimming="CharacterEllipsis"/>
+
+                        <TextBlock Grid.Row="3" Text="Uptime" Style="{StaticResource TextSecondary}" FontSize="12"/>
+                        <TextBlock x:Name="TxtSessionUptime" Grid.Row="3" Grid.Column="1" FontWeight="SemiBold" FontSize="12.5"
+                                   FontFamily="{StaticResource AppFontSemiBold}"/>
+                    </Grid>
+                </Border>
+            </StackPanel>
+
             <TextBlock Text="Launches — last 14 days" Style="{StaticResource H2}" Margin="0,24,0,12"/>
             <Border Style="{StaticResource Card}" Padding="16,12">
                 <StackPanel>

@@ -1,5 +1,6 @@
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using FishstrapV2.Core;
 using FishstrapV2.UI;
 
@@ -20,20 +21,79 @@ public class SessionRow
 
 public partial class StatisticsPage : FishstrapPage
 {
+    private readonly DispatcherTimer _tick = new(DispatcherPriority.Background)
+    {
+        Interval = TimeSpan.FromSeconds(1),
+    };
+    private string? _queriedAddress;
+
     public StatisticsPage()
     {
         InitializeComponent();
         StatisticsStore.Changed += OnStatsChanged;
+        SessionWatcher.Changed += OnSessionChanged;
+        _tick.Tick += (_, _) => TickUptime();
         Loaded += (_, _) => OnShown();
-        Unloaded += (_, _) => StatisticsStore.Changed -= OnStatsChanged;
+        Unloaded += (_, _) =>
+        {
+            StatisticsStore.Changed -= OnStatsChanged;
+            SessionWatcher.Changed -= OnSessionChanged;
+            _tick.Stop();
+        };
     }
 
-    public override void OnShown() => Refresh();
-
-    private void OnStatsChanged()
+    public override void OnShown()
     {
-        Dispatcher.Invoke(Refresh);
+        Refresh();
+        UpdateSession();
+        _tick.Start();
     }
+
+    private void OnStatsChanged() => Dispatcher.Invoke(Refresh);
+    private void OnSessionChanged() => Dispatcher.Invoke(UpdateSession);
+
+    private void TickUptime()
+    {
+        var s = SessionWatcher.Current;
+        if (s is null) return;
+        TxtSessionUptime.Text = FormatUptime(s);
+    }
+
+    private void UpdateSession()
+    {
+        var s = SessionWatcher.Current;
+        if (s is null)
+        {
+            SessionPanel.Visibility = Visibility.Collapsed;
+            _queriedAddress = null;
+            return;
+        }
+
+        SessionPanel.Visibility = Visibility.Visible;
+        TxtSessionGame.Text = string.IsNullOrEmpty(s.GameName) ? "Roblox" : s.GameName;
+        TxtSessionInstance.Text = s.JobId;
+        TxtSessionUptime.Text = FormatUptime(s);
+
+        if (s.ServerAddress != _queriedAddress)
+        {
+            _queriedAddress = s.ServerAddress;
+            TxtSessionLocation.Text = "Loading…";
+            _ = QueryLocationAsync(s.ServerAddress);
+        }
+    }
+
+    private async Task QueryLocationAsync(string address)
+    {
+        var location = await RoValra.GetServerLocationAsync(address);
+        await Dispatcher.InvokeAsync(() =>
+        {
+            if (SessionWatcher.Current is { } s && s.ServerAddress == address)
+                TxtSessionLocation.Text = location ?? "Not available";
+        });
+    }
+
+    private static string FormatUptime(SessionWatcher.Session s) =>
+        StatisticsStore.FormatDuration((long)(DateTime.UtcNow - (s.ServerBoot ?? s.JoinedAt)).TotalSeconds);
 
     private void Refresh()
     {

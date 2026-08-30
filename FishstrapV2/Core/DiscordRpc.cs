@@ -1,17 +1,13 @@
 using System.Diagnostics;
-using System.IO;
 using System.IO.Pipes;
-using System.Net.Http;
 using System.Text;
 using System.Text.Json;
-using System.Text.RegularExpressions;
 
 namespace FishstrapV2.Core;
 
 /// <summary>
-/// Best-effort Discord Rich Presence: tails the newest Roblox client log,
-/// extracts the current place, and publishes presence over the Discord IPC pipe.
-/// Fails silently when Discord is not running.
+/// Best-effort Discord Rich Presence: publishes SessionWatcher's live session
+/// over the Discord IPC pipe. Fails silently when Discord is not running.
 /// </summary>
 public static class DiscordRpc
 {
@@ -19,16 +15,8 @@ public static class DiscordRpc
 
     private static System.Timers.Timer? _pollTimer;
     private static NamedPipeClientStream? _pipe;
-    private static string _currentPlaceId = "";
-    private static string _gameName = "";
-    private static readonly Dictionary<string, string> NameCache = new();
-    private static DateTime? _activityStart;
-    private static long _logOffset;
-    private static string _lastLogFile = "";
+    private static bool _hasPresence;
     private static readonly object PipeLock = new();
-
-    private static readonly Regex PlaceRegex = new(@"placeId[""':=\s]+(\d+)", RegexOptions.Compiled);
-    private static readonly Regex JobRegex = new(@"jobId[""':=\s]+([0-9a-fA-F-]{36})", RegexOptions.Compiled);
 
     public static void SetEnabled(bool enabled)
     {
@@ -58,9 +46,7 @@ public static class DiscordRpc
             try { _pipe?.Dispose(); } catch { }
             _pipe = null;
         }
-        _currentPlaceId = "";
-        _gameName = "";
-        _activityStart = null;
+        _hasPresence = false;
         Logger.Info("Discord RPC watcher stopped");
     }
 
@@ -71,104 +57,25 @@ public static class DiscordRpc
 
         try
         {
-            var placeId = ReadLatestPlaceId();
-            if (string.IsNullOrEmpty(placeId))
+            var s = SessionWatcher.Current;
+            if (s is null)
             {
-                if (_currentPlaceId.Length > 0)
+                if (_hasPresence)
                 {
                     // No longer in game.
-                    _currentPlaceId = "";
-                    _gameName = "";
-                    _activityStart = null;
                     ClearPresence();
+                    _hasPresence = false;
                 }
                 return;
             }
 
-            if (placeId != _currentPlaceId)
-            {
-                _currentPlaceId = placeId;
-                _activityStart = DateTime.UtcNow;
-                _ = Task.Run(() => ResolveGameName(placeId));
-            }
-
             EnsureConnected();
-            PublishPresence();
+            PublishPresence(s);
+            _hasPresence = true;
         }
         catch (Exception ex)
         {
             Logger.Warn("Discord RPC poll failed: " + ex.Message);
-        }
-    }
-
-    private static string? ReadLatestPlaceId()
-    {
-        try
-        {
-            var dir = Paths.RobloxLogsDir;
-            if (!Directory.Exists(dir)) return null;
-
-            var log = Directory.GetFiles(dir, "*.log")
-                .Select(f => new FileInfo(f))
-                .OrderByDescending(f => f.LastWriteTime)
-                .FirstOrDefault();
-            if (log is null) return null;
-
-            if (log.FullName != _lastLogFile)
-            {
-                _lastLogFile = log.FullName;
-                _logOffset = 0;
-            }
-
-            if (log.Length <= _logOffset) return null;
-
-            using var stream = new FileStream(log.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            stream.Seek(_logOffset, SeekOrigin.Begin);
-            using var reader = new StreamReader(stream);
-            var newText = reader.ReadToEnd();
-            _logOffset = stream.Length;
-
-            var placeMatch = PlaceRegex.Match(newText);
-            return placeMatch.Success ? placeMatch.Groups[1].Value : null;
-        }
-        catch
-        {
-            return null;
-        }
-    }
-
-    private static async Task ResolveGameName(string placeId)
-    {
-        if (NameCache.TryGetValue(placeId, out var cached))
-        {
-            _gameName = cached;
-            return;
-        }
-
-        try
-        {
-            using var http = new HttpClient { Timeout = TimeSpan.FromSeconds(10) };
-            http.DefaultRequestHeaders.UserAgent.ParseAdd("FishstrapV2-RPC");
-
-            var universeResp = await http.GetStringAsync($"https://apis.roblox.com/universes/v1/places/{placeId}/universe");
-            using var uDoc = JsonDocument.Parse(universeResp);
-            var universeId = uDoc.RootElement.TryGetProperty("universeId", out var uid) ? uid.GetInt64().ToString() : "";
-
-            if (universeId.Length > 0)
-            {
-                var gamesResp = await http.GetStringAsync($"https://games.roblox.com/v1/games?universeIds={universeId}");
-                using var gDoc = JsonDocument.Parse(gamesResp);
-                var name = gDoc.RootElement.GetProperty("data")[0].TryGetProperty("name", out var n) ? n.GetString() : null;
-                if (!string.IsNullOrEmpty(name))
-                {
-                    NameCache[placeId] = name!;
-                    _gameName = name!;
-                }
-            }
-        }
-        catch
-        {
-            // Name resolution is optional.
         }
     }
 
@@ -201,10 +108,10 @@ public static class DiscordRpc
         }
     }
 
-    private static void PublishPresence()
+    private static void PublishPresence(SessionWatcher.Session s)
     {
         var rpc = SettingsStore.Settings.Integrations.DiscordRpc;
-        var game = string.IsNullOrEmpty(_gameName) ? "Roblox" : _gameName;
+        var game = string.IsNullOrEmpty(s.GameName) ? "Roblox" : s.GameName;
 
         var details = (rpc.Details.Length > 0 ? rpc.Details : "Playing {game}").Replace("{game}", game);
         var state = rpc.State.Replace("{game}", game);
@@ -216,8 +123,8 @@ public static class DiscordRpc
             ["assets"] = new Dictionary<string, object?> { ["large_image"] = "roblox", ["large_text"] = "Roblox" },
         };
 
-        if (rpc.ShowElapsedTime && _activityStart is not null)
-            activity["timestamps"] = new Dictionary<string, object?> { ["start"] = new DateTimeOffset(_activityStart.Value).ToUnixTimeSeconds() };
+        if (rpc.ShowElapsedTime)
+            activity["timestamps"] = new Dictionary<string, object?> { ["start"] = new DateTimeOffset(s.JoinedAt).ToUnixTimeSeconds() };
 
         var payload = JsonSerializer.Serialize(new
         {
