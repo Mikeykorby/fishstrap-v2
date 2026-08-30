@@ -16,6 +16,9 @@ public class FlagRow : INotifyPropertyChanged
     private string _name = "";
     private string _value = "";
 
+    /// <summary>Key this row came from; edits only touch their own key so a filtered view can never wipe other flags.</summary>
+    public string OriginalKey { get; set; } = "";
+
     public string Name
     {
         get => _name;
@@ -56,26 +59,39 @@ public partial class FastFlagsPage : FishstrapPage
         var flags = SettingsStore.Settings.FastFlags.Flags;
         FlagsList.ItemsSource = flags
             .OrderBy(k => k.Key, StringComparer.OrdinalIgnoreCase)
-            .Select(kvp => new FlagRow { Name = kvp.Key, Value = FastFlagManager.ValueToString(kvp.Value) })
+            .Select(kvp => new FlagRow { OriginalKey = kvp.Key, Name = kvp.Key, Value = FastFlagManager.ValueToString(kvp.Value) })
             .ToList();
         NoFlags.Visibility = flags.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
         FlagCount.Text = $"{flags.Count} flag(s) configured";
     }
 
+    /// <summary>
+    /// Updates each visible row's own key (rename-aware). Keys that are not on screen
+    /// — e.g. while a search filter is active — are never touched, so filtering and
+    /// editing can never wipe flags the user can't currently see.
+    /// </summary>
     private void SyncFromRows()
     {
         if (FlagsList.ItemsSource is not IEnumerable<FlagRow> rows) return;
-        var dict = new Dictionary<string, JsonElement>(StringComparer.OrdinalIgnoreCase);
+        var flags = SettingsStore.Settings.FastFlags.Flags;
+
         foreach (var row in rows)
         {
             var name = row.Name.Trim();
+            if (row.OriginalKey.Length > 0)
+            {
+                var stillUsed = rows.Any(r => r != row && r.Name.Trim().Equals(row.OriginalKey, StringComparison.OrdinalIgnoreCase));
+                if (!stillUsed && !name.Equals(row.OriginalKey, StringComparison.OrdinalIgnoreCase))
+                    flags.Remove(row.OriginalKey);
+            }
             if (name.Length == 0) continue;
-            dict[name] = FastFlagManager.ParseValue(row.Value);
+            flags[name] = FastFlagManager.ParseValue(row.Value);
         }
-        SettingsStore.Settings.FastFlags.Flags = dict;
+
+        // Rows whose name was cleared keep their old value; deleting is the trash button's job.
         Persist();
-        NoFlags.Visibility = dict.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
-        FlagCount.Text = $"{dict.Count} flag(s) configured";
+        NoFlags.Visibility = flags.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+        FlagCount.Text = $"{flags.Count} flag(s) configured";
     }
 
     private void Search_TextChanged(object sender, TextChangedEventArgs e)
@@ -87,7 +103,7 @@ public partial class FastFlagsPage : FishstrapPage
         FlagsList.ItemsSource = flags
             .Where(k => k.Key.Contains(query, StringComparison.OrdinalIgnoreCase))
             .OrderBy(k => k.Key, StringComparer.OrdinalIgnoreCase)
-            .Select(kvp => new FlagRow { Name = kvp.Key, Value = FastFlagManager.ValueToString(kvp.Value) })
+            .Select(kvp => new FlagRow { OriginalKey = kvp.Key, Name = kvp.Key, Value = FastFlagManager.ValueToString(kvp.Value) })
             .ToList();
     }
 
@@ -106,7 +122,7 @@ public partial class FastFlagsPage : FishstrapPage
     private void FlagDelete_Click(object sender, RoutedEventArgs e)
     {
         if ((sender as Button)?.Tag is not FlagRow row) return;
-        SettingsStore.Settings.FastFlags.Flags.Remove(row.Name.Trim());
+        SettingsStore.Settings.FastFlags.Flags.Remove(row.OriginalKey.Length > 0 ? row.OriginalKey : row.Name.Trim());
         Persist();
         Reload();
     }

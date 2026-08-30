@@ -47,7 +47,7 @@ public partial class AppearancePage : FishstrapPage
     private void LoadBootstrapperStyles(string selected)
     {
         CmbBootstrapperStyle.Items.Clear();
-        foreach (var name in new[] { "Fishstrap", "Disabled" }
+        foreach (var name in new[] { "Fishstrap", "Disabled", "Classic Fluent", "Terminal", "TwentyFive" }
                      .Concat(Bloxnified.All.Select(t => t.Name))
                      .Concat(Bloxnified.UserThemeNames()))
         {
