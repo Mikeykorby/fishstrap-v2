@@ -20,7 +20,6 @@
     <SolidColorBrush x:Key="BrushAccent" Color="#7C6CF0"/>
     <SolidColorBrush x:Key="BrushAccentHover" Color="#8D7DF5"/>
     <SolidColorBrush x:Key="BrushAccentSubtle" Color="#267C6CF0"/>
-    <SolidColorBrush x:Key="BrushSuccess" Color="#4ADE80"/>
     <SolidColorBrush x:Key="BrushDanger" Color="#F87171"/>
     <SolidColorBrush x:Key="BrushWarning" Color="#FBBF24"/>
     <SolidColorBrush x:Key="BrushInfo" Color="#60A5FA"/>

@@ -9,9 +9,6 @@ namespace FishstrapV2.Pages;
 
 public partial class DashboardPage : FishstrapPage
 {
-    private static readonly Brush SuccessBrush = new SolidColorBrush(Color.FromRgb(0x4A, 0xDE, 0x80));
-    private static readonly Brush DangerBrush = new SolidColorBrush(Color.FromRgb(0xF8, 0x71, 0x71));
-
     public DashboardPage()
     {
         InitializeComponent();
@@ -60,7 +57,7 @@ public partial class DashboardPage : FishstrapPage
         var entry = RobloxInstallManager.GetActiveVersion("Player");
         CardInstalled.Value = entry is null ? "Not installed" : entry.Installed.ToString("MMM dd, yyyy");
         CardStatus.Value = entry is null ? "Not installed" : "Ready";
-        CardStatus.ValueBrush = entry is null ? DangerBrush : SuccessBrush;
+        CardStatus.ValueBrush = TryFindResource("BrushTextPrimary") as Brush;
     }
 
     private async Task LoadRobloxInfoAsync()
