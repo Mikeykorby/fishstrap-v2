@@ -4,8 +4,8 @@ namespace FishstrapV2.Core;
 
 /// <summary>
 /// Runs long bootstrap operations (Roblox installs/updates) under the bootstrapper dialog,
-/// honoring the user's chosen bootstrapper style: Fishstrap (default dark dialog),
-/// Light, or Disabled (runs silently with log-only progress).
+/// honoring the user's chosen bootstrapper style: Fishstrap (default), a Bloxnified/imported
+/// theme, or Disabled (runs silently with log-only progress).
 /// </summary>
 public static class Bootstrapper
 {
