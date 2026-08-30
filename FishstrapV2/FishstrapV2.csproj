@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <RootNamespace>FishstrapV2</RootNamespace>
+    <AssemblyName>FishstrapV2</AssemblyName>
+    <Version>3.1.2</Version>
+    <AssemblyTitle>Fishstrap V2</AssemblyTitle>
+    <Product>Fishstrap V2</Product>
+    <Description>Fishstrap V2 - a custom bootstrapper for Roblox</Description>
+    <Company>Mikeykorby</Company>
+    <Copyright>Copyright (c) 2026 Mikeykorby</Copyright>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets/Bloxstrap.ico</ApplicationIcon>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <None Remove="Assets/*.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets/Bloxstrap.png" />
+    <Resource Include="Assets/Bloxstrap-full-dark.png" />
+    <Resource Include="Assets/Bloxstrap-full-light.png" />
+  </ItemGroup>
+
+</Project>

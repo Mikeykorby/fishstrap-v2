@@ -1,78 +1,66 @@
-> [!CAUTION]
-> The only official places to download Fishstrap are this GitHub repository and
-> our website <https://www.fishstrap.app>. Any other websites offering downloads
-> or claiming to be us are not controlled by us, do not download from them.
+# Fishstrap V2
 
-<div align="center">
+A custom bootstrapper for Roblox, rebuilt from the ground up. Fishstrap V2 is a
+fork of Fishstrap (which is based on Bloxstrap by pizzaboxer) with a fully
+redesigned dark interface and a set of new quality-of-life features.
 
-![][banner-light]
-![][banner-dark]
-
-![][badge-license]
-![][badge-actions]
-![][badge-downloads]
-[![][badge-latest]][repo-latest]
-[![][badge-discord]][discord-invite]
-![][badge-stars]
-
-</div>
-
-Fishstrap V2 (pronounced fish-strap v2) is a custom bootstrapper for Roblox based on
-Fishstrap (pronounced fish-strap). It provides additional features
-to enhance your experience.
-
-If you found any bugs, please open an issue
-
-> [!NOTE]
-> Fishstrap V2 is an application for **Windows 10 and above.** For other operating
-> systems, such as Mac OS and various Linux distributions, you can try
-> [AppleBlox][appleblox] and [Sober][sober] respectively.
+Fishstrap V2 is an application for **Windows 10 and above**.
 
 ## Features
 
-- Detailed server information using [RoValra][rovalra]'s API
-- Support for Roblox Studio
-- Unhidden FastFlags editor
-  - You cannot apply FastFlags not present in the allowlist. This does not
-    affect Roblox Studio. [Learn more][devforum-fflags]
-- Global Basic Settings editor
-  - Ability to increase frame rate cap, toggle quality levels and more
-- Fishstrap's own game invites
-  - Try it out now — this link will lead you to Crossroads (don't turn left!):
-    <https://www.fishstrap.app/v1/joingame?placeId=1818>
-- Cache cleaner, channel switcher and many more
+- **Redesigned dashboard-first settings UI** — dark theme, quick launch,
+  quick settings, quick links and live statistics on one screen
+- **Roblox deployment management** — real deploy API integration
+  (clientsettings.roblox.com + setup.rbxcdn.com), channel switching,
+  version history with pinning, reinstall, Studio support and old-version pruning
+- **Unhidden FastFlags editor** — editable flag grid with search, presets,
+  JSON import/export, and Fishstrap-style allowlist enforcement
+- **Global basic settings** — FPS unlock slider, lighting technology,
+  graphics backend, post effects, player shadows and telemetry blocking,
+  all translated into FastFlags automatically
+- **Mods** — custom cursors, sounds and fonts, applied to the installed
+  version on every launch, with one-click apply/clean
+- **Integrations** — Discord Rich Presence (best-effort log tailing),
+  activity tracking, better matchmaking and fishstrap.app game invite links
+- **Shortcuts** — desktop / Start menu shortcuts, plus extra shortcuts for
+  settings and your last played game
+- **Statistics** — launches per day, total playtime, average session and a
+  14-day activity chart
+- **Profiles & backups** — save the whole settings state under a named
+  profile, or create one-click restore-point backups
+- **Auto-update checks** against this repository's GitHub releases
+- **Test mode** — toggle in the sidebar: changes are held in memory and only
+  written to disk when you press Save
+- **Cache cleaner** — clears the Roblox HTTP cache, download cache and logs
 
-## Special thanks
+## Building
 
-- [Valra](https://github.com/NotValra) for providing their API
-- Owner of Fishstrap for most of the content
-- Other independent contributors
+Requires the .NET 8 SDK (or newer; a .NET 9 SDK builds the net8.0-windows
+target fine):
 
-<div align="center">
+```
+dotnet build FishstrapV2.sln
+```
 
-![][repo-showcase]
+Run the app from `FishstrapV2/bin/Debug/net8.0-windows/FishstrapV2.exe`.
 
-</div>
+There are **no third-party NuGet dependencies** — everything is built on the
+base class libraries, so restore is instant and offline-friendly.
 
-[banner-light]: https://github.com/fishstrap/fishstrap/raw/main/Images/Bloxstrap-full-light.png#gh-light-mode-only
-[banner-dark]:  https://github.com/fishstrap/fishstrap/raw/main/Images/Bloxstrap-full-dark.png#gh-dark-mode-only
+## Where things live
 
-[badge-license]:   https://img.shields.io/github/license/fishstrap/fishstrap?style=flat-square
-[badge-actions]:   https://img.shields.io/github/actions/workflow/status/fishstrap/fishstrap/ci-release.yml?branch=main&style=flat-square&label=builds
-[badge-downloads]: https://img.shields.io/github/downloads/fishstrap/fishstrap/latest/total?style=flat-square&color=981bfe
-[badge-latest]:    https://img.shields.io/github/v/release/fishstrap/fishstrap?style=flat-square&color=7a39fb
-[badge-discord]:   https://img.shields.io/discord/1299397064165429360?style=flat-square&logo=discord&logoColor=white&logoSize=auto&label=discord&color=4d3dff
-[badge-stars]:     https://img.shields.io/github/stars/fishstrap/fishstrap?style=flat-square&color=dd9900
+- Settings: `%LOCALAPPDATA%\FishstrapV2\settings.json`
+- Statistics: `%LOCALAPPDATA%\FishstrapV2\statistics.json`
+- Roblox versions: `%LOCALAPPDATA%\FishstrapV2\Versions`
+- Mods: `%LOCALAPPDATA%\FishstrapV2\Mods`
+- Logs: `%LOCALAPPDATA%\FishstrapV2\logs`
 
-[repo-latest]:    https://github.com/fishstrap/fishstrap/releases/latest
-[repo-new-issue]: https://github.com/fishstrap/fishstrap/issues/new/choose
-[repo-showcase]:  https://www.fishstrap.app/img/Showcase.webp
+## Credits
 
-[discord-invite]: https://discord.gg/SRs5zb9BJd
+Fishstrap V2 is a fork of [Fishstrap](https://github.com/fishstrap/fishstrap)
+(MIT, Copyright (c) 2025 returnrqt), which is based on
+[Bloxstrap](https://github.com/bloxstraplabs/bloxstrap) by pizzaboxer (MIT).
+Roblox is a trademark of Roblox Corporation; this project is not affiliated
+with or endorsed by Roblox Corporation.
 
-[bloxstrap]: https://bloxstraplabs.com
-[appleblox]: https://github.com/AppleBlox/appleblox
-[sober]:     https://sober.vinegarhq.org
-[rovalra]:   https://www.rovalra.com
-
-[devforum-fflags]: https://devforum.roblox.com/t/allowlist-for-local-client-configuration-via-fast-flags/3966569
+Licensed under the [MIT License](LICENSE).

@@ -1,0 +1,134 @@
+<local:FishstrapPage x:Class="FishstrapV2.Pages.ModsPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:FishstrapV2.UI"
+        xmlns:ctrl="clr-namespace:FishstrapV2.UI.Controls">
+    <local:FishstrapPage.Resources>
+        <DataTemplate x:Key="ModFileTemplate">
+            <Grid Margin="0,2,0,2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding Name}" FontSize="12" FontFamily="{StaticResource MonoFont}"
+                           TextTrimming="CharacterEllipsis" VerticalAlignment="Center"
+                           Foreground="{DynamicResource BrushTextSecondary}"/>
+                <Button Grid.Column="1" Style="{StaticResource IconButton}" Click="BtnModDelete_Click" Tag="{Binding}"
+                        ToolTip="Remove file">
+                    <TextBlock Text="&#xE74D;" FontFamily="{StaticResource IconFont}" FontSize="11"/>
+                </Button>
+            </Grid>
+        </DataTemplate>
+    </local:FishstrapPage.Resources>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="32,22,32,28">
+
+            <TextBlock Text="Mods" Style="{StaticResource H1}" Margin="0,0,0,6"/>
+            <TextBlock Text="Customize the Roblox client with your own cursors, sounds and fonts."
+                       Style="{StaticResource TextSecondary}" Margin="0,0,0,22"/>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
+                <Button x:Name="BtnApply" Content="Apply mods now" Style="{StaticResource PrimaryButton}"
+                        Click="BtnApply_Click"/>
+                <Button x:Name="BtnClean" Content="Remove applied mods" Style="{StaticResource CmdButton}"
+                        Margin="10,0,0,0" Click="BtnClean_Click"/>
+            </StackPanel>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="14"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="14"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Style="{StaticResource Card}" Padding="14,12">
+                    <StackPanel>
+                        <Grid>
+                            <StackPanel Orientation="Horizontal">
+                                <Border Width="34" Height="34" CornerRadius="8" Background="#3A5C74">
+                                    <TextBlock Text="&#xE77B;" FontFamily="{StaticResource IconFont}" FontSize="14"
+                                               Foreground="#E6E6F0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock Text="Custom cursor" FontWeight="SemiBold" FontSize="13"/>
+                                    <TextBlock Text="Replace the Roblox cursor" Style="{DynamicResource TextSecondary}"
+                                               FontSize="11.5" Margin="0,2,0,0"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <CheckBox x:Name="ChkCursor" Style="{StaticResource ModernToggle}"
+                                      HorizontalAlignment="Right" VerticalAlignment="Center"
+                                      Checked="Cursor_Changed" Unchecked="Cursor_Changed"/>
+                        </Grid>
+                        <ItemsControl x:Name="ListCursor" ItemTemplate="{StaticResource ModFileTemplate}" Margin="0,12,0,0" AlternationCount="999"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+                            <Button Content="Import files" Style="{StaticResource CmdButton}" Click="BtnImportCursor_Click"/>
+                            <Button Content="Clear" Style="{StaticResource GhostButton}" Margin="8,0,0,0"
+                                    Click="BtnClearCursor_Click"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="2" Style="{StaticResource Card}" Padding="14,12">
+                    <StackPanel>
+                        <Grid>
+                            <StackPanel Orientation="Horizontal">
+                                <Border Width="34" Height="34" CornerRadius="8" Background="#6E5C33">
+                                    <TextBlock Text="&#xE7F4;" FontFamily="{StaticResource IconFont}" FontSize="14"
+                                               Foreground="#E6E6F0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock Text="Custom sounds" FontWeight="SemiBold" FontSize="13"/>
+                                    <TextBlock Text="Replace hit, splat and other sounds" Style="{DynamicResource TextSecondary}"
+                                               FontSize="11.5" Margin="0,2,0,0"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <CheckBox x:Name="ChkSounds" Style="{StaticResource ModernToggle}"
+                                      HorizontalAlignment="Right" VerticalAlignment="Center"
+                                      Checked="Sounds_Changed" Unchecked="Sounds_Changed"/>
+                        </Grid>
+                        <ItemsControl x:Name="ListSounds" ItemTemplate="{StaticResource ModFileTemplate}" Margin="0,12,0,0"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+                            <Button Content="Import files" Style="{StaticResource CmdButton}" Click="BtnImportSounds_Click"/>
+                            <Button Content="Clear" Style="{StaticResource GhostButton}" Margin="8,0,0,0"
+                                    Click="BtnClearSounds_Click"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="4" Style="{StaticResource Card}" Padding="14,12">
+                    <StackPanel>
+                        <Grid>
+                            <StackPanel Orientation="Horizontal">
+                                <Border Width="34" Height="34" CornerRadius="8" Background="#2E5C44">
+                                    <TextBlock Text="&#xE8D2;" FontFamily="{StaticResource IconFont}" FontSize="14"
+                                               Foreground="#E6E6F0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock Text="Custom font" FontWeight="SemiBold" FontSize="13"/>
+                                    <TextBlock Text="Replace client fonts (ttf/otf)" Style="{DynamicResource TextSecondary}"
+                                               FontSize="11.5" Margin="0,2,0,0"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <CheckBox x:Name="ChkFonts" Style="{StaticResource ModernToggle}"
+                                      HorizontalAlignment="Right" VerticalAlignment="Center"
+                                      Checked="Fonts_Changed" Unchecked="Fonts_Changed"/>
+                        </Grid>
+                        <ItemsControl x:Name="ListFonts" ItemTemplate="{StaticResource ModFileTemplate}" Margin="0,12,0,0"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+                            <Button Content="Import files" Style="{StaticResource CmdButton}" Click="BtnImportFonts_Click"/>
+                            <Button Content="Clear" Style="{StaticResource GhostButton}" Margin="8,0,0,0"
+                                    Click="BtnClearFonts_Click"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <Border Style="{StaticResource SubCard}" Margin="0,16,0,0">
+                <TextBlock Style="{DynamicResource TextSecondary}" FontSize="11.5" TextWrapping="Wrap"
+                           Text="Mods are copied into the installed Roblox version folder on every launch. Files keep their original names, so name them exactly like the files you want to replace (for example hit.wav for the hit sound)."/>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</local:FishstrapPage>

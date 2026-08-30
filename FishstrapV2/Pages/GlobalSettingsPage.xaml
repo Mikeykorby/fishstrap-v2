@@ -1,0 +1,135 @@
+<local:FishstrapPage x:Class="FishstrapV2.Pages.GlobalSettingsPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:FishstrapV2.UI"
+        xmlns:ctrl="clr-namespace:FishstrapV2.UI.Controls">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="32,22,32,28">
+
+            <TextBlock Text="Global Settings" Style="{StaticResource H1}" Margin="0,0,0,6"/>
+            <TextBlock Text="Basic engine settings applied through the FastFlag system."
+                       Style="{StaticResource TextSecondary}" Margin="0,0,0,22"/>
+
+            <!-- Engine -->
+            <TextBlock Text="Engine" Style="{StaticResource H2}" Margin="0,0,0,12"/>
+            <ctrl:SettingRow x:Name="RowFps" Icon="&#xE916;" IconTint="#4A3A70"
+                             Title="Increase frame rate cap" Subtitle="Unlock the Roblox frame rate limit">
+                <ctrl:SettingRow.RowContent>
+                    <CheckBox x:Name="ChkFps" Style="{StaticResource ModernToggle}"
+                              Checked="Fps_Changed" Unchecked="Fps_Changed"/>
+                </ctrl:SettingRow.RowContent>
+            </ctrl:SettingRow>
+            <Border x:Name="FpsPanel" Style="{StaticResource Card}" Margin="0,12,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Target FPS" Style="{DynamicResource TextSecondary}" VerticalAlignment="Center" Width="100"/>
+                    <Slider x:Name="SldFps" Minimum="30" Maximum="999" Value="240" Width="320"
+                            VerticalAlignment="Center" ValueChanged="FpsSlider_Changed"
+                            IsSnapToTickEnabled="True" TickFrequency="5"/>
+                    <TextBlock x:Name="FpsValue" Text="240" Style="{StaticResource Mono}" FontSize="14"
+                               VerticalAlignment="Center" Margin="16,0,0,0" FontWeight="SemiBold"/>
+                </StackPanel>
+            </Border>
+
+            <ctrl:SettingRow x:Name="RowLighting" Icon="&#xE790;" IconTint="#2E2E38"
+                             Title="Lighting technology" Subtitle="Force a specific lighting technology"
+                             Margin="0,12,0,0">
+                <ctrl:SettingRow.RowContent>
+                    <ComboBox x:Name="CmbLighting" Width="180" SelectionChanged="Lighting_Changed">
+                        <ComboBoxItem Content="Automatic"/>
+                        <ComboBoxItem Content="Voxel"/>
+                        <ComboBoxItem Content="ShadowMap"/>
+                        <ComboBoxItem Content="Future"/>
+                    </ComboBox>
+                </ctrl:SettingRow.RowContent>
+            </ctrl:SettingRow>
+
+            <ctrl:SettingRow x:Name="RowGraphics" Icon="&#xE713;" IconTint="#2E2E38"
+                             Title="Graphics mode" Subtitle="Force a rendering backend" Margin="0,10,0,0">
+                <ctrl:SettingRow.RowContent>
+                    <ComboBox x:Name="CmbGraphics" Width="180" SelectionChanged="Graphics_Changed">
+                        <ComboBoxItem Content="Automatic"/>
+                        <ComboBoxItem Content="Direct3D 11"/>
+                        <ComboBoxItem Content="Direct3D 10"/>
+                        <ComboBoxItem Content="Vulkan"/>
+                        <ComboBoxItem Content="OpenGL"/>
+                    </ComboBox>
+                </ctrl:SettingRow.RowContent>
+            </ctrl:SettingRow>
+
+            <StackPanel Margin="0,12,0,0">
+                <ctrl:SettingRow x:Name="RowPostFx" Icon="&#xE790;" IconTint="#2E2E38"
+                                 Title="Disable post effects" Subtitle="Turn off bloom, blur and color correction">
+                    <ctrl:SettingRow.RowContent>
+                        <CheckBox x:Name="ChkPostFx" Style="{StaticResource ModernToggle}"
+                                  Checked="Toggle_Changed" Unchecked="Toggle_Changed"/>
+                    </ctrl:SettingRow.RowContent>
+                </ctrl:SettingRow>
+                <ctrl:SettingRow x:Name="RowShadows" Icon="&#xE70F;" IconTint="#2E2E38"
+                                 Title="Disable player shadows" Subtitle="Skip dynamic shadow rendering" Margin="0,10,0,0">
+                    <ctrl:SettingRow.RowContent>
+                        <CheckBox x:Name="ChkShadows" Style="{StaticResource ModernToggle}"
+                                  Checked="Toggle_Changed" Unchecked="Toggle_Changed"/>
+                    </ctrl:SettingRow.RowContent>
+                </ctrl:SettingRow>
+                <ctrl:SettingRow x:Name="RowTelemetry" Icon="&#xE946;" IconTint="#6E3333"
+                                 Title="Block telemetry" Subtitle="Stop the client from sending analytics" Margin="0,10,0,0">
+                    <ctrl:SettingRow.RowContent>
+                        <CheckBox x:Name="ChkTelemetry" Style="{StaticResource ModernToggle}"
+                                  Checked="Toggle_Changed" Unchecked="Toggle_Changed"/>
+                    </ctrl:SettingRow.RowContent>
+                </ctrl:SettingRow>
+            </StackPanel>
+
+            <!-- Effective flags -->
+            <Border Style="{StaticResource Card}" Margin="0,14,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="EffectiveCount" Style="{DynamicResource TextSecondary}" FontSize="12.5"
+                               VerticalAlignment="Center"/>
+                    <Button x:Name="BtnApplyNow" Content="Apply now" Style="{StaticResource CmdButton}"
+                            Margin="14,0,0,0" Click="BtnApplyNow_Click"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Profiles -->
+            <TextBlock Text="Profiles" Style="{StaticResource H2}" Margin="0,24,0,6"/>
+            <TextBlock Text="Save your whole configuration under a name and swap it in one click."
+                       Style="{StaticResource TextSecondary}" FontSize="12" Margin="0,0,0,12"/>
+            <Border Style="{StaticResource Card}" Padding="14,12">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox x:Name="TxtProfileName" Width="240" VerticalAlignment="Center"
+                                 ToolTip="Profile name"/>
+                        <Button Content="Save current as profile" Style="{StaticResource CmdButton}"
+                                Margin="10,0,0,0" Click="BtnSaveProfile_Click"/>
+                        <Button Content="Create backup" Style="{StaticResource CmdButton}"
+                                Margin="10,0,0,0" Click="BtnBackup_Click"/>
+                    </StackPanel>
+                    <ItemsControl x:Name="ProfileList" Margin="0,12,0,0">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,3">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding Name}" FontSize="12.5" VerticalAlignment="Center"
+                                               FontWeight="SemiBold"/>
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                        <Button Content="Apply" Style="{StaticResource GhostButton}"
+                                                Click="ProfileApply_Click" Tag="{Binding}"/>
+                                        <Button Style="{StaticResource IconButton}" Click="ProfileDelete_Click"
+                                                Tag="{Binding}" ToolTip="Delete profile">
+                                            <TextBlock Text="&#xE74D;" FontFamily="{StaticResource IconFont}" FontSize="11"/>
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <TextBlock x:Name="NoProfiles" Text="No profiles saved yet." Style="{DynamicResource TextSecondary}"
+                               FontSize="12" Margin="0,4,0,0"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</local:FishstrapPage>
