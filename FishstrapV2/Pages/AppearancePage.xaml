@@ -76,20 +76,66 @@
                 </StackPanel>
             </Border>
 
-            <!-- Bootstrapper preview -->
-            <TextBlock Text="Bootstrapper preview" Style="{StaticResource H2}" Margin="0,24,0,12"/>
-            <Border Style="{StaticResource Card}" HorizontalAlignment="Left" Width="420">
+            <!-- Bootstrapper -->
+            <TextBlock Text="Bootstrapper" Style="{StaticResource H2}" Margin="0,24,0,4"/>
+            <TextBlock Text="How the install progress window looks while Roblox installs or updates."
+                       Style="{StaticResource TextSecondary}" Margin="0,0,0,12"/>
+            <Border Style="{StaticResource Card}" HorizontalAlignment="Stretch">
                 <StackPanel>
-                    <Border Background="{DynamicResource BrushBgAlt}" CornerRadius="8" Padding="12,10">
-                        <Grid>
-                            <TextBlock Text="Roblox Update" FontWeight="SemiBold" FontFamily="{StaticResource AppFontSemiBold}" FontSize="12.5"/>
-                            <TextBlock Text="Fishstrap V2" Style="{DynamicResource TextSecondary}" FontSize="11"
-                                       HorizontalAlignment="Right"/>
-                        </Grid>
-                    </Border>
-                    <TextBlock x:Name="PreviewStatus" Text="Downloading Roblox&#8230;"
-                               Style="{DynamicResource TextSecondary}" FontSize="12" Margin="0,12,0,8"/>
-                    <ProgressBar IsIndeterminate="True"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Bootstrapper style" FontSize="12.5" FontWeight="SemiBold"
+                                       FontFamily="{StaticResource AppFontSemiBold}"/>
+                            <TextBlock Text="Choose the dialog style. Bloxnified themes are built in."
+                                       Style="{DynamicResource TextSecondary}" FontSize="11.5" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <ComboBox x:Name="CmbBootstrapperStyle" Grid.Column="1" Width="170" Margin="0,0,10,0"
+                                  SelectionChanged="BootstrapperStyle_Changed"/>
+                        <Button x:Name="BtnPreviewBootstrapper" Grid.Column="2" Content="Preview"
+                                Style="{StaticResource CmdButton}" Click="BtnPreviewBootstrapper_Click"/>
+                    </Grid>
+
+                    <Grid Margin="0,14,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Logo animation" FontSize="12.5" FontWeight="SemiBold"
+                                       FontFamily="{StaticResource AppFontSemiBold}"/>
+                            <TextBlock Text="Static, spinning, or a custom image — animated GIFs play."
+                                       Style="{DynamicResource TextSecondary}" FontSize="11.5" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal">
+                            <ComboBox x:Name="CmbBootstrapperAnimation" Width="120" SelectionChanged="BootstrapperAnimation_Changed">
+                                <ComboBoxItem Content="None"/>
+                                <ComboBoxItem Content="Spin"/>
+                                <ComboBoxItem Content="Custom"/>
+                            </ComboBox>
+                            <Button x:Name="BtnPickLogo" Content="Pick file&#8230;" Style="{StaticResource CmdButton}"
+                                    Margin="10,0,0,0" Visibility="Collapsed" Click="BtnPickLogo_Click"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Margin="0,14,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Custom themes" FontSize="12.5" FontWeight="SemiBold"
+                                       FontFamily="{StaticResource AppFontSemiBold}"/>
+                            <TextBlock Text="Import any Bloxstrap-style theme folder (Theme.xml plus its assets)."
+                                       Style="{DynamicResource TextSecondary}" FontSize="11.5" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <Button x:Name="BtnImportTheme" Grid.Column="1" Content="Import&#8230;"
+                                Style="{StaticResource CmdButton}" Click="BtnImportTheme_Click"/>
+                    </Grid>
                 </StackPanel>
             </Border>
         </StackPanel>

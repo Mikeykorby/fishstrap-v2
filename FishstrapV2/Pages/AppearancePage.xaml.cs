@@ -21,18 +21,41 @@ public partial class AppearancePage : FishstrapPage
     public override void OnShown()
     {
         _suppress = true;
-        var s = SettingsStore.Settings.Appearance;
+        var s = SettingsStore.Settings;
 
-        CmbTheme.SelectedIndex = s.Theme switch
+        CmbTheme.SelectedIndex = s.Appearance.Theme switch
         {
             "Light" => 1,
             "System" => 2,
             _ => 0,
         };
-        TxtAccentHex.Text = s.Accent;
+        TxtAccentHex.Text = s.Appearance.Accent;
+
+        LoadBootstrapperStyles(s.Launcher.BootstrapperStyle);
+        CmbBootstrapperAnimation.SelectedItem = CmbBootstrapperAnimation.Items
+            .Cast<ComboBoxItem>()
+            .FirstOrDefault(i => i.Content as string == s.Launcher.BootstrapperAnimation)
+            ?? CmbBootstrapperAnimation.Items[0];
+        UpdateLogoPickerVisibility();
+
         _suppress = false;
 
         LoadIconPreview();
+    }
+
+    private void LoadBootstrapperStyles(string selected)
+    {
+        CmbBootstrapperStyle.Items.Clear();
+        foreach (var name in new[] { "Fishstrap", "Light", "Disabled" }
+                     .Concat(Bloxnified.All.Select(t => t.Name))
+                     .Concat(Bloxnified.UserThemeNames()))
+        {
+            CmbBootstrapperStyle.Items.Add(new ComboBoxItem { Content = name });
+        }
+        CmbBootstrapperStyle.SelectedItem = CmbBootstrapperStyle.Items
+            .Cast<ComboBoxItem>()
+            .FirstOrDefault(i => i.Content as string == selected)
+            ?? CmbBootstrapperStyle.Items[0];
     }
 
     private void LoadIconPreview()
@@ -70,6 +93,108 @@ public partial class AppearancePage : FishstrapPage
         SettingsStore.Settings.Appearance.Theme = theme;
         Persist();
         ThemeManager.ApplyTheme(theme);
+    }
+
+    private void BootstrapperStyle_Changed(object sender, SelectionChangedEventArgs e)
+    {
+        if (!IsLoaded || _suppress || CmbBootstrapperStyle.SelectedItem is not ComboBoxItem item) return;
+        SettingsStore.Settings.Launcher.BootstrapperStyle = item.Content as string ?? "Fishstrap";
+        Persist();
+    }
+
+    private void BootstrapperAnimation_Changed(object sender, SelectionChangedEventArgs e)
+    {
+        if (!IsLoaded || _suppress || CmbBootstrapperAnimation.SelectedItem is not ComboBoxItem item) return;
+        SettingsStore.Settings.Launcher.BootstrapperAnimation = item.Content as string ?? "None";
+        UpdateLogoPickerVisibility();
+        Persist();
+    }
+
+    private void UpdateLogoPickerVisibility() =>
+        BtnPickLogo.Visibility =
+            (CmbBootstrapperAnimation.SelectedItem as ComboBoxItem)?.Content as string == "Custom"
+                ? Visibility.Visible
+                : Visibility.Collapsed;
+
+    private void BtnPickLogo_Click(object sender, RoutedEventArgs e)
+    {
+        var dialog = new OpenFileDialog
+        {
+            Filter = "Images|*.png;*.jpg;*.jpeg;*.gif;*.bmp|All files|*.*",
+            Title = "Choose bootstrapper logo",
+        };
+        if (dialog.ShowDialog() != true) return;
+
+        SettingsStore.Settings.Launcher.BootstrapperIconFile = dialog.FileName;
+        Persist();
+        MainWindow.Current?.ShowToast("Custom bootstrapper logo set");
+    }
+
+    private void BtnImportTheme_Click(object sender, RoutedEventArgs e)
+    {
+        var dialog = new OpenFileDialog
+        {
+            Filter = "Bootstrapper theme|Theme.xml",
+            Title = "Import a Bloxstrap-style theme",
+        };
+        if (dialog.ShowDialog() != true) return;
+
+        try
+        {
+            var sourceDir = Path.GetDirectoryName(dialog.FileName)!;
+            var target = Path.Combine(Paths.BootstrappersDir, Path.GetFileName(sourceDir)!);
+            Paths.EnsureDirectories();
+            if (Directory.Exists(target))
+                target += "-" + DateTime.Now.ToString("yyyyMMddHHmmss");
+            CopyDirectory(sourceDir, target);
+
+            LoadBootstrapperStyles(SettingsStore.Settings.Launcher.BootstrapperStyle);
+            MainWindow.Current?.ShowToast("Theme imported: " + Path.GetFileName(target));
+        }
+        catch (Exception ex)
+        {
+            MainWindow.Current?.ShowToast("Import failed: " + ex.Message, true);
+        }
+    }
+
+    private static void CopyDirectory(string source, string target)
+    {
+        Directory.CreateDirectory(target);
+        foreach (var file in Directory.GetFiles(source))
+            File.Copy(file, Path.Combine(target, Path.GetFileName(file)), true);
+        foreach (var dir in Directory.GetDirectories(source))
+            CopyDirectory(dir, Path.Combine(target, Path.GetFileName(dir)!));
+    }
+
+    private async void BtnPreviewBootstrapper_Click(object sender, RoutedEventArgs e)
+    {
+        BtnPreviewBootstrapper.IsEnabled = false;
+        try
+        {
+            await Bootstrapper.RunAsync("Upgrading Roblox...", async (p, ct) =>
+            {
+                for (var i = 0; i <= 100 && !ct.IsCancellationRequested; i += 10)
+                {
+                    p.Report(i >= 100 ? "Applying modifications..." : $"Upgrading Roblox... {i}%");
+                    await Task.Delay(140, ct);
+                }
+                p.Report("Starting Roblox...");
+                await Task.Delay(500, ct);
+                return (object?)null;
+            });
+        }
+        catch (OperationCanceledException)
+        {
+            // preview cancelled — nothing to clean up
+        }
+        catch (Exception ex)
+        {
+            Logger.Warn("Bootstrapper preview failed: " + ex.Message);
+        }
+        finally
+        {
+            BtnPreviewBootstrapper.IsEnabled = true;
+        }
     }
 
     private void Swatch_Click(object sender, RoutedEventArgs e)

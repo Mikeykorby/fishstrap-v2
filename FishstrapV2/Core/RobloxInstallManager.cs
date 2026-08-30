@@ -18,6 +18,22 @@ public class RobloxVersionEntry
     public string DirectoryPath => Path.Combine(Paths.VersionsDir, Hash);
 }
 
+/// <summary>Progress reporter that also carries the bootstrapper dialog so the deploy client can drive its bar.</summary>
+public class InstallProgress : IProgress<string>, RobloxDeployClient.IProgressHook
+{
+    private readonly Action<string>? _onStatus;
+
+    public InstallProgress(Action<string>? onStatus = null) => _onStatus = onStatus;
+
+    public UI.BootstrapperDialog? Dialog { get; set; }
+
+    void IProgress<string>.Report(string value)
+    {
+        Logger.Info(value);
+        _onStatus?.Invoke(value);
+    }
+}
+
 public static class RobloxInstallManager
 {
     public static List<RobloxVersionEntry> GetInstalledVersions()
@@ -76,16 +92,18 @@ public static class RobloxInstallManager
             : versions.FirstOrDefault(v => v.HasStudio);
     }
 
-    public static async Task<RobloxVersionEntry> EnsurePlayerInstalledAsync(IProgress<string>? progress = null)
+    public static async Task<RobloxVersionEntry> EnsurePlayerInstalledAsync(
+        IProgress<string>? progress = null, CancellationToken cancellationToken = default)
     {
         var active = GetActiveVersion("Player");
         if (active is not null)
             return active;
-        return await InstallAsync(progress, includeStudio: false, forceReinstall: false);
+        return await InstallAsync(progress, includeStudio: false, forceReinstall: false, cancellationToken);
     }
 
     public static async Task<RobloxVersionEntry> InstallAsync(
-        IProgress<string>? progress = null, bool includeStudio = true, bool forceReinstall = false)
+        IProgress<string>? progress = null, bool includeStudio = true, bool forceReinstall = false,
+        CancellationToken cancellationToken = default)
     {
         progress?.Report("Checking latest Roblox version…");
 
@@ -105,7 +123,7 @@ public static class RobloxInstallManager
         if (!File.Exists(exe))
         {
             progress?.Report($"Downloading Roblox {info.Version}…");
-            await RobloxDeployClient.DownloadVersionAsync(info.VersionHash, dir, progress);
+            await RobloxDeployClient.DownloadVersionAsync(info.VersionHash, dir, progress, cancellationToken);
             progress?.Report("Applying settings…");
             EnsureAppSettings(dir);
             FastFlagManager.ApplyToVersion(dir, SettingsStore.Settings);
@@ -118,6 +136,7 @@ public static class RobloxInstallManager
 
         if (includeStudio)
         {
+            cancellationToken.ThrowIfCancellationRequested();
             var sinfo = await RobloxDeployClient.GetLatestVersionAsync(SettingsStore.Settings.Deployment.Channel, "WindowsStudio64");
             if (sinfo is not null)
             {
@@ -127,7 +146,7 @@ public static class RobloxInstallManager
                 if (!File.Exists(Path.Combine(sdir, "RobloxStudioBeta.exe")))
                 {
                     progress?.Report("Downloading Roblox Studio…");
-                    await RobloxDeployClient.DownloadVersionAsync(sinfo.VersionHash, sdir, progress);
+                    await RobloxDeployClient.DownloadVersionAsync(sinfo.VersionHash, sdir, progress, cancellationToken);
                     WriteSidecar(sdir, sinfo.VersionHash);
                 }
             }

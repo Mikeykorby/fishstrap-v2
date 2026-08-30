@@ -9,6 +9,8 @@ using FishstrapV2.UI.Controls;
 using FishstrapV2.Pages;
 using System.Windows.Documents;
 using System.Windows.Automation;
+using System.Windows.Interop;
+using System.Runtime.InteropServices;
 using WS = System.Windows.Shell;
 
 namespace FishstrapV2;
@@ -57,15 +59,80 @@ public partial class MainWindow : Window
         {
             MaximizeGlyph.Icon =
                 WindowState == WindowState.Maximized ? "copy" : "square";
-
-            // Borderless windows bleed the resize border off-screen when maximized;
-            // pad the content so the command bar and edges stay fully visible.
-            RootGrid.Margin = WindowState == WindowState.Maximized ? new Thickness(8) : new Thickness(0);
         };
 
         if (SettingsStore.Settings.Integrations.DiscordRpc.Enabled)
             DiscordRpc.SetEnabled(true);
     }
+
+    // ======== Maximize into the work area (never under the taskbar) ========
+    // Borderless (WindowStyle=None) windows default to maximizing over the whole
+    // monitor, which puts the command bar underneath the taskbar. Capping the
+    // maximized bounds to the monitor's work area fixes that.
+    private const int WM_GETMINMAXINFO = 0x0024;
+
+    protected override void OnSourceInitialized(EventArgs e)
+    {
+        base.OnSourceInitialized(e);
+        var source = (HwndSource?)PresentationSource.FromVisual(this);
+        source?.AddHook(WndProc);
+    }
+
+    private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+    {
+        if (msg != WM_GETMINMAXINFO)
+            return IntPtr.Zero;
+
+        var mmi = Marshal.PtrToStructure<MINMAXINFO>(lParam);
+        var monitor = MonitorFromWindow(hwnd, MONITOR_DEFAULTTONEAREST);
+        if (monitor != IntPtr.Zero)
+        {
+            var info = new MONITORINFO { cbSize = Marshal.SizeOf<MONITORINFO>() };
+            if (GetMonitorInfo(monitor, ref info))
+            {
+                mmi.ptMaxPosition.X = Math.Abs(info.rcWork.Left - info.rcMonitor.Left);
+                mmi.ptMaxPosition.Y = Math.Abs(info.rcWork.Top - info.rcMonitor.Top);
+                mmi.ptMaxSize.X = Math.Abs(info.rcWork.Right - info.rcMonitor.Left) - mmi.ptMaxPosition.X;
+                mmi.ptMaxSize.Y = Math.Abs(info.rcWork.Bottom - info.rcMonitor.Top) - mmi.ptMaxPosition.Y;
+                Marshal.StructureToPtr(mmi, lParam, true);
+            }
+        }
+        handled = true;
+        return IntPtr.Zero;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct MINMAXINFO
+    {
+        public POINT ptReserved;
+        public POINT ptMaxSize;
+        public POINT ptMaxPosition;
+        public POINT ptMinTrackSize;
+        public POINT ptMaxTrackSize;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct POINT { public int X, Y; }
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct RECTW { public int Left, Top, Right, Bottom; }
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct MONITORINFO
+    {
+        public int cbSize;
+        public RECTW rcMonitor;
+        public RECTW rcWork;
+        public uint dwFlags;
+    }
+
+    [DllImport("user32.dll")]
+    private static extern IntPtr MonitorFromWindow(IntPtr hwnd, uint flags);
+
+    [DllImport("user32.dll")]
+    private static extern bool GetMonitorInfo(IntPtr monitor, ref MONITORINFO info);
+
+    private const uint MONITOR_DEFAULTTONEAREST = 2;
 
     private void BuildSidebar()
     {

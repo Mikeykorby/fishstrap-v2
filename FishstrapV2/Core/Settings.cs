@@ -20,6 +20,13 @@ public class LauncherSettings
     public bool AutoCloseAfterLaunch { get; set; } = false;
     public bool CreateShortcutsOnInstall { get; set; } = true;
     public string LaunchArgs { get; set; } = "";
+    /// <summary>Bootstrapper progress dialog: "Fishstrap" (default), "Light" or "Disabled".</summary>
+    public string BootstrapperStyle { get; set; } = "Fishstrap";
+    public string BootstrapperTitle { get; set; } = "Fishstrap V2";
+    /// <summary>Bootstrapper logo animation: "None" (static), "Spin", or "Custom".</summary>
+    public string BootstrapperAnimation { get; set; } = "None";
+    /// <summary>Image (PNG or animated GIF) shown when BootstrapperAnimation is "Custom".</summary>
+    public string BootstrapperIconFile { get; set; } = "";
 }
 
 public class DeploymentSettings

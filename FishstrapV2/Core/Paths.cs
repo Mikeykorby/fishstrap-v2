@@ -15,6 +15,7 @@ public static class Paths
     public static readonly string ProfilesDir = Path.Combine(AppData, "Profiles");
     public static readonly string DownloadsDir = Path.Combine(AppData, "Downloads");
     public static readonly string VersionsDir = Path.Combine(AppData, "Versions");
+    public static readonly string BootstrappersDir = Path.Combine(AppData, "Bootstrappers");
     public static readonly string CustomIconFile = Path.Combine(AppData, "custom-icon.png");
 
     public static string StockRobloxRoot =>
@@ -33,5 +34,6 @@ public static class Paths
         Directory.CreateDirectory(ProfilesDir);
         Directory.CreateDirectory(DownloadsDir);
         Directory.CreateDirectory(VersionsDir);
+        Directory.CreateDirectory(BootstrappersDir);
     }
 }

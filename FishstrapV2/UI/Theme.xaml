@@ -541,6 +541,8 @@
                                           ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
                                           ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                                           Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          IsHitTestVisible="False"
                                           TextElement.Foreground="{TemplateBinding Foreground}"/>
                         <TextBlock x:Name="Placeholder" Text="{TemplateBinding Tag}" Visibility="Collapsed"
                                    Margin="{TemplateBinding Padding}" VerticalAlignment="Center"
@@ -671,7 +673,7 @@
                     <Border x:Name="Root"
                             Background="{DynamicResource BrushCard}"
                             BorderBrush="{DynamicResource BrushCardBorder}"
-                            BorderThickness="1" CornerRadius="12" Padding="14,12">
+                            BorderThickness="1" CornerRadius="12" Padding="14,11,14,10">
                         <Grid>
                             <Border x:Name="HoverLayer" Background="{DynamicResource BrushCardHover}" CornerRadius="11" Opacity="0"/>
                             <Grid>
@@ -683,7 +685,7 @@
                             <ctrl:IconGlyph Icon="{TemplateBinding Icon}" Size="15"
                                            Foreground="{Binding IconTint, RelativeSource={RelativeSource TemplatedParent}, TargetNullValue={StaticResource BrushTextSecondary}}"
                                            VerticalAlignment="Center" Margin="0,0,1,0"/>
-                            <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="13,0,13,0">
+                            <StackPanel Grid.Column="1" VerticalAlignment="Top" Margin="13,1,13,0">
                                 <TextBlock Text="{TemplateBinding Title}" FontSize="13" FontWeight="SemiBold" FontFamily="{StaticResource AppFontSemiBold}"
                                            TextTrimming="CharacterEllipsis"/>
                                 <TextBlock Text="{TemplateBinding Subtitle}" Style="{StaticResource TextSecondary}"

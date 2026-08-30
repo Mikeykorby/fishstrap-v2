@@ -91,11 +91,15 @@ public partial class BootstrapperPage : FishstrapPage
         try
         {
             BtnSetup.IsEnabled = false;
-            ProgressPanel.Visibility = Visibility.Visible;
-            var progress = new Progress<string>(m => ProgressText.Text = m);
-            var entry = await RobloxInstallManager.InstallAsync(progress);
-            ProgressText.Text = $"Roblox {entry.Hash} is ready.";
+            await Bootstrapper.RunAsync("Installing Roblox…", (p, ct) =>
+                RobloxInstallManager.InstallAsync(p, includeStudio: true, forceReinstall: false, ct));
+            ProgressText.Text = "Roblox is ready.";
             MainWindow.Current?.ShowToast("Roblox is up to date");
+        }
+        catch (OperationCanceledException)
+        {
+            ProgressText.Text = "Setup cancelled.";
+            MainWindow.Current?.ShowToast("Setup cancelled");
         }
         catch (Exception ex)
         {

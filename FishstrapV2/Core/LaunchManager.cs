@@ -31,8 +31,9 @@ public static class LaunchManager
 
     private static async Task<RobloxVersionEntry> LaunchPlayerCoreAsync(string? extraArgs)
     {
-        var progress = new Progress<string>(m => Logger.Info(m));
-        var entry = await RobloxInstallManager.EnsurePlayerInstalledAsync(progress);
+        // When Roblox still needs installing, show the bootstrapper dialog for the download.
+        var entry = await Bootstrapper.RunAsync("Installing Roblox…", (p, ct) =>
+            RobloxInstallManager.EnsurePlayerInstalledAsync(p, ct));
 
         Prepare(entry.DirectoryPath);
 

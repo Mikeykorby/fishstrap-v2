@@ -150,11 +150,17 @@ public partial class DeploymentPage : FishstrapPage
                 return;
             }
 
-            SetBusy(true, $"Downloading Roblox {info.Version}…");
-            await RobloxInstallManager.InstallAsync(new Progress<string>(m => ProgressText.Text = m), includeStudio: false);
             SetBusy(false);
+            await Bootstrapper.RunAsync<object?>($"Upgrading Roblox to {info.Version}…", (p, ct) =>
+                RobloxInstallManager.InstallAsync(p, includeStudio: false, cancellationToken: ct)
+                    .ContinueWith(t => (object?)t.Result, ct));
             RefreshVersionList();
             MainWindow.Current?.ShowToast($"Installed Roblox {info.Version}");
+        }
+        catch (OperationCanceledException)
+        {
+            SetBusy(false);
+            MainWindow.Current?.ShowToast("Update cancelled");
         }
         catch (Exception ex)
         {
@@ -168,12 +174,17 @@ public partial class DeploymentPage : FishstrapPage
     {
         try
         {
-            SetBusy(true, "Reinstalling current version…");
-            await RobloxInstallManager.InstallAsync(
-                new Progress<string>(m => ProgressText.Text = m), includeStudio: false, forceReinstall: true);
             SetBusy(false);
+            await Bootstrapper.RunAsync<object?>("Installing Roblox…", (p, ct) =>
+                RobloxInstallManager.InstallAsync(p, includeStudio: false, forceReinstall: true, cancellationToken: ct)
+                    .ContinueWith(t => (object?)t.Result, ct));
             RefreshVersionList();
             MainWindow.Current?.ShowToast("Reinstalled the current Roblox version");
+        }
+        catch (OperationCanceledException)
+        {
+            SetBusy(false);
+            MainWindow.Current?.ShowToast("Reinstall cancelled");
         }
         catch (Exception ex)
         {
@@ -190,15 +201,21 @@ public partial class DeploymentPage : FishstrapPage
             SetBusy(true, "Downloading Roblox Studio…");
             var info = await RobloxDeployClient.GetLatestVersionAsync(SettingsStore.Settings.Deployment.Channel, "WindowsStudio64")
                        ?? throw new InvalidOperationException("Could not reach the Roblox deployment API.");
-            await RobloxDeployClient.DownloadVersionAsync(
-                info.VersionHash,
-                System.IO.Path.Combine(Paths.VersionsDir, info.VersionHash),
-                new Progress<string>(m => ProgressText.Text = m));
+            await Bootstrapper.RunAsync("Downloading Roblox Studio…", (p, ct) =>
+                RobloxDeployClient.DownloadVersionAsync(
+                    info.VersionHash,
+                    System.IO.Path.Combine(Paths.VersionsDir, info.VersionHash),
+                    p, ct));
             RobloxInstallManager.WriteSidecar(
                 System.IO.Path.Combine(Paths.VersionsDir, info.VersionHash), info.VersionHash);
             SetBusy(false);
             RefreshVersionList();
             MainWindow.Current?.ShowToast("Roblox Studio installed");
+        }
+        catch (OperationCanceledException)
+        {
+            SetBusy(false);
+            MainWindow.Current?.ShowToast("Studio install cancelled");
         }
         catch (Exception ex)
         {

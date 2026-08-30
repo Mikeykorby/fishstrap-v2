@@ -21,6 +21,7 @@ public partial class AboutPage : FishstrapPage
         VersionText.Text = $"Version {AppInfo.Version}";
         ChannelText.Text = SettingsStore.Settings.Deployment.Channel;
         UpdateStatus.Text = "";
+        UpdateStatus.Visibility = Visibility.Collapsed;
     }
 
     private static void OpenUrl(string url)
@@ -38,6 +39,7 @@ public partial class AboutPage : FishstrapPage
     private async void BtnCheckUpdates_Click(object sender, RoutedEventArgs e)
     {
         BtnCheckUpdates.IsEnabled = false;
+        UpdateStatus.Visibility = Visibility.Visible;
         UpdateStatus.Text = "Checking for updates…";
         var result = await UpdaterService.CheckAsync();
         BtnCheckUpdates.IsEnabled = true;

@@ -234,13 +234,16 @@ public static class RobloxDeployClient
         long totalBytes = packages.Sum(p => p.Size);
         long doneBytes = 0;
 
+        var status = progress as IProgressHook;
+        status?.Dialog?.StartDeterminate(totalBytes);
+
         foreach (var pkg in packages)
         {
             ct.ThrowIfCancellationRequested();
             progress?.Report($"Downloading {pkg.Name}…");
 
             var tmpZip = Path.Combine(Paths.DownloadsDir, $"{Guid.NewGuid():N}.{pkg.Name}");
-            var md5 = await DownloadToFileAsync($"{host}/{hash}-{pkg.Name}", tmpZip, progress, ct, doneBytes, totalBytes, pkg.Name);
+            var md5 = await DownloadToFileAsync($"{host}/{hash}-{pkg.Name}", tmpZip, progress, ct, doneBytes, totalBytes, pkg.Name, status);
 
             if (!md5.Equals(pkg.Md5, StringComparison.OrdinalIgnoreCase))
             {
@@ -359,9 +362,16 @@ public static class RobloxDeployClient
         }
     }
 
+    /// <summary>Lets a progress callback also drive the bootstrapper dialog's byte-level progress bar.</summary>
+    public interface IProgressHook
+    {
+        UI.BootstrapperDialog? Dialog { get; }
+    }
+
     private static async Task<string> DownloadToFileAsync(
         string url, string dest, IProgress<string>? progress, CancellationToken ct,
-        long doneBytes = 0, long totalBytes = 0, string label = "")
+        long doneBytes = 0, long totalBytes = 0, string label = "",
+        IProgressHook? status = null)
     {
         using var resp = await Http.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, ct);
         resp.EnsureSuccessStatusCode();
@@ -381,7 +391,7 @@ public static class RobloxDeployClient
             await target.WriteAsync(buffer.AsMemory(0, read), ct);
             written += read;
 
-            if (progress is not null && (DateTime.Now - lastReport).TotalMilliseconds > 300)
+            if ((DateTime.Now - lastReport).TotalMilliseconds > 300)
             {
                 lastReport = DateTime.Now;
                 var done = doneBytes + written;
@@ -389,6 +399,8 @@ public static class RobloxDeployClient
                 progress?.Report(total > 0
                     ? $"Downloading {label}… {done / 1024 / 1024} / {total / 1024 / 1024} MB"
                     : $"Downloading {label}… {done / 1024 / 1024} MB");
+                if (totalBytes > 0)
+                    status?.Dialog?.ReportBytes(done, totalBytes);
             }
         }
 
