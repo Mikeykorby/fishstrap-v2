@@ -37,6 +37,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Assets/Bloxnified/**/*" />
+    <Content Include="Assets/Bloxnified/**/*" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>

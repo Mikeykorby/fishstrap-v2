@@ -11,7 +11,8 @@ using FishstrapV2.Core;
 namespace FishstrapV2.UI;
 
 /// <summary>
-/// Bloxstrap-style custom bootstrapper themes imported by the user; the folders live in
+/// Bloxstrap-style custom bootstrapper themes: the built-in Bloxnified V2 pack ships
+/// verbatim under Assets/Bloxnified, and user-imported theme folders live in
 /// %LOCALAPPDATA%\FishstrapV2\Bootstrappers. Theme.xml is parsed with XamlReader after a
 /// minimal adaptation: the root element is renamed to a Grid, Bloxstrap-only attributes
 /// are stripped, and theme:// resources resolve to the folder.
@@ -20,8 +21,15 @@ public static class Bloxnified
 {
     public record Theme(string Name, string Dir);
 
-    public static Theme? Find(string style)
+    static readonly string BuiltInRoot = Path.Combine(AppContext.BaseDirectory, "Assets", "Bloxnified");
+    public static readonly Theme[] All =
     {
+        new("Bloxnified V2", Path.Combine(BuiltInRoot, "V2")),
+    };
+    public static Theme? Find(string style)
+    {
+        var builtin = Array.Find(All, t => t.Name == style);
+        if (builtin is not null) return builtin;
         var dir = Path.Combine(Paths.BootstrappersDir, style);
         return File.Exists(Path.Combine(dir, "Theme.xml")) ? new Theme(style, dir) : null;
     }
