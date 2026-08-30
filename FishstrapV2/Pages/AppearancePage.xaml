@@ -91,7 +91,7 @@
                         <StackPanel>
                             <TextBlock Text="Bootstrapper style" FontSize="12.5" FontWeight="SemiBold"
                                        FontFamily="{StaticResource AppFontSemiBold}"/>
-                            <TextBlock Text="Choose the dialog style. Bloxnified themes are built in."
+                            <TextBlock Text="Choose the dialog style, or import your own Bloxstrap theme."
                                        Style="{DynamicResource TextSecondary}" FontSize="11.5" Margin="0,2,0,0"/>
                         </StackPanel>
                         <ComboBox x:Name="CmbBootstrapperStyle" Grid.Column="1" Width="170" Margin="0,0,10,0"

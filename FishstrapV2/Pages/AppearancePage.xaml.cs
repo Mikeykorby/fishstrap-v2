@@ -47,9 +47,7 @@ public partial class AppearancePage : FishstrapPage
     private void LoadBootstrapperStyles(string selected)
     {
         CmbBootstrapperStyle.Items.Clear();
-        foreach (var name in new[] { "Fishstrap", "Disabled" }
-                     .Concat(Bloxnified.All.Select(t => t.Name))
-                     .Concat(Bloxnified.UserThemeNames()))
+        foreach (var name in new[] { "Fishstrap", "Disabled" }.Concat(Bloxnified.UserThemeNames()))
         {
             CmbBootstrapperStyle.Items.Add(new ComboBoxItem { Content = name });
         }

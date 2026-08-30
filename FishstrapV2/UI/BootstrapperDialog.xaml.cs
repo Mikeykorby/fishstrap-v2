@@ -49,10 +49,18 @@ public partial class BootstrapperDialog : Window, RobloxDeployClient.IProgressHo
     private void ApplyBloxnifiedTheme()
     {
         var theme = Bloxnified.Find(SettingsStore.Settings.Launcher.BootstrapperStyle);
-        if (theme is null) return;
+        if (theme is null)
+        {
+            Logger.Info($"Bootstrapper: no theme for style '{SettingsStore.Settings.Launcher.BootstrapperStyle}'");
+            return;
+        }
 
         var layout = Bloxnified.TryLoad(theme);
-        if (layout is null) return;
+        if (layout is null)
+        {
+            Logger.Info($"Bootstrapper: theme '{theme.Name}' failed to load");
+            return;
+        }
 
         var added = new List<UIElement>();
         try
