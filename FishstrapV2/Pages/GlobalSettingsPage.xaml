@@ -12,7 +12,7 @@
 
             <!-- Engine -->
             <TextBlock Text="Engine" Style="{StaticResource H2}" Margin="0,0,0,12"/>
-            <ctrl:SettingRow x:Name="RowFps" Icon="gauge" IconTint="#4A3A70"
+            <ctrl:SettingRow x:Name="RowFps" Icon="gauge" IconTint="{DynamicResource BrushTextSecondary}"
                              Title="Increase frame rate cap" Subtitle="Unlock the Roblox frame rate limit">
                 <ctrl:SettingRow.RowContent>
                     <CheckBox x:Name="ChkFps" Style="{StaticResource ModernToggle}"
@@ -30,7 +30,7 @@
                 </StackPanel>
             </Border>
 
-            <ctrl:SettingRow x:Name="RowLighting" Icon="lightbulb" IconTint="#2E2E38"
+            <ctrl:SettingRow x:Name="RowLighting" Icon="lightbulb" IconTint="{DynamicResource BrushTextSecondary}"
                              Title="Lighting technology" Subtitle="Force a specific lighting technology"
                              Margin="0,12,0,0">
                 <ctrl:SettingRow.RowContent>
@@ -43,7 +43,7 @@
                 </ctrl:SettingRow.RowContent>
             </ctrl:SettingRow>
 
-            <ctrl:SettingRow x:Name="RowGraphics" Icon="sliders-horizontal" IconTint="#2E2E38"
+            <ctrl:SettingRow x:Name="RowGraphics" Icon="sliders-horizontal" IconTint="{DynamicResource BrushTextSecondary}"
                              Title="Graphics mode" Subtitle="Force a rendering backend" Margin="0,10,0,0">
                 <ctrl:SettingRow.RowContent>
                     <ComboBox x:Name="CmbGraphics" Width="180" SelectionChanged="Graphics_Changed">
@@ -57,21 +57,21 @@
             </ctrl:SettingRow>
 
             <StackPanel Margin="0,12,0,0">
-                <ctrl:SettingRow x:Name="RowPostFx" Icon="sparkles" IconTint="#2E2E38"
+                <ctrl:SettingRow x:Name="RowPostFx" Icon="sparkles" IconTint="{DynamicResource BrushTextSecondary}"
                                  Title="Disable post effects" Subtitle="Turn off bloom, blur and color correction">
                     <ctrl:SettingRow.RowContent>
                         <CheckBox x:Name="ChkPostFx" Style="{StaticResource ModernToggle}"
                                   Checked="Toggle_Changed" Unchecked="Toggle_Changed"/>
                     </ctrl:SettingRow.RowContent>
                 </ctrl:SettingRow>
-                <ctrl:SettingRow x:Name="RowShadows" Icon="contrast" IconTint="#2E2E38"
+                <ctrl:SettingRow x:Name="RowShadows" Icon="contrast" IconTint="{DynamicResource BrushTextSecondary}"
                                  Title="Disable player shadows" Subtitle="Skip dynamic shadow rendering" Margin="0,10,0,0">
                     <ctrl:SettingRow.RowContent>
                         <CheckBox x:Name="ChkShadows" Style="{StaticResource ModernToggle}"
                                   Checked="Toggle_Changed" Unchecked="Toggle_Changed"/>
                     </ctrl:SettingRow.RowContent>
                 </ctrl:SettingRow>
-                <ctrl:SettingRow x:Name="RowTelemetry" Icon="shield" IconTint="#6E3333"
+                <ctrl:SettingRow x:Name="RowTelemetry" Icon="shield" IconTint="{DynamicResource BrushTextSecondary}"
                                  Title="Block telemetry" Subtitle="Stop the client from sending analytics" Margin="0,10,0,0">
                     <ctrl:SettingRow.RowContent>
                         <CheckBox x:Name="ChkTelemetry" Style="{StaticResource ModernToggle}"

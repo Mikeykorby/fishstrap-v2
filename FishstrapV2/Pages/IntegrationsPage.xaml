@@ -10,7 +10,7 @@
             <TextBlock Text="Connect Fishstrap V2 with the rest of your system." Style="{StaticResource TextSecondary}"
                        Margin="0,0,0,22"/>
 
-            <ctrl:SettingRow x:Name="RowRpc" Icon="message-circle" IconTint="#3A3A70"
+            <ctrl:SettingRow x:Name="RowRpc" Icon="message-circle" IconTint="{DynamicResource BrushTextSecondary}"
                              Title="Discord Rich Presence" Subtitle="Show what you're playing in Discord">
                 <ctrl:SettingRow.RowContent>
                     <CheckBox x:Name="ChkRpc" Style="{StaticResource ModernToggle}"
@@ -70,7 +70,7 @@
                 </StackPanel>
             </Border>
 
-            <ctrl:SettingRow x:Name="RowActivity" Icon="activity" IconTint="#2E5C44"
+            <ctrl:SettingRow x:Name="RowActivity" Icon="activity" IconTint="{DynamicResource BrushTextSecondary}"
                              Title="Activity Tracking" Subtitle="Record launches and play time for statistics"
                              Margin="0,12,0,0">
                 <ctrl:SettingRow.RowContent>
@@ -83,7 +83,7 @@
             <Border Style="{StaticResource Card}" Margin="0,12,0,0">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <ctrl:IconGlyph Icon="send" Size="16" Foreground="#8FA7E0" VerticalAlignment="Center"/>
+                        <ctrl:IconGlyph Icon="send" Size="16" Foreground="{DynamicResource BrushTextSecondary}" VerticalAlignment="Center"/>
                         <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
                             <TextBlock Text="Game invites" FontWeight="SemiBold" FontFamily="{StaticResource AppFontSemiBold}" FontSize="13"/>
                             <TextBlock Text="Generate a fishstrap.app invite link for any place"

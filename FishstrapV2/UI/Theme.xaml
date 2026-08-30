@@ -680,7 +680,8 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <ctrl:IconGlyph Icon="{TemplateBinding Icon}" Size="15" Foreground="{TemplateBinding IconTint}"
+                            <ctrl:IconGlyph Icon="{TemplateBinding Icon}" Size="15"
+                                           Foreground="{Binding IconTint, RelativeSource={RelativeSource TemplatedParent}, TargetNullValue={StaticResource BrushTextSecondary}}"
                                            VerticalAlignment="Center" Margin="0,0,1,0"/>
                             <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="13,0,13,0">
                                 <TextBlock Text="{TemplateBinding Title}" FontSize="13" FontWeight="SemiBold" FontFamily="{StaticResource AppFontSemiBold}"

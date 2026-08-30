@@ -25,7 +25,7 @@ public class SettingRow : Control
 
     public static readonly DependencyProperty IconTintProperty =
         DependencyProperty.Register(nameof(IconTint), typeof(Brush), typeof(SettingRow),
-            new PropertyMetadata(new SolidColorBrush(Color.FromRgb(0x2E, 0x2E, 0x38))));
+            new PropertyMetadata(null));
 
     public static readonly DependencyProperty TitleProperty =
         DependencyProperty.Register(nameof(Title), typeof(string), typeof(SettingRow), new PropertyMetadata(""));

@@ -47,7 +47,7 @@
                     <StackPanel>
                         <Grid>
                             <StackPanel Orientation="Horizontal">
-                                <ctrl:IconGlyph Icon="mouse-pointer-2" Size="16" Foreground="#82B4DC" VerticalAlignment="Center"/>
+                                <ctrl:IconGlyph Icon="mouse-pointer-2" Size="16" Foreground="{DynamicResource BrushTextSecondary}" VerticalAlignment="Center"/>
                                 <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
                                     <TextBlock Text="Custom cursor" FontWeight="SemiBold" FontFamily="{StaticResource AppFontSemiBold}" FontSize="13"/>
                                     <TextBlock Text="Replace the Roblox cursor" Style="{DynamicResource TextSecondary}"
@@ -71,7 +71,7 @@
                     <StackPanel>
                         <Grid>
                             <StackPanel Orientation="Horizontal">
-                                <ctrl:IconGlyph Icon="volume-2" Size="16" Foreground="#D9C67A" VerticalAlignment="Center"/>
+                                <ctrl:IconGlyph Icon="volume-2" Size="16" Foreground="{DynamicResource BrushTextSecondary}" VerticalAlignment="Center"/>
                                 <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
                                     <TextBlock Text="Custom sounds" FontWeight="SemiBold" FontFamily="{StaticResource AppFontSemiBold}" FontSize="13"/>
                                     <TextBlock Text="Replace hit, splat and other sounds" Style="{DynamicResource TextSecondary}"
@@ -95,7 +95,7 @@
                     <StackPanel>
                         <Grid>
                             <StackPanel Orientation="Horizontal">
-                                <ctrl:IconGlyph Icon="type" Size="16" Foreground="#7BD3A0" VerticalAlignment="Center"/>
+                                <ctrl:IconGlyph Icon="type" Size="16" Foreground="{DynamicResource BrushTextSecondary}" VerticalAlignment="Center"/>
                                 <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
                                     <TextBlock Text="Custom font" FontWeight="SemiBold" FontFamily="{StaticResource AppFontSemiBold}" FontSize="13"/>
                                     <TextBlock Text="Replace client fonts (ttf/otf)" Style="{DynamicResource TextSecondary}"

@@ -44,13 +44,13 @@
             <!-- Status cards -->
             <UniformGrid Columns="4">
                 <ctrl:StatusCard x:Name="CardVersion" Icon="tag" Label="Roblox Version"
-                                 IconTint="#33456E" Value="Checking&#8230;" Margin="0,0,12,0"/>
+                                 IconTint="{DynamicResource BrushTextSecondary}" Value="Checking&#8230;" Margin="0,0,12,0"/>
                 <ctrl:StatusCard x:Name="CardChannel" Icon="globe" Label="Channel"
-                                 IconTint="#4A3A70" Value="production" Margin="0,0,12,0"/>
+                                 IconTint="{DynamicResource BrushTextSecondary}" Value="production" Margin="0,0,12,0"/>
                 <ctrl:StatusCard x:Name="CardInstalled" Icon="hard-drive" Label="Installed"
-                                 IconTint="#2E5C44" Value="Not installed" Margin="0,0,12,0"/>
+                                 IconTint="{DynamicResource BrushTextSecondary}" Value="Not installed" Margin="0,0,12,0"/>
                 <ctrl:StatusCard x:Name="CardStatus" Icon="activity" Label="Status"
-                                 IconTint="#6E3333" Value="Not installed"/>
+                                 IconTint="{DynamicResource BrushTextSecondary}" Value="Not installed"/>
             </UniformGrid>
 
             <!-- Quick launch -->
@@ -62,10 +62,10 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <ctrl:QuickLaunchButton x:Name="LaunchPlayer" Grid.Column="0" Icon="play"
-                                        IconTint="#4C3F8F" Title="Launch Roblox Player"
+                                        IconTint="{DynamicResource BrushTextSecondary}" Title="Launch Roblox Player"
                                         Subtitle="Play games with your custom setup"/>
                 <ctrl:QuickLaunchButton x:Name="LaunchStudio" Grid.Column="2" Icon="hammer"
-                                        IconTint="#3A5C74" Title="Launch Roblox Studio"
+                                        IconTint="{DynamicResource BrushTextSecondary}" Title="Launch Roblox Studio"
                                         Subtitle="Create and test your experiences"/>
             </Grid>
 
@@ -79,21 +79,21 @@
                 <StackPanel Grid.Column="0">
                     <TextBlock Text="Quick Settings" Style="{StaticResource H2}" Margin="0,0,0,12"/>
                     <StackPanel>
-                        <ctrl:SettingRow x:Name="RowActivity" Icon="activity" IconTint="#2E2E38"
+                        <ctrl:SettingRow x:Name="RowActivity" Icon="activity" IconTint="{DynamicResource BrushTextSecondary}"
                                          Title="Activity Tracking" Subtitle="Log sessions and playtime">
                             <ctrl:SettingRow.RowContent>
                                 <CheckBox x:Name="ChkActivity" Style="{StaticResource ModernToggle}"
                                           Checked="QuickSetting_Changed" Unchecked="QuickSetting_Changed"/>
                             </ctrl:SettingRow.RowContent>
                         </ctrl:SettingRow>
-                        <ctrl:SettingRow x:Name="RowRpc" Icon="message-circle" IconTint="#2E2E38"
+                        <ctrl:SettingRow x:Name="RowRpc" Icon="message-circle" IconTint="{DynamicResource BrushTextSecondary}"
                                          Title="Discord RPC" Subtitle="Show your game in Discord" Margin="0,10,0,0">
                             <ctrl:SettingRow.RowContent>
                                 <CheckBox x:Name="ChkRpc" Style="{StaticResource ModernToggle}"
                                           Checked="QuickSetting_Changed" Unchecked="QuickSetting_Changed"/>
                             </ctrl:SettingRow.RowContent>
                         </ctrl:SettingRow>
-                        <ctrl:SettingRow x:Name="RowFlags" Icon="flag" IconTint="#2E2E38"
+                        <ctrl:SettingRow x:Name="RowFlags" Icon="flag" IconTint="{DynamicResource BrushTextSecondary}"
                                          Title="Fast Flags" Subtitle="Apply custom engine flags" Margin="0,10,0,0">
                             <ctrl:SettingRow.RowContent>
                                 <CheckBox x:Name="ChkFlags" Style="{StaticResource ModernToggle}"
@@ -105,13 +105,13 @@
                 <StackPanel Grid.Column="2">
                     <TextBlock Text="Quick Links" Style="{StaticResource H2}" Margin="0,0,0,12"/>
                     <StackPanel>
-                        <ctrl:SettingRow x:Name="LinkIntegrations" Icon="plug" IconTint="#2E2E38"
+                        <ctrl:SettingRow x:Name="LinkIntegrations" Icon="plug" IconTint="{DynamicResource BrushTextSecondary}"
                                          Title="Integrations" Subtitle="Discord, activity tracking"
                                          IsClickable="True"/>
-                        <ctrl:SettingRow x:Name="LinkMods" Icon="puzzle" IconTint="#2E2E38"
+                        <ctrl:SettingRow x:Name="LinkMods" Icon="puzzle" IconTint="{DynamicResource BrushTextSecondary}"
                                          Title="Mods" Subtitle="Cursors, sounds, custom font"
                                          IsClickable="True" Margin="0,10,0,0"/>
-                        <ctrl:SettingRow x:Name="LinkFlags" Icon="flag" IconTint="#2E2E38"
+                        <ctrl:SettingRow x:Name="LinkFlags" Icon="flag" IconTint="{DynamicResource BrushTextSecondary}"
                                          Title="Fast Flags" Subtitle="Performance and quality settings"
                                          IsClickable="True" Margin="0,10,0,0"/>
                     </StackPanel>
@@ -122,11 +122,11 @@
             <TextBlock Text="Statistics" Style="{StaticResource H2}" Margin="0,26,0,12"/>
             <UniformGrid Columns="3">
                 <ctrl:StatusCard x:Name="StatLaunches" Icon="rocket" Label="Total launches"
-                                 IconTint="#2E2E38" Value="0" Margin="0,0,12,0"/>
+                                 IconTint="{DynamicResource BrushTextSecondary}" Value="0" Margin="0,0,12,0"/>
                 <ctrl:StatusCard x:Name="StatPlaytime" Icon="clock" Label="Total playtime"
-                                 IconTint="#2E2E38" Value="0s" Margin="0,0,12,0"/>
+                                 IconTint="{DynamicResource BrushTextSecondary}" Value="0s" Margin="0,0,12,0"/>
                 <ctrl:StatusCard x:Name="StatWeek" Icon="calendar" Label="Last 7 days"
-                                 IconTint="#2E2E38" Value="0 launches"/>
+                                 IconTint="{DynamicResource BrushTextSecondary}" Value="0 launches"/>
             </UniformGrid>
         </StackPanel>
     </ScrollViewer>

@@ -46,11 +46,11 @@
 
             <UniformGrid Columns="3">
                 <ctrl:StatusCard x:Name="CardLaunches" Icon="rocket" Label="Total launches"
-                                 IconTint="#33456E" Value="0" Margin="0,0,12,0"/>
+                                 IconTint="{DynamicResource BrushTextSecondary}" Value="0" Margin="0,0,12,0"/>
                 <ctrl:StatusCard x:Name="CardPlaytime" Icon="clock" Label="Total playtime"
-                                 IconTint="#4A3A70" Value="0s" Margin="0,0,12,0"/>
+                                 IconTint="{DynamicResource BrushTextSecondary}" Value="0s" Margin="0,0,12,0"/>
                 <ctrl:StatusCard x:Name="CardAverage" Icon="rotate-ccw" Label="Average session"
-                                 IconTint="#2E5C44" Value="0s"/>
+                                 IconTint="{DynamicResource BrushTextSecondary}" Value="0s"/>
             </UniformGrid>
 
             <TextBlock Text="Launches — last 14 days" Style="{StaticResource H2}" Margin="0,24,0,12"/>
