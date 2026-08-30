@@ -105,12 +105,12 @@
                             Background="{DynamicResource BrushButton}"
                             BorderBrush="{DynamicResource BrushButtonBorder}"
                             BorderThickness="1"
-                            CornerRadius="8"
-                            Padding="{TemplateBinding Padding}">
+                            CornerRadius="8">
                         <Grid>
                             <Border x:Name="HoverLayer" Background="{DynamicResource BrushButtonHover}"
                                     CornerRadius="7" Opacity="0"/>
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                              Margin="{TemplateBinding Padding}"/>
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -143,12 +143,12 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border x:Name="Root" Background="{DynamicResource BrushAccent}" CornerRadius="8"
-                            Padding="{TemplateBinding Padding}">
+                    <Border x:Name="Root" Background="{DynamicResource BrushAccent}" CornerRadius="8">
                         <Grid>
                             <Border x:Name="HoverLayer" Background="{DynamicResource BrushAccentHover}"
                                     CornerRadius="7" Opacity="0"/>
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                              Margin="{TemplateBinding Padding}"/>
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -182,11 +182,11 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border x:Name="Root" Background="Transparent"
-                            BorderBrush="#4A2A2E" BorderThickness="1" CornerRadius="8"
-                            Padding="{TemplateBinding Padding}">
+                            BorderBrush="#4A2A2E" BorderThickness="1" CornerRadius="8">
                         <Grid>
                             <Border x:Name="HoverLayer" Background="#2A1B1E" CornerRadius="7" Opacity="0"/>
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                              Margin="{TemplateBinding Padding}"/>
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -217,11 +217,11 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border x:Name="Root" Background="Transparent" CornerRadius="8"
-                            Padding="{TemplateBinding Padding}">
+                    <Border x:Name="Root" Background="Transparent" CornerRadius="8">
                         <Grid>
                             <Border x:Name="HoverLayer" Background="{DynamicResource BrushNavHover}" CornerRadius="8" Opacity="0"/>
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                              Margin="{TemplateBinding Padding}"/>
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
