@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Text.Json;
@@ -20,6 +21,7 @@ public static class SessionWatcher
         public string GameName { get; set; } = "";
         public DateTime JoinedAt { get; set; }        // when we joined (UTC)
         public DateTime? ServerBoot { get; set; }     // server's own start time
+        public string LogFile { get; set; } = "";     // log the join came from
     }
 
     private static readonly Regex JoinRegex =
@@ -32,6 +34,7 @@ public static class SessionWatcher
     private static System.Timers.Timer? _pollTimer;
     private static long _logOffset;
     private static string _lastLogFile = "";
+    private static string _currentLogFile = "";
     private static readonly object Gate = new();
 
     public static Session? Current { get; private set; }
@@ -66,6 +69,7 @@ public static class SessionWatcher
                             PlaceId = join.Groups[2].Value,
                             ServerAddress = join.Groups[3].Value,
                             JoinedAt = DateTime.UtcNow,
+                            LogFile = _currentLogFile,
                         };
                         Changed?.Invoke();
                         _ = Task.Run(() => ResolveGameName(Current!.PlaceId));
@@ -125,6 +129,7 @@ public static class SessionWatcher
                 {
                     // A new client instance started; the old session is dead.
                     _lastLogFile = log.FullName;
+                    _currentLogFile = log.FullName;
                     _logOffset = 0;
                     if (Current is not null)
                     {
@@ -133,9 +138,11 @@ public static class SessionWatcher
                     }
                 }
 
-                if (Current is not null && DateTime.UtcNow - log.LastWriteTimeUtc > TimeSpan.FromMinutes(5))
+                // A session only survives while its client lives and its own log keeps
+                // growing — covers kills/crashes that never emit the disconnect entry,
+                // and stale joins found in an old log at startup.
+                if (Current is not null && SessionDead(Current))
                 {
-                    // The client died without a disconnect entry (crash / force-kill).
                     Current = null;
                     Changed?.Invoke();
                 }
@@ -155,6 +162,16 @@ public static class SessionWatcher
             return null;
         }
     }
+
+    private static bool SessionDead(Session s)
+    {
+        if (!IsRobloxRunning()) return true;
+        return File.GetLastWriteTimeUtc(s.LogFile) < DateTime.UtcNow - TimeSpan.FromMinutes(2);
+    }
+
+    private static bool IsRobloxRunning() =>
+        Process.GetProcessesByName("RobloxPlayerBeta").Length > 0 ||
+        Process.GetProcessesByName("RobloxStudioBeta").Length > 0;
 
     private static async Task ResolveGameName(string placeId)
     {
