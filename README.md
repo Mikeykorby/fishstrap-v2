@@ -5,8 +5,7 @@
 
 <div align="center">
 
-![][banner-light]
-![][banner-dark]
+![][shot-dashboard]
 
 **A new launcher, a new experience.**
 
@@ -18,10 +17,13 @@
 
 </div>
 
-Fishstrap V2 (pronounced fish-strap two) is a custom bootstrapper for Roblox
-based on [Fishstrap][fishstrap] (pronounced fish-strap), which is based on
-[Bloxstrap][bloxstrap]. It is rebuilt from the ground up with a redesigned
-dark interface, and provides additional features to enhance your experience.
+Fishstrap V2 is a custom bootstrapper for Roblox, rebuilt from scratch around
+a sleek, dark, dashboard-first interface. Everything important lives on one
+screen — quick launch for Player and Studio, quick settings, quick links and
+live statistics — with FastFlags, mods, bootstrapper themes, version management
+and more a click away in the sidebar.
+
+It is a fork of [Fishstrap][fishstrap], which is based on [Bloxstrap][bloxstrap].
 
 If you found any bugs, please [open an issue here][repo-new-issue].
 
@@ -31,6 +33,8 @@ If you found any bugs, please [open an issue here][repo-new-issue].
 
 ## Features
 
+- A sleek dashboard-first interface — quick launch, quick settings, quick links
+  and live statistics on one dark screen
 - Detailed server information using [RoValra][rovalra]'s API
 - Support for Roblox Studio
 - Unhidden FastFlags editor with search, presets and JSON import/export
@@ -52,7 +56,9 @@ If you found any bugs, please [open an issue here][repo-new-issue].
 
 <div align="center">
 
-![][showcase]
+![][shot-fastflags]
+
+*The unhidden FastFlags editor — search, presets and one-click apply.*
 
 </div>
 
@@ -97,9 +103,8 @@ Roblox Corporation.
 
 Licensed under the [MIT License](LICENSE).
 
-[banner-light]: https://github.com/Mikeykorby/fishstrap-v2/raw/main/Images/Bloxstrap-full-light.png#gh-light-mode-only
-[banner-dark]: https://github.com/Mikeykorby/fishstrap-v2/raw/main/Images/Bloxstrap-full-dark.png#gh-dark-mode-only
-[showcase]: https://github.com/Mikeykorby/fishstrap-v2/raw/main/Images/Showcase.webp
+[shot-dashboard]: https://github.com/Mikeykorby/fishstrap-v2/raw/main/Images/Screenshots/Dashboard.png
+[shot-fastflags]: https://github.com/Mikeykorby/fishstrap-v2/raw/main/Images/Screenshots/FastFlags.png
 [badge-license]: https://img.shields.io/github/license/Mikeykorby/fishstrap-v2?style=flat-square
 [badge-builds]: https://img.shields.io/github/actions/workflow/status/Mikeykorby/fishstrap-v2/ci-release.yml?branch=main&style=flat-square&label=builds
 [badge-downloads]: https://img.shields.io/github/downloads/Mikeykorby/fishstrap-v2/latest/total?style=flat-square&color=981bfe

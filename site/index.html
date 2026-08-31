@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fishstrap V2 — A new launcher, a new experience.</title>
+<meta name="description" content="Fishstrap V2 is a custom bootstrapper for Roblox with a sleek, dark, dashboard-first interface. FastFlags, mods, bootstrapper themes, version management and live stats — one click away.">
+<link rel="icon" type="image/png" href="https://raw.githubusercontent.com/Mikeykorby/fishstrap-v2/main/Images/Bloxstrap.png">
+<style>
+  :root{
+    --bg:#0b0b0e; --bg-alt:#101014; --card:#17171b; --card-border:#26262e;
+    --text:#f2f2f5; --muted:#9a9aa3; --accent:#4d7dff; --accent-soft:rgba(77,125,255,.12);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:"Inter","Segoe UI",system-ui,-apple-system,sans-serif;
+    line-height:1.6; overflow-x:hidden;
+  }
+  .glow{position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:radial-gradient(60rem 30rem at 50% -10rem, rgba(77,125,255,.14), transparent 60%);}
+  .wrap{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:0 24px}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0}
+  nav img{height:34px;border-radius:8px}
+  nav .brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:17px}
+  nav .links a{color:var(--muted);text-decoration:none;margin-left:22px;font-size:14.5px}
+  nav .links a:hover{color:var(--text)}
+  header{padding:72px 0 40px;text-align:center}
+  .pill{display:inline-block;font-size:12.5px;color:var(--accent);background:var(--accent-soft);
+    border:1px solid rgba(77,125,255,.25);border-radius:999px;padding:5px 14px;margin-bottom:22px}
+  h1{font-size:clamp(34px,6vw,56px);line-height:1.12;letter-spacing:-.02em;font-weight:800}
+  h1 .grad{background:linear-gradient(92deg,#7ea4ff,#4d7dff);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .tag{color:var(--muted);font-size:18px;margin:18px auto 30px;max-width:620px}
+  .cta{display:inline-flex;gap:14px;flex-wrap:wrap;justify-content:center}
+  .btn{display:inline-block;text-decoration:none;font-weight:600;font-size:15px;
+    padding:13px 26px;border-radius:10px;border:1px solid transparent;transition:filter .15s ease}
+  .btn:hover{filter:brightness(1.15)}
+  .btn-primary{background:var(--accent);color:#fff}
+  .btn-ghost{border-color:var(--card-border);color:var(--text);background:var(--card)}
+  .shot{margin:56px 0 0;border:1px solid var(--card-border);border-radius:14px;overflow:hidden;
+    box-shadow:0 30px 80px rgba(0,0,0,.55)}
+  .shot img{display:block;width:100%;height:auto}
+  section{padding:70px 0}
+  h2{font-size:26px;letter-spacing:-.01em;margin-bottom:8px}
+  .sub{color:var(--muted);margin-bottom:34px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+  .card{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px}
+  .card b{display:block;margin-bottom:6px;font-size:15.5px}
+  .card span{color:var(--muted);font-size:14px}
+  .shot2{border:1px solid var(--card-border);border-radius:14px;overflow:hidden;margin-top:10px}
+  .shot2 img{display:block;width:100%;height:auto}
+  footer{border-top:1px solid var(--card-border);margin-top:40px;padding:36px 0 48px;
+    color:var(--muted);font-size:13.5px;text-align:center}
+  footer a{color:var(--text);text-decoration:none}
+  footer a:hover{text-decoration:underline}
+  .fine{max-width:720px;margin:10px auto 0;font-size:12.5px;color:#6f6f78}
+</style>
+</head>
+<body>
+<div class="glow"></div>
+<div class="wrap">
+
+  <nav>
+    <div class="brand"><img src="https://raw.githubusercontent.com/Mikeykorby/fishstrap-v2/main/Images/Bloxstrap.png" alt="Fishstrap V2 logo">Fishstrap V2</div>
+    <div class="links">
+      <a href="#features">Features</a>
+      <a href="https://github.com/Mikeykorby/fishstrap-v2/releases/latest">Download</a>
+      <a href="https://github.com/Mikeykorby/fishstrap-v2">GitHub</a>
+    </div>
+  </nav>
+
+  <header>
+    <div class="pill">Windows 10+ · Free &amp; open source</div>
+    <h1>A new launcher,<br><span class="grad">a new experience.</span></h1>
+    <p class="tag">Fishstrap V2 is a custom bootstrapper for Roblox, rebuilt from scratch
+       around a sleek, dark, dashboard-first interface — quick launch, quick settings and
+       live stats on one screen.</p>
+    <div class="cta">
+      <a class="btn btn-primary" href="https://github.com/Mikeykorby/fishstrap-v2/releases/latest">Download latest</a>
+      <a class="btn btn-ghost" href="https://github.com/Mikeykorby/fishstrap-v2">View source</a>
+    </div>
+    <div class="shot">
+      <img src="https://raw.githubusercontent.com/Mikeykorby/fishstrap-v2/main/Images/Screenshots/Dashboard.png"
+           alt="Fishstrap V2 dashboard — quick launch, quick settings and live statistics" loading="lazy">
+    </div>
+  </header>
+
+  <section id="features">
+    <h2>Everything, one click away</h2>
+    <p class="sub">The essentials live on the dashboard; the power tools live one sidebar click deep.</p>
+    <div class="grid">
+      <div class="card"><b>Quick Launch</b><span>Roblox Player and Studio with your custom setup, right from the dashboard.</span></div>
+      <div class="card"><b>FastFlags editor</b><span>Unhidden, with search, presets, JSON import/export and an allowlist mode.</span></div>
+      <div class="card"><b>Bootstrapper themes</b><span>Classic Fluent, Terminal, TwentyFive, Bloxnified — or import any Bloxstrap-style theme.</span></div>
+      <div class="card"><b>Server info by RoValra</b><span>See the server you joined — location and uptime — while you play.</span></div>
+      <div class="card"><b>Version management</b><span>Channel switcher, version pinning, reinstall and old-version pruning.</span></div>
+      <div class="card"><b>Mods</b><span>Custom cursors, sounds and fonts, applied on every launch.</span></div>
+      <div class="card"><b>Discord Rich Presence</b><span>Show your game in Discord, with activity tracking on the side.</span></div>
+      <div class="card"><b>Live statistics</b><span>Launches and playtime with a 14-day activity chart.</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The FastFlags editor</h2>
+    <p class="sub">Search, presets, import/export — and it can't wipe what you can't see.</p>
+    <div class="shot2">
+      <img src="https://raw.githubusercontent.com/Mikeykorby/fishstrap-v2/main/Images/Screenshots/FastFlags.png"
+           alt="Fishstrap V2 FastFlags editor" loading="lazy">
+    </div>
+  </section>
+
+  <footer>
+    <p><b>Fishstrap V2</b> — <i>A new launcher, a new experience.</i></p>
+    <p style="margin-top:8px">
+      <a href="https://github.com/Mikeykorby/fishstrap-v2">GitHub</a> ·
+      <a href="https://github.com/Mikeykorby/fishstrap-v2/releases/latest">Download</a> ·
+      <a href="https://github.com/Mikeykorby/fishstrap-v2/issues">Issues</a>
+    </p>
+    <p class="fine">MIT licensed. A fork of <a href="https://github.com/fishstrap/fishstrap">Fishstrap</a>,
+      based on Bloxstrap by pizzaboxer. Server info by RoValra; Bloxnified themes by Svznify.
+      Roblox is a trademark of Roblox Corporation — this project is not affiliated with or endorsed by Roblox Corporation.</p>
+  </footer>
+
+</div>
+</body>
+</html>
