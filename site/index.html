@@ -7,6 +7,13 @@
 <meta name="description" content="Fishstrap V2, a fork of Fishstrap for Roblox, redesigned around a sleek, dark, dashboard-first interface. FastFlags, mods, bootstrapper themes, version management and live stats — one click away.">
 <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/Mikeykorby/fishstrap-v2/main/Images/Bloxstrap.png">
 <style>
+  /* Inter, the same font files the app ships with */
+  @font-face{font-family:Inter;font-style:normal;font-weight:400;font-display:swap;
+    src:url(https://raw.githubusercontent.com/Mikeykorby/fishstrap-v2/main/FishstrapV2/Assets/Fonts/Inter-Regular.ttf) format("truetype")}
+  @font-face{font-family:Inter;font-style:normal;font-weight:600;font-display:swap;
+    src:url(https://raw.githubusercontent.com/Mikeykorby/fishstrap-v2/main/FishstrapV2/Assets/Fonts/Inter-SemiBold.ttf) format("truetype")}
+  @font-face{font-family:Inter;font-style:normal;font-weight:700;font-display:swap;
+    src:url(https://raw.githubusercontent.com/Mikeykorby/fishstrap-v2/main/FishstrapV2/Assets/Fonts/Inter-Bold.ttf) format("truetype")}
   :root{
     /* the app's own theme */
     --bg:#0b0b0e; --panel:#121216; --card:#17171b; --card-border:#24242c;
@@ -29,7 +36,7 @@
     padding:8px 16px;border-radius:999px;
     border:1px solid var(--card-border);background:rgba(18,18,22,.78);
     backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
-  .brand{display:flex;align-items:center;gap:10px;font-weight:650;font-size:15.5px;text-decoration:none}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:15.5px;text-decoration:none}
   .brand img{height:28px;border-radius:7px}
   .ver{font-size:11.5px;color:var(--muted);border:1px solid var(--card-border);border-radius:999px;padding:1.5px 8px}
   .bar nav{display:flex;align-items:center;gap:2px}
@@ -43,7 +50,7 @@
   .logo-row{display:flex;align-items:center;gap:14px;margin-bottom:26px}
   .logo-row img{width:64px;height:64px;border-radius:14px}
   .logo-row .k{font-size:13px;color:var(--muted);letter-spacing:.02em}
-  h1{font-size:clamp(42px,7vw,66px);line-height:1.05;letter-spacing:-.03em;font-weight:750}
+  h1{font-size:clamp(42px,7vw,66px);line-height:1.05;letter-spacing:-.03em;font-weight:700}
   .tag{color:var(--muted);font-size:16.5px;margin:16px 0 0;max-width:600px}
   .tag b{color:var(--text);font-weight:600}
   .meta{display:flex;gap:18px;flex-wrap:wrap;color:var(--faint);font-size:13px;margin-top:14px}
@@ -65,7 +72,7 @@
   .cols{display:grid;grid-template-columns:1fr 1fr;gap:0 44px}
   @media (max-width:700px){ .cols{grid-template-columns:1fr} }
   .f{padding:13px 0;border-top:1px solid var(--card-border)}
-  .f b{display:block;font-size:14.5px;font-weight:650}
+  .f b{display:block;font-size:14.5px;font-weight:600}
   .f span{color:var(--muted);font-size:13.5px}
 
   .cap{color:var(--faint);font-size:12.5px;margin:10px 2px 26px}
@@ -97,7 +104,7 @@
     <div class="logo-row">
       <img src="https://raw.githubusercontent.com/Mikeykorby/fishstrap-v2/main/Images/Bloxstrap.png" alt="Fishstrap V2 logo">
       <div><div class="k">Custom bootstrapper for Roblox</div>
-      <div style="font-weight:650;font-size:15px">Windows 10 or newer</div></div>
+      <div style="font-weight:600;font-size:15px">Windows 10 or newer</div></div>
     </div>
     <h1>A new launcher,<br>a new experience.</h1>
     <p class="tag"><b>Fishstrap V2</b> is a fork of <a href="https://github.com/fishstrap/fishstrap">Fishstrap</a>
@@ -144,7 +151,7 @@
 
   <footer>
     <div class="fp">
-      <div style="font-weight:650;color:var(--text)">Fishstrap V2 — <i>A new launcher, a new experience.</i></div>
+      <div style="font-weight:600;color:var(--text)">Fishstrap V2 — <i>A new launcher, a new experience.</i></div>
       <nav>
         <a href="https://github.com/Mikeykorby/fishstrap-v2">GitHub</a>
         <a href="https://github.com/Mikeykorby/fishstrap-v2/releases/latest">Download</a>
