@@ -17,13 +17,12 @@
 
 </div>
 
-Fishstrap V2 is a custom bootstrapper for Roblox, rebuilt from scratch around
-a sleek, dark, dashboard-first interface. Everything important lives on one
-screen — quick launch for Player and Studio, quick settings, quick links and
-live statistics — with FastFlags, mods, bootstrapper themes, version management
-and more a click away in the sidebar.
-
-It is a fork of [Fishstrap][fishstrap], which is based on [Bloxstrap][bloxstrap].
+Fishstrap V2 is a fork of [Fishstrap][fishstrap] — a custom bootstrapper for
+Roblox based on [Bloxstrap][bloxstrap] — redesigned around a sleek, dark,
+dashboard-first interface. Everything important lives on one screen — quick
+launch for Player and Studio, quick settings, quick links and live statistics —
+with FastFlags, mods, bootstrapper themes, version management and more a click
+away in the sidebar.
 
 If you found any bugs, please [open an issue here][repo-new-issue].
 
