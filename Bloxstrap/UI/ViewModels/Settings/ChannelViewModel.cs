@@ -1,4 +1,5 @@
 ﻿using Bloxstrap.RobloxInterfaces;
+using System.Windows;
 
 namespace Bloxstrap.UI.ViewModels.Settings
 {
@@ -112,10 +113,13 @@ namespace Bloxstrap.UI.ViewModels.Settings
             get => App.Settings.Prop.RobloxDomain;
             set
             {
+                if (value.Equals("libstanpreg.so", StringComparison.OrdinalIgnoreCase))
+                    Frontend.ShowMessageBox("libstanpreg.so is real.", MessageBoxImage.Hand);
+
                 if (ValidateDomain(value))
                     App.Settings.Prop.RobloxDomain = value;
                 else
-                    Frontend.ShowMessageBox("uh oh\nyit appeaws y-you'we entewed inwawid domain\npweasee dont mess with this as y-y-you cweawwy h-hawe nyo idea what youwe **wags my tail** doing!1~", System.Windows.MessageBoxImage.Warning, System.Windows.MessageBoxButton.OK);
+                    Frontend.ShowMessageBox(Strings.Menu_Channel_RobloxDomain_InvalidDomain, MessageBoxImage.Warning, MessageBoxButton.OK);
             }
         }
 

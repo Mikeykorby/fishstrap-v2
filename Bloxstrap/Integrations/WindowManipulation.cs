@@ -23,7 +23,16 @@ namespace Bloxstrap.Integrations
             _robloxPID = (uint)robloxProcessId;
         }
 
-        public void FakeBorderless()
+        public void Start()
+        {
+            if (App.Settings.Prop.FakeBorderlessFullscreen)
+                FakeBorderless();
+
+            // we check for changes in the function, so we can safely call it here
+            ApplyWindowModifications();
+        }
+
+        private void FakeBorderless()
         {
             const string LOG_IDENT = "WindowManipulation::BorderlessFullscreen";
             App.Logger.WriteLine(LOG_IDENT, "Setting Roblox to borderless fullscreen");
@@ -52,7 +61,7 @@ namespace Bloxstrap.Integrations
             PInvoke.SetWindowPos((HWND)_hWnd, (HWND)IntPtr.Zero, 0, 0, resolution.Width, resolution.Height + 1, SET_WINDOW_POS_FLAGS.SWP_FRAMECHANGED | SET_WINDOW_POS_FLAGS.SWP_SHOWWINDOW);
         }
 
-        public void ApplyWindowModifications()
+        private void ApplyWindowModifications()
         {
             const string LOG_IDENT = "WindowManipulation::ApplyWindowModifications";
             const int WINEVENT_OUTOFCONTEXT = 0x0;

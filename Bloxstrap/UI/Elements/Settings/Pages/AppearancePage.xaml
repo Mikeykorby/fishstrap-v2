@@ -30,39 +30,77 @@
             Description="{x:Static resources:Strings.Menu_Appearance_Language_Description}">
             <ComboBox Width="200" Padding="10,5,10,5" ItemsSource="{Binding Languages, Mode=OneTime}" Text="{Binding SelectedLanguage, Mode=TwoWay}" />
         </controls:OptionControl>
-        <TextBlock Text="Roblox" FontSize="20" FontWeight="Medium" Margin="0,16,0,0" />
 
-        <controls:OptionControl Header="{x:Static resources:Strings.Menu_Appearance_RobloxTitle_Title}" Description="{x:Static resources:Strings.Menu_Appearance_RobloxTitle_Description}">
-            <ui:TextBox PlaceholderText="Roblox" Width="200" Text="{Binding WindowTitle, Mode=TwoWay}" />
+        <!--<controls:OptionControl
+            Header="{x:Static resources:Strings.Common_Acrylic}"
+            Description="{x:Static resources:Strings.Menu_Appearance_Acrylic_Description}">
+            <ui:ToggleSwitch IsChecked="{Binding AcrylicBackdropEnabled, Mode=TwoWay}" />
         </controls:OptionControl>
 
-        <controls:OptionControl Header="{x:Static resources:Strings.Menu_Appearance_RobloxIcon_Title}" Description="{x:Static resources:Strings.Menu_Appearance_RobloxIcon_Description}">
-            <ComboBox Width="200" Padding="10,5,10,5" ItemsSource="{Binding RobloxIcons, Mode=OneWay}" SelectedValuePath="IconType" SelectedValue="{Binding RobloxIcon, Mode=TwoWay}">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="16" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Image Height="16" Source="{Binding ImageSource, Mode=OneWay}" RenderOptions.BitmapScalingMode="HighQuality" />
-                            <TextBlock Grid.Column="1" Margin="8,0,0,0" Text="{Binding Path=IconType, Converter={StaticResource EnumNameConverter}}" />
-                        </Grid>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-        </controls:OptionControl>
-
-        <controls:OptionControl Header="{x:Static resources:Strings.Menu_Appearance_CustomisationIcon_Title}" Description="{x:Static resources:Strings.Menu_Appearance_CustomisationIcon_Description}">
-            <Grid>
+        <controls:OptionControl
+            Header="{x:Static resources:Strings.Menu_Appearance_AcrylicOpacity_Title}"
+            Description="{x:Static resources:Strings.Menu_Appearance_AcrylicOpacity_Description}">
+            <Grid Width="204">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <ui:TextBox Grid.Column="0" Margin="0,0,4,0" Text="{Binding CustomRobloxIconLocation, Mode=TwoWay}" />
-                <ui:Button Grid.Column="1" Margin="4,0,0,0" Height="35" Icon="Folder24" Content="{x:Static resources:Strings.Common_Browse}" Command="{Binding BrowseCustomRobloxIconLocationCommand}" />
+                <Slider Grid.Column="0" Margin="0,0,8,0" Minimum="1" Maximum="255" TickFrequency="1" IsSnapToTickEnabled="True" Value="{Binding AcrylicBackgroundOpacity, Mode=TwoWay, Delay=250}" />
+                <Border Margin="0,-4,0,0" Grid.Column="1" Width="30" BorderBrush="{ui:ThemeResource SolidBackgroundFillColorSecondarybrush}" Background="{ui:ThemeResource SolidBackgroundFillColorSecondarybrush}" BorderThickness="1" CornerRadius="4">
+                    <TextBlock HorizontalAlignment="Center" Padding="4" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding AcrylicBackgroundOpacity, Mode=TwoWay}" />
+                </Border>
             </Grid>
-        </controls:OptionControl>
+        </controls:OptionControl>-->
+        <StackPanel Grid.Column="0" VerticalAlignment="Bottom" Margin="0,8,0,0">
+            <TextBlock Text="Roblox" FontSize="20" FontWeight="Medium" VerticalAlignment="Bottom" />
+            <TextBlock Text="Customize how the Roblox window looks like." TextWrapping="Wrap" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+        </StackPanel>
+
+        <StackPanel>
+            <StackPanel.Style>
+                <Style TargetType="StackPanel">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding WindowManipulationEnabled}" Value="False">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
+            <ui:InfoBar Margin="0,8,0,8" Padding="8" Title="{x:Static resources:Strings.Common_NotAvailable}" Message="{x:Static resources:Strings.Menu_Appearance_WindowManipulationAlert}" Severity="Informational" IsOpen="True" IsClosable="False" />
+        </StackPanel>
+
+        <StackPanel IsEnabled="{Binding WindowManipulationEnabled, Mode=OneWay}">
+            <controls:OptionControl Header="{x:Static resources:Strings.Menu_Appearance_RobloxTitle_Title}" Description="{x:Static resources:Strings.Menu_Appearance_RobloxTitle_Description}">
+                <ui:TextBox PlaceholderText="Roblox" Width="200" Text="{Binding WindowTitle, Mode=TwoWay}" />
+            </controls:OptionControl>
+
+            <controls:OptionControl Header="{x:Static resources:Strings.Menu_Appearance_RobloxIcon_Title}" Description="{x:Static resources:Strings.Menu_Appearance_RobloxIcon_Description}" HelpLink="https://wiki.fishstrap.app/manual/appearance/#custom-icons">
+                <Grid Width="200" HorizontalAlignment="Right">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <ComboBox Grid.Column="0" Padding="10,5,10,5" ItemsSource="{Binding RobloxIcons, Mode=OneWay}" SelectedValuePath="IconType" SelectedValue="{Binding RobloxIcon, Mode=TwoWay}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="16" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Image Height="16" Source="{Binding ImageSource, Mode=OneWay}" RenderOptions.BitmapScalingMode="HighQuality" />
+                                    <TextBlock Grid.Column="1" Margin="8,0,0,0" Text="{Binding Path=IconType, Converter={StaticResource EnumNameConverter}}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <ui:Button Grid.Column="1" Width="34" Height="30" Margin="4,0,0,0" Icon="Folder16" ToolTip="{Binding CustomRobloxIconLocation, Mode=OneWay}" Command="{Binding BrowseCustomRobloxIconLocationCommand}" />
+                </Grid>
+            </controls:OptionControl>
+        </StackPanel>
 
         <Grid Margin="0,8,0,0">
             <Grid.ColumnDefinitions>
@@ -154,64 +192,34 @@
             </Grid>
         </ui:CardExpander>
 
-        <controls:OptionControl 
-            x:Name="IconSelector"
-            Header="{x:Static resources:Strings.Menu_Appearance_Icon_Title}" 
-            Description="{x:Static resources:Strings.Menu_Appearance_Icon_Description}">
-            <ComboBox Width="200" Padding="10,5,10,5" ItemsSource="{Binding Icons, Mode=OneWay}" SelectedValuePath="IconType" SelectedValue="{Binding Icon, Mode=TwoWay}">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="16" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Image Height="16" Source="{Binding ImageSource, Mode=OneWay}" RenderOptions.BitmapScalingMode="HighQuality" />
-                            <TextBlock Grid.Column="1" Margin="8,0,0,0" Text="{Binding Path=IconType, Converter={StaticResource EnumNameConverter}}" />
-                        </Grid>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
+        <controls:OptionControl Header="{x:Static resources:Strings.Menu_Appearance_CustomisationTitle_Title}" Description="{x:Static resources:Strings.Menu_Appearance_CustomisationTitle_Description}">
+            <ui:TextBox PlaceholderText="Fishstrap" Width="200" Text="{Binding Title, Mode=TwoWay}" />
         </controls:OptionControl>
 
-        <ui:CardExpander Margin="0,8,0,0" IsExpanded="False">
-            <ui:CardExpander.Header>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0">
-                        <TextBlock FontSize="14" Text="{x:Static resources:Strings.Menu_Appearance_Customisation_Title}" />
-                        <TextBlock FontSize="12" Text="{x:Static resources:Strings.Menu_Appearance_Customisation_Description}" Foreground="{DynamicResource TextFillColorTertiaryBrush}"  />
-                    </StackPanel>
-                </Grid>
-            </ui:CardExpander.Header>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
+        <controls:OptionControl x:Name="IconSelector" Header="{x:Static resources:Strings.Menu_Appearance_Icon_Title}" Description="{x:Static resources:Strings.Menu_Appearance_Icon_Description}" HelpLink="https://wiki.fishstrap.app/manual/appearance/#custom-icons">
+            <Grid Width="200" HorizontalAlignment="Right">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="180" />
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="{x:Static resources:Strings.Menu_Appearance_CustomisationTitle_Title}" VerticalAlignment="Center" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
-                <ui:TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Title, Mode=TwoWay}" />
-                <TextBlock Grid.Row="1" Grid.Column="1" Margin="0,4,0,0" FontSize="12" Text="{x:Static resources:Strings.Menu_Appearance_CustomisationTitle_Description}" Foreground="{DynamicResource TextFillColorTertiaryBrush}" />
-                <TextBlock Grid.Row="2" Grid.Column="0" Margin="0,12,0,0"  Text="{x:Static resources:Strings.Menu_Appearance_CustomisationIcon_Title}" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
-                <Grid Grid.Row="2" Grid.Column="1" Margin="0,12,0,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <ui:TextBox Grid.Column="0" Margin="0,0,4,0" Text="{Binding CustomIconLocation, Mode=TwoWay}" />
-                    <ui:Button Grid.Column="1" Margin="4,0,0,0" Height="35" Icon="Folder24" Content="{x:Static resources:Strings.Common_Browse}" Command="{Binding BrowseCustomIconLocationCommand}" />
-                </Grid>
-                <TextBlock Grid.Row="3" Grid.Column="1" Margin="0,4,0,0" FontSize="12" Text="{x:Static resources:Strings.Menu_Appearance_CustomisationIcon_Description}" TextWrapping="Wrap" Foreground="{DynamicResource TextFillColorTertiaryBrush}" />
+
+                <ComboBox Grid.Column="0" Padding="10,5,10,5" ItemsSource="{Binding Icons, Mode=OneWay}" SelectedValuePath="IconType" SelectedValue="{Binding Icon, Mode=TwoWay}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="16" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Image Height="16" Source="{Binding ImageSource, Mode=OneWay}" RenderOptions.BitmapScalingMode="HighQuality" />
+                                <TextBlock Grid.Column="1" Margin="8,0,0,0" Text="{Binding Path=IconType, Converter={StaticResource EnumNameConverter}}" />
+                            </Grid>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <ui:Button Grid.Column="1" Width="34" Height="30" Margin="4,0,0,0" Icon="Folder16" ToolTip="{Binding CustomIconLocation, Mode=OneWay}" Command="{Binding BrowseCustomIconLocationCommand}" />
             </Grid>
-        </ui:CardExpander>
+        </controls:OptionControl>
     </StackPanel>
 </ui:UiPage>

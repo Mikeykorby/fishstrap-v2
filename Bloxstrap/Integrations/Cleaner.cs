@@ -16,7 +16,8 @@ namespace Bloxstrap.Integrations
             { "FishstrapLogs", Paths.Logs },
             { "FishstrapCache", Paths.Downloads },
             { "RobloxLogs", Paths.RobloxLogs },
-            { "RobloxCache", Paths.RobloxCache }
+            { "RobloxCache", Paths.RobloxCache },
+            { "RobloxStudioCache", Paths.RobloxStudioCache }
         };
 
         public static void DoCleaning()
@@ -29,13 +30,14 @@ namespace Bloxstrap.Integrations
             {
                 CleanerOptions.OneDay => 1,
                 CleanerOptions.OneWeek => 7,
+                CleanerOptions.TwoWeeks => 14,
                 CleanerOptions.OneMonth => 30,
                 CleanerOptions.TwoMonths => 60,
                 CleanerOptions.Never => int.MaxValue,
                 _ => int.MaxValue,
             };
 
-            var Threshold = DateTime.Now.AddHours(-MaxFileAge);
+            var Threshold = DateTime.Now.AddDays(-MaxFileAge);
             int DeletedItems = 0;
 
             foreach (var directory in Directories)

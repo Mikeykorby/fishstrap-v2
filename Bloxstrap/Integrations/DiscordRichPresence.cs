@@ -407,6 +407,7 @@ namespace Bloxstrap.Integrations
             _currentPresence = new DiscordRPC.RichPresence
             {
                 Details = universeName,
+                StatusDisplay = App.Settings.Prop.RichPresenceStatusDisplayType.ToStatusDisplayType(),
                 State = status,
                 Timestamps = new Timestamps { Start = timeStarted.ToUniversalTime() },
                 Buttons = GetButtons(),

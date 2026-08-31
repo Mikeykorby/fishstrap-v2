@@ -129,6 +129,9 @@
   <data name="Dialog.Connectivity.BadConnection" xml:space="preserve">
     <value>A connection could not be made, which likely indicates a poor internet connection or a firewall block. If your connection is fine, please ensure that your antivirus isn't blocking Fishstrap.</value>
   </data>
+  <data name="Dialog.Connectivity.MatchmakingFailed" xml:space="preserve">
+    <value>BetterMatchmaking will be disabled for this session.</value>
+  </data>
   <data name="Bootstrapper.FirstRunUninstall" xml:space="preserve">
     <value>You must first install Fishstrap before uninstalling.</value>
   </data>
@@ -478,7 +481,7 @@ Would you like to upgrade your currently installed version?</value>
     <value>The text that shows as the title of the bootstrapper.</value>
   </data>
   <data name="Menu.Appearance.CustomisationTitle.Title" xml:space="preserve">
-    <value>Title</value>
+    <value>Bootstrapper Title</value>
   </data>
   <data name="Menu.Appearance.Description" xml:space="preserve">
     <value>Configure how Fishstrap should look.</value>
@@ -487,10 +490,10 @@ Would you like to upgrade your currently installed version?</value>
     <value>Global Theme</value>
   </data>
   <data name="Menu.Appearance.Icon.Description" xml:space="preserve">
-    <value>Choose what icon it should use.</value>
+    <value>Choose what icon the bootstrapper should use.</value>
   </data>
   <data name="Menu.Appearance.Icon.Title" xml:space="preserve">
-    <value>Icon</value>
+    <value>Bootstrapper Icon</value>
   </data>
   <data name="Menu.Appearance.Preview" xml:space="preserve">
     <value>Preview</value>
@@ -837,21 +840,6 @@ Some text might not be translated to preferred language.</value>
   <data name="Menu.FastFlags.Presets.FullscreenTitlebar.Description" xml:space="preserve">
     <value>Stops it from showing whenever you move your mouse to the top of the screen.</value>
   </data>
-  <data name="Menu.FastFlags.Presets.TextureQuality.Title" xml:space="preserve">
-    <value>Texture quality</value>
-  </data>
-  <data name="Enums.FlagPresets.TextureQuality.Level0" xml:space="preserve">
-    <value>Level 0 (Lowest)</value>
-  </data>
-  <data name="Enums.FlagPresets.TextureQuality.Level1" xml:space="preserve">
-    <value>Level 1</value>
-  </data>
-  <data name="Enums.FlagPresets.TextureQuality.Level2" xml:space="preserve">
-    <value>Level 2</value>
-  </data>
-  <data name="Enums.FlagPresets.TextureQuality.Level3" xml:space="preserve">
-    <value>Level 3 (Highest)</value>
-  </data>
   <data name="Dialog.Connectivity.UnableToDownload" xml:space="preserve">
     <value>Fishstrap is unable to download Roblox</value>
   </data>
@@ -1186,9 +1174,6 @@ Would you like to enable test mode?</value>
     <value>Icons</value>
     <comment>Name of the folder that gets created according to the "create shortcut icons" option. Ensure that it is a valid folder name.</comment>
   </data>
-  <data name="Enums.FlagPresets.RenderingMode.OpenGL" xml:space="preserve">
-    <value>OpenGL</value>
-  </data>
   <data name="Enums.FlagPresets.RenderingMode.Vulkan" xml:space="preserve">
     <value>Vulkan</value>
   </data>
@@ -1257,17 +1242,14 @@ Please close any applications that may be using Roblox's files, and relaunch.</v
   <data name="Bootstrapper.Status.Downloading" xml:space="preserve">
     <value>Downloading</value>
   </data>
+  <data name="Bootstrapper.Status.DownloadingPackages" xml:space="preserve">
+    <value>Downloading - {0} out of {1}</value>
+  </data>
   <data name="Menu.Appearance.BootstrapperDownloading.Title" xml:space="preserve">
     <value>Bootstrapper downloading status</value>
   </data>
   <data name="Menu.Appearance.BootstrapperDownloading.Description" xml:space="preserve">
     <value>Change downloading string. {0} is package name, {1} is downloaded packages size and {2} is total size of packages.</value>
-  </data>
-  <data name="Menu.Behaviour.MultiInstances.Title" xml:space="preserve">
-    <value>Multi-instance launching</value>
-  </data>
-  <data name="Menu.Behaviour.MultiInstances.Description" xml:space="preserve">
-    <value>Allows for having more than one Roblox game client instance open simultaneously. May cause issues with desktop app.</value>
   </data>
   <data name="Menu.FlagProfiles.ClearFlags" xml:space="preserve">
     <value>Clear FFlags</value>
@@ -1420,6 +1402,9 @@ Would you like to switch your preferred channel to {0}?</value>
   <data name="Enums.CleanerOptions.OneWeek" xml:space="preserve">
     <value>After 1 week</value>
   </data>
+  <data name="Enums.CleanerOptions.TwoWeeks" xml:space="preserve">
+    <value>After 2 weeks</value>
+  </data>
   <data name="Enums.CleanerOptions.OneMonth" xml:space="preserve">
     <value>After 1 month</value>
   </data>
@@ -1437,6 +1422,12 @@ Would you like to switch your preferred channel to {0}?</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.Cache.Description" xml:space="preserve">
     <value>Old downloads will be deleted.</value>
+  </data>
+  <data name="Menu.Bootstrapper.Cleaner.StudioCache.Title" xml:space="preserve">
+    <value>Studio Cache</value>
+  </data>
+  <data name="Menu.Bootstrapper.Cleaner.StudioCache.Description" xml:space="preserve">
+    <value>Old Studio downloads will be deleted.</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.Logs.Title" xml:space="preserve">
     <value>Logs</value>
@@ -1649,12 +1640,6 @@ Defaulting to {1}.</value>
   <data name="Bootstrapper.ExtractionFailed.Message" xml:space="preserve">
     <value>Some content may be missing. Force a Roblox reinstallation in settings to fix this.</value>
   </data>
-  <data name="Menu.Integrations.MultiInstanceLaunching.Title" xml:space="preserve">
-    <value>Allow multi-instance launching</value>
-  </data>
-  <data name="Menu.Integrations.MultiInstanceLaunching.Description" xml:space="preserve">
-    <value>Allows for having more than one Roblox game client instance open simultaneously.</value>
-  </data>
   <data name="Common.Rename" xml:space="preserve">
     <value>Rename</value>
   </data>
@@ -1686,7 +1671,7 @@ Defaulting to {1}.</value>
     <value>Waiting for data</value>
   </data>
   <data name="Menu.FastFlags.EditorInfo" xml:space="preserve">
-    <value>Roblox only applies whitelisted FFlags. Double click to learn more.</value>
+    <value>Roblox only applies whitelisted FFlags.</value>
   </data>
   <data name="Common.Geometry" xml:space="preserve">
     <value>Geometry</value>
@@ -1788,10 +1773,10 @@ Defaulting to {1}.</value>
     <value>Timestamp</value>
   </data>
   <data name="Menu.Channel.RobloxDomain.Title" xml:space="preserve">
-	  <value>Roblox domain</value>
+    <value>Roblox domain</value>
   </data>
   <data name="Menu.Channel.RobloxDomain.Description" xml:space="preserve">
-	  <value>Set what domain Roblox and Fishstrap will use. Enter only trusted domains.</value>
+    <value>Set what domain Roblox and Fishstrap will use. Enter only trusted domains.</value>
   </data>
   <data name="Enums.BootstrapperStyle.TwentyFiveDialog" xml:space="preserve">
     <value>Roblox (~2025)</value>
@@ -1811,13 +1796,10 @@ Defaulting to {1}.</value>
   <data name="Bootstrapper.Experimental.BetterMatchmaking.RandomizeServer.Description" xml:space="preserve">
     <value>Randomizes the chosen server from the list of optimal servers.</value>
   </data>
-  <data name="Menu.Integrations.MultiInstanceLaunching.Warning" xml:space="preserve">
-    <value>Multi-Instancing is prone to breaking. We will not provide support for issues with Multi-Instancing, since Roblox is actively adding measures to make sure it doesn't work. We cannot and won't attempt to bypass these measures.</value>
-  </data>
   <data name="Menu.Appearance.RobloxTitle.Title" xml:space="preserve">
     <value>Roblox title</value>
   </data>
-	<data name="Menu.Appearance.RobloxTitle.Description" xml:space="preserve">
+  <data name="Menu.Appearance.RobloxTitle.Description" xml:space="preserve">
     <value>Choose what title Roblox window should have.</value>
   </data>
   <data name="Menu.Appearance.RobloxIcon.Title" xml:space="preserve">
@@ -1825,5 +1807,54 @@ Defaulting to {1}.</value>
   </data>
   <data name="Menu.Appearance.RobloxIcon.Description" xml:space="preserve">
     <value>Choose what icon Roblox should display on the taskbar.</value>
+  </data>
+  <data name="Enums.BootstrapperStyle.TerminalDialog" xml:space="preserve">
+    <value>Windows Terminal</value>
+  </data>
+  <data name="Common.Acrylic" xml:space="preserve">
+    <value>Acrylic backdrop</value>
+  </data>
+  <data name="Menu.Appearance.Acrylic.Description" xml:space="preserve">
+    <value>Enable Acrylic backdrop for the settings menu and other dialogs. (Note: Does not work on Windows 11)</value>
+  </data>
+  <data name="Menu.Appearance.AcrylicOpacity.Title" xml:space="preserve">
+    <value>Acrylic backdrop opacity</value>
+  </data>
+  <data name="Menu.Appearance.AcrylicOpacity.Description" xml:space="preserve">
+    <value>Set the opacity for the Acrylic background.</value>
+  </data>
+  <data name="Enums.DiscordRPCStatusDisplay.Name" xml:space="preserve">
+    <value>Name (Playing Roblox)</value>
+  </data>
+  <data name="Enums.DiscordRPCStatusDisplay.Details" xml:space="preserve">
+    <value>Details (Playing Game)</value>
+  </data>
+  <data name="Menu.Integrations.StatusDisplay.Title" xml:space="preserve">
+    <value>Discord status display</value>
+  </data>
+  <data name="Menu.Integrations.StatusDisplay.Description" xml:space="preserve">
+    <value>Select the type of status display you want.</value>
+  </data>
+  <data name="Menu.Channel.RobloxDomain.InvalidDomain" xml:space="preserve">
+    <value>The domain you've enter appears to be invalid.
+Please don't change this setting unless you know what you're doing.</value>
+  </data>
+  <data name="Menu.Integrations.EnableWindowManipulation.Title" xml:space="preserve">
+    <value>Enable window manipulation</value>
+  </data>
+  <data name="Menu.Integrations.EnableWindowManipulation.Description" xml:space="preserve">
+    <value>Allows Fishstrap to access Roblox's window handle allowing for better customization and features.</value>
+  </data>
+  <data name="Menu.Integrations.FakeVulkanBorderless.Title" xml:space="preserve">
+    <value>Enable Borderless Fullscreen for Vulkan</value>
+  </data>
+  <data name="Menu.Integrations.FakeVulkanBorderless.Description" xml:space="preserve">
+    <value>Let's you use a fake version of borderless fullscreen while using Vulkan.</value>
+  </data>
+  <data name="Common.WindowManipulation" xml:space="preserve">
+    <value>Window Manipulation</value>
+  </data>
+  <data name="Menu.Appearance.WindowManipulationAlert" xml:space="preserve">
+    <value>This feature requires window manipulation</value>
   </data>
 </root>

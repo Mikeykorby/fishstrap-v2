@@ -1,15 +1,4 @@
-﻿using System.Windows.Input;
-
-using CommunityToolkit.Mvvm.Input;
-
-using Bloxstrap.Enums.FlagPresets;
-using System.Windows;
-using Bloxstrap.UI.Elements.Settings.Pages;
-using Wpf.Ui.Mvvm.Contracts;
-using System.Windows.Documents;
-using System.Windows.Controls;
-using System.Windows.Navigation;
-using Bloxstrap.Enums.GBSPresets;
+﻿using Bloxstrap.Enums.GBSPresets;
 
 namespace Bloxstrap.UI.ViewModels.Settings
 {
@@ -21,10 +10,29 @@ namespace Bloxstrap.UI.ViewModels.Settings
             set => App.GlobalSettings.SetReadOnly(value);
         }
 
-        public string FramerateCap
+        public int FramerateCap
         {
-            get => App.GlobalSettings.GetPreset("Rendering.FramerateCap")!;
-            set => App.GlobalSettings.SetPreset("Rendering.FramerateCap", value);
+            get
+            {
+                if (int.TryParse(App.GlobalSettings.GetPreset("Rendering.FramerateCap"), out int framerate))
+                {
+                    // -1 is default framerate cap set by `DFIntTaskSchedulerTargetFps`
+                    if (framerate < 1)
+                        return 60;
+                    else
+                        return framerate;
+                }
+                else
+                    return 60;
+            }
+            set
+            {
+                // setting the framerate cap to 0 will break roblox's renderer so we want to avoid that
+                if (value < 1)
+                    value = -1;
+                
+                App.GlobalSettings.SetPreset("Rendering.FramerateCap", value);
+            }
         }
 
         public string UITransparency
