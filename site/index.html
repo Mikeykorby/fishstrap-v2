@@ -168,7 +168,8 @@
 
 </div>
 
-<!-- liquidGL (MIT, https://github.com/naughtyduk/liquidGL): WebGL glass refraction on the nav pill -->
+<!-- liquidGL (MIT, https://github.com/naughtyduk/liquidGL): WebGL glass refraction on the nav pill. v2.0.0 snapshots the page via html2canvas, which must be loaded first. -->
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/gh/naughtyduk/liquidGL@v2.0.0/scripts/liquidGL.js" defer></script>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
@@ -189,6 +190,13 @@ document.addEventListener("DOMContentLoaded", () => {
       magnify: 1,
     });
   } catch (e) { /* the plain frosted pill stays */ }
+  // liquidGL hides the pill until its first snapshot lands; if that never happens, restore it
+  setTimeout(() => {
+    const bar = document.querySelector(".bar");
+    if (bar && bar.style.opacity === "0" &&
+        (!window.__liquidGLRenderer__ || !window.__liquidGLRenderer__.staticSnapshotCanvas))
+      bar.style.opacity = "1";
+  }, 3000);
 });
 </script>
 </body>
