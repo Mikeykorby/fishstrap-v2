@@ -30,12 +30,12 @@
   a{color:inherit}
   .wrap{max-width:1020px;margin:0 auto;padding:0 22px}
 
-  /* floating pill nav, fishstrap.app style */
+  /* floating pill nav, fishstrap.app style — glassified by liquidGL */
   .bar{position:sticky;top:12px;z-index:5;margin:12px auto 0;max-width:920px;
-    display:flex;align-items:center;justify-content:space-between;gap:10px;
-    padding:8px 16px;border-radius:999px;
-    border:1px solid var(--card-border);background:rgba(18,18,22,.78);
-    backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+    padding:6px;border-radius:999px;
+    border:1px solid var(--card-border);background:rgba(18,18,22,.42)}
+  .bar-inner{display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:2px 14px;position:relative;z-index:3}
   .brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:15.5px;text-decoration:none}
   .brand img{height:28px;border-radius:7px}
   .ver{font-size:11.5px;color:var(--muted);border:1px solid var(--card-border);border-radius:999px;padding:1.5px 8px}
@@ -88,6 +88,7 @@
 <body>
 
 <div class="bar">
+  <div class="bar-inner">
   <a class="brand" href="#top"><img src="https://raw.githubusercontent.com/Mikeykorby/fishstrap-v2/main/Images/Bloxstrap.png" alt="">Fishstrap V2<span class="ver">v3.1.2</span></a>
   <nav>
     <a class="xs" href="#features">Features</a>
@@ -96,6 +97,7 @@
     <a href="https://github.com/Mikeykorby/fishstrap-v2">GitHub</a>
     <a class="dl" href="https://github.com/Mikeykorby/fishstrap-v2/releases/latest">Download</a>
   </nav>
+  </div>
 </div>
 
 <div class="wrap" id="top">
@@ -165,5 +167,29 @@
   </footer>
 
 </div>
+
+<!-- liquidGL (MIT, https://github.com/naughtyduk/liquidGL): WebGL glass refraction on the nav pill -->
+<script src="https://cdn.jsdelivr.net/npm/liquid-gl@2.0.1/liquidGL.js" defer></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  if (typeof liquidGL !== "function") return; // keep the plain pill as fallback
+  try {
+    liquidGL({
+      target: ".bar",
+      snapshot: "body",
+      resolution: 1.6,
+      refraction: 0.014,
+      bevelDepth: 0.1,
+      bevelWidth: 0.16,
+      frost: 1.5,
+      shadow: true,
+      specular: true,
+      reveal: "fade",
+      tilt: false,
+      magnify: 1,
+    });
+  } catch (e) { /* the plain frosted pill stays */ }
+});
+</script>
 </body>
 </html>
