@@ -24,6 +24,9 @@ launch for Player and Studio, quick settings, quick links and live statistics â€
 with FastFlags, mods, bootstrapper themes, version management and more a click
 away in the sidebar.
 
+There's also a landing page at [fishstrap-v2.pages.dev][site] â€” a quick look at
+the launcher before you install it.
+
 If you found any bugs, please [open an issue here][repo-new-issue].
 
 > [!NOTE]
@@ -111,6 +114,7 @@ Licensed under the [MIT License](LICENSE).
 [badge-stars]: https://img.shields.io/github/stars/Mikeykorby/fishstrap-v2?style=flat-square&color=dd9900
 [repo-latest]: https://github.com/Mikeykorby/fishstrap-v2/releases/latest
 [repo-new-issue]: https://github.com/Mikeykorby/fishstrap-v2/issues/new
+[site]: https://fishstrap-v2.pages.dev
 [fishstrap]: https://github.com/fishstrap/fishstrap
 [bloxstrap]: https://bloxstraplabs.com
 [rovalra]: https://www.rovalra.com
