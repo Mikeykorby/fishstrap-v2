@@ -19,10 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-Fishstrap V2 is a fork of Fishstrap (https://github.com/fishstrap/fishstrap),
-which is itself based on Bloxstrap (https://github.com/bloxstraplabs/bloxstrap)
-by pizzaboxer. Both projects are MIT licensed and this project gratefully
-acknowledges them.
