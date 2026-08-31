@@ -6,6 +6,10 @@ on:
 
 jobs:
   publish:
+    # Winget publishing needs a valid WINGET_TOKEN secret and a komac fork;
+    # this fork doesn't have one, so skip here. Re-enable once the secret
+    # is configured (upstream fishstrap publishes via this workflow).
+    if: github.repository_owner == 'fishstrap'
     runs-on: windows-latest
     steps:
       - uses: vedantmgoyal9/winget-releaser@main
