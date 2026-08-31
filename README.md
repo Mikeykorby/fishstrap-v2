@@ -107,7 +107,7 @@ Licensed under the [MIT License](LICENSE).
 
 [shot-dashboard]: https://github.com/Mikeykorby/fishstrap-v2/raw/main/Images/Screenshots/Dashboard.png
 [shot-fastflags]: https://github.com/Mikeykorby/fishstrap-v2/raw/main/Images/Screenshots/FastFlags.png
-[badge-license]: https://img.shields.io/github/license/Mikeykorby/fishstrap-v2?style=flat-square
+[badge-license]: https://img.shields.io/github/license/Mikeykorby/fishstrap-v2?style=flat-square&v=2
 [badge-builds]: https://img.shields.io/github/actions/workflow/status/Mikeykorby/fishstrap-v2/ci-release.yml?branch=main&style=flat-square&label=builds
 [badge-downloads]: https://img.shields.io/github/downloads/Mikeykorby/fishstrap-v2/latest/total?style=flat-square&color=981bfe
 [badge-latest]: https://img.shields.io/github/v/release/Mikeykorby/fishstrap-v2?style=flat-square&color=7a39fb
