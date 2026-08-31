@@ -9,9 +9,9 @@
 <style>
   :root{
     /* the app's own theme */
-    --bg:#0b0b0e; --bg-soft:#101014; --card:#17171b; --card-border:#26262e;
-    --text:#f2f2f5; --muted:#9a9aa3; --faint:#6f6f78;
-    --accent:#42a5e8; --accent-deep:#175c89; --accent-soft:rgba(66,165,232,.13);
+    --bg:#0b0b0e; --panel:#121216; --card:#17171b; --card-border:#24242c;
+    --text:#f2f2f5; --muted:#9a9aa3; --faint:#71717a;
+    --accent:#42a5e8; --accent-deep:#175c89;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -20,128 +20,137 @@
     font-family:"Inter","Segoe UI",system-ui,-apple-system,sans-serif;
     line-height:1.6; overflow-x:hidden;
   }
-  .glow{position:fixed;inset:0;pointer-events:none;z-index:0;
-    background:
-      radial-gradient(56rem 26rem at 50% -14rem, rgba(66,165,232,.18), transparent 62%),
-      radial-gradient(40rem 20rem at 88% 8%, rgba(23,92,137,.16), transparent 60%);}
-  .wrap{position:relative;z-index:1;max-width:1060px;margin:0 auto;padding:0 24px}
+  a{color:inherit}
+  .wrap{max-width:1020px;margin:0 auto;padding:0 22px}
 
-  /* floating frosted pill nav, like fishstrap.app */
-  .bar{position:sticky;top:14px;z-index:5;margin:14px auto 0;max-width:920px;
+  /* floating pill nav, fishstrap.app style */
+  .bar{position:sticky;top:12px;z-index:5;margin:12px auto 0;max-width:920px;
     display:flex;align-items:center;justify-content:space-between;gap:10px;
-    padding:9px 18px;border-radius:999px;
-    border:1px solid var(--card-border);
-    background:rgba(16,16,20,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
-  .brand{display:flex;align-items:center;gap:11px;font-weight:700;font-size:16px;text-decoration:none;color:var(--text)}
-  .brand img{height:30px;border-radius:8px}
-  .ver{font-size:11.5px;color:var(--muted);border:1px solid var(--card-border);border-radius:999px;padding:2px 9px}
-  .bar .links{display:flex;align-items:center;gap:4px}
-  .bar .links a{color:var(--muted);text-decoration:none;font-size:14px;padding:7px 12px;border-radius:999px;white-space:nowrap}
-  .bar .links a:hover{color:var(--text);background:var(--card)}
-  .bar .dl{color:#fff !important;background:var(--accent-deep)}
-  .bar .dl:hover{background:var(--accent);color:#fff !important}
-  @media (max-width:640px){ .bar .links a.hide-s{display:none} }
+    padding:8px 16px;border-radius:999px;
+    border:1px solid var(--card-border);background:rgba(18,18,22,.78);
+    backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:650;font-size:15.5px;text-decoration:none}
+  .brand img{height:28px;border-radius:7px}
+  .ver{font-size:11.5px;color:var(--muted);border:1px solid var(--card-border);border-radius:999px;padding:1.5px 8px}
+  .bar nav{display:flex;align-items:center;gap:2px}
+  .bar nav a{color:var(--muted);text-decoration:none;font-size:13.5px;padding:7px 11px;border-radius:999px;white-space:nowrap}
+  .bar nav a:hover{color:var(--text);background:var(--card)}
+  .bar nav .dl{color:#fff;background:var(--accent-deep);font-weight:600}
+  .bar nav .dl:hover{background:var(--accent);color:#fff}
+  @media (max-width:660px){ .bar nav a.xs{display:none} }
 
-  /* hero */
-  header{padding:84px 0 44px;text-align:center}
-  .pill{display:inline-block;font-size:12.5px;color:var(--accent);background:var(--accent-soft);
-    border:1px solid rgba(66,165,232,.3);border-radius:999px;padding:5px 14px;margin-bottom:24px}
-  h1{font-size:clamp(40px,7vw,64px);line-height:1.08;letter-spacing:-.025em;font-weight:800}
-  h1 .grad{background:linear-gradient(94deg,#9fd0f5 10%,var(--accent) 60%);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .tag{color:var(--muted);font-size:17.5px;margin:20px auto 32px;max-width:640px}
+  header{padding:88px 0 30px}
+  .logo-row{display:flex;align-items:center;gap:14px;margin-bottom:26px}
+  .logo-row img{width:64px;height:64px;border-radius:14px}
+  .logo-row .k{font-size:13px;color:var(--muted);letter-spacing:.02em}
+  h1{font-size:clamp(42px,7vw,66px);line-height:1.05;letter-spacing:-.03em;font-weight:750}
+  .tag{color:var(--muted);font-size:16.5px;margin:16px 0 0;max-width:600px}
   .tag b{color:var(--text);font-weight:600}
-  .cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-  .btn{display:inline-block;text-decoration:none;font-weight:600;font-size:15px;
-    padding:13px 28px;border-radius:12px;border:1px solid transparent;transition:filter .15s ease}
-  .btn:hover{filter:brightness(1.12)}
+  .meta{display:flex;gap:18px;flex-wrap:wrap;color:var(--faint);font-size:13px;margin-top:14px}
+  .meta span{white-space:nowrap}
+  .cta{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap}
+  .btn{display:inline-block;text-decoration:none;font-weight:600;font-size:14.5px;
+    padding:12px 24px;border-radius:10px;border:1px solid transparent;transition:background .12s ease}
   .btn-accent{background:var(--accent-deep);color:#fff}
-  .btn-ghost{border-color:var(--card-border);color:var(--text);background:var(--card)}
+  .btn-accent:hover{background:var(--accent)}
+  .btn-ghost{border-color:var(--card-border);background:var(--panel);color:var(--text)}
+  .btn-ghost:hover{background:var(--card)}
 
-  .shot{margin:54px 0 0;border:1px solid var(--card-border);border-radius:16px;overflow:hidden;
-    box-shadow:0 34px 90px rgba(0,0,0,.55)}
+  .shot{margin-top:44px;border:1px solid var(--card-border);border-radius:12px;overflow:hidden}
   .shot img{display:block;width:100%;height:auto}
-  .cap{color:var(--faint);font-size:13px;margin-top:12px}
 
-  section{padding:72px 0}
-  h2{font-size:28px;letter-spacing:-.015em;margin-bottom:8px}
-  .sub{color:var(--muted);margin-bottom:36px}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(232px,1fr));gap:15px}
-  .card{background:var(--card);border:1px solid var(--card-border);border-radius:14px;padding:20px}
-  .card b{display:block;margin-bottom:6px;font-size:15.5px}
-  .card span{color:var(--muted);font-size:14px}
-  .card .dot{display:inline-block;width:8px;height:8px;border-radius:999px;background:var(--accent);margin-right:8px}
+  section{padding:64px 0 8px}
+  h2{font-size:21px;font-weight:700;letter-spacing:-.01em;margin-bottom:6px}
+  .sub{color:var(--muted);font-size:14.5px;margin-bottom:26px}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:0 44px}
+  @media (max-width:700px){ .cols{grid-template-columns:1fr} }
+  .f{padding:13px 0;border-top:1px solid var(--card-border)}
+  .f b{display:block;font-size:14.5px;font-weight:650}
+  .f span{color:var(--muted);font-size:13.5px}
 
-  footer{border-top:1px solid var(--card-border);margin-top:30px;padding:40px 0 52px;
-    color:var(--muted);font-size:13.5px;text-align:center}
-  footer a{color:var(--text);text-decoration:none}
-  footer a:hover{text-decoration:underline}
-  .fine{max-width:740px;margin:12px auto 0;font-size:12.5px;color:var(--faint)}
+  .cap{color:var(--faint);font-size:12.5px;margin:10px 2px 26px}
+
+  footer{border-top:1px solid var(--card-border);margin-top:56px;padding:34px 0 46px;
+    color:var(--muted);font-size:13px}
+  footer .fp{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:baseline}
+  footer nav a{color:var(--muted);text-decoration:none;margin-right:16px}
+  footer nav a:hover{color:var(--text)}
+  .fine{margin-top:16px;font-size:12px;color:var(--faint);max-width:760px}
 </style>
 </head>
 <body>
-<div class="glow"></div>
 
 <div class="bar">
-  <a class="brand" href="#top"><img src="https://raw.githubusercontent.com/Mikeykorby/fishstrap-v2/main/Images/Bloxstrap.png" alt="Fishstrap V2 logo">Fishstrap V2<span class="ver">v3.1.2</span></a>
-  <div class="links">
-    <a href="#features" class="hide-s">Features</a>
-    <a href="#fastflags" class="hide-s">FastFlags</a>
-    <a href="https://github.com/Mikeykorby/fishstrap-v2/issues" class="hide-s">Issues</a>
+  <a class="brand" href="#top"><img src="https://raw.githubusercontent.com/Mikeykorby/fishstrap-v2/main/Images/Bloxstrap.png" alt="">Fishstrap V2<span class="ver">v3.1.2</span></a>
+  <nav>
+    <a class="xs" href="#features">Features</a>
+    <a class="xs" href="#fastflags">FastFlags</a>
+    <a class="xs" href="https://github.com/Mikeykorby/fishstrap-v2/issues">Issues</a>
     <a href="https://github.com/Mikeykorby/fishstrap-v2">GitHub</a>
     <a class="dl" href="https://github.com/Mikeykorby/fishstrap-v2/releases/latest">Download</a>
-  </div>
+  </nav>
 </div>
 
 <div class="wrap" id="top">
 
   <header>
-    <div class="pill">Windows 10+ · Free &amp; open source</div>
-    <h1>A new launcher,<br><span class="grad">a new experience.</span></h1>
-    <p class="tag"><b>Fishstrap V2</b> is a fork of <a style="color:var(--text)" href="https://github.com/fishstrap/fishstrap">Fishstrap</a>
-      for Roblox, redesigned around a sleek, dark, dashboard-first interface —
-      quick launch, quick settings and live stats on one screen.</p>
+    <div class="logo-row">
+      <img src="https://raw.githubusercontent.com/Mikeykorby/fishstrap-v2/main/Images/Bloxstrap.png" alt="Fishstrap V2 logo">
+      <div><div class="k">Custom bootstrapper for Roblox</div>
+      <div style="font-weight:650;font-size:15px">Windows 10 or newer</div></div>
+    </div>
+    <h1>A new launcher,<br>a new experience.</h1>
+    <p class="tag"><b>Fishstrap V2</b> is a fork of <a href="https://github.com/fishstrap/fishstrap">Fishstrap</a>
+      redesigned around a sleek, dark, dashboard-first interface — quick launch,
+      quick settings and live stats on one screen.</p>
+    <div class="meta"><span>v3.1.2</span><span>MIT license</span><span>No third-party dependencies</span><span>Free &amp; open source</span></div>
     <div class="cta">
       <a class="btn btn-accent" href="https://github.com/Mikeykorby/fishstrap-v2/releases/latest">Download latest</a>
       <a class="btn btn-ghost" href="https://github.com/Mikeykorby/fishstrap-v2">View source</a>
     </div>
     <div class="shot">
       <img src="https://raw.githubusercontent.com/Mikeykorby/fishstrap-v2/main/Images/Screenshots/Dashboard.png"
-           width="1920" height="1154" alt="Fishstrap V2 dashboard — quick launch, quick settings and live statistics">
+           width="1920" height="1154" alt="The Fishstrap V2 dashboard">
     </div>
-    <p class="cap">The Fishstrap V2 dashboard</p>
+    <p class="cap">The dashboard — quick launch, quick settings and live statistics.</p>
   </header>
 
   <section id="features">
-    <h2>Everything, one click away</h2>
-    <p class="sub">The essentials live on the dashboard; the power tools are one sidebar click deep.</p>
-    <div class="grid">
-      <div class="card"><b><i class="dot"></i>Quick Launch</b><span>Roblox Player and Studio with your custom setup, right from the dashboard.</span></div>
-      <div class="card"><b><i class="dot"></i>FastFlags editor</b><span>Unhidden, with search, presets, JSON import/export and an allowlist mode.</span></div>
-      <div class="card"><b><i class="dot"></i>Bootstrapper themes</b><span>Classic Fluent, Terminal, TwentyFive, Bloxnified — or import any Bloxstrap-style theme.</span></div>
-      <div class="card"><b><i class="dot"></i>Server info by RoValra</b><span>See the server you joined — location and uptime — while you play.</span></div>
-      <div class="card"><b><i class="dot"></i>Version management</b><span>Channel switcher, version pinning, reinstall and old-version pruning.</span></div>
-      <div class="card"><b><i class="dot"></i>Mods</b><span>Custom cursors, sounds and fonts, applied on every launch.</span></div>
-      <div class="card"><b><i class="dot"></i>Discord Rich Presence</b><span>Show your game in Discord, with activity tracking on the side.</span></div>
-      <div class="card"><b><i class="dot"></i>Live statistics</b><span>Launches and playtime with a 14-day activity chart.</span></div>
+    <h2>Features</h2>
+    <p class="sub">What Fishstrap V2 adds on top of the original.</p>
+    <div class="cols">
+      <div class="f"><b>Dashboard-first interface</b><span>Quick launch for Player and Studio, quick settings and live stats on one dark screen.</span></div>
+      <div class="f"><b>FastFlags editor</b><span>Unhidden, with search, presets, JSON import/export and an allowlist mode.</span></div>
+      <div class="f"><b>Server info by RoValra</b><span>See the server you joined — location and uptime — while you play.</span></div>
+      <div class="f"><b>Bootstrapper themes</b><span>Classic Fluent, Terminal, TwentyFive, Bloxnified — or import any Bloxstrap-style theme.</span></div>
+      <div class="f"><b>Roblox Studio support</b><span>Manage the Studio install alongside the Player.</span></div>
+      <div class="f"><b>Version management</b><span>Channel switcher, version pinning, reinstall and old-version pruning.</span></div>
+      <div class="f"><b>Mods</b><span>Custom cursors, sounds and fonts, applied on every launch.</span></div>
+      <div class="f"><b>Discord Rich Presence</b><span>Show your game in Discord, with activity tracking on the side.</span></div>
+      <div class="f"><b>Cache cleaner &amp; backups</b><span>Clear the Roblox cache, save flag profiles, one-click backups and shortcuts.</span></div>
+      <div class="f"><b>Launch statistics</b><span>Launches and playtime with a 14-day activity chart.</span></div>
     </div>
   </section>
 
   <section id="fastflags">
-    <h2>The FastFlags editor</h2>
-    <p class="sub">Search, presets, import/export — and editing through a filter can't wipe what you can't see.</p>
-    <div class="shot" style="margin-top:0">
+    <h2>FastFlags</h2>
+    <p class="sub">Search, presets, import/export — editing through a filter can't wipe what you can't see.</p>
+    <div class="shot">
       <img src="https://raw.githubusercontent.com/Mikeykorby/fishstrap-v2/main/Images/Screenshots/FastFlags.png"
-           width="1920" height="1154" alt="Fishstrap V2 FastFlags editor">
+           width="1920" height="1154" alt="The Fishstrap V2 FastFlags editor">
     </div>
+    <p class="cap">The FastFlags editor.</p>
   </section>
 
   <footer>
-    <p><b>Fishstrap V2</b> — <i>A new launcher, a new experience.</i></p>
-    <p style="margin-top:10px">
-      <a href="https://github.com/Mikeykorby/fishstrap-v2">GitHub</a> ·
-      <a href="https://github.com/Mikeykorby/fishstrap-v2/releases/latest">Download</a> ·
-      <a href="https://github.com/Mikeykorby/fishstrap-v2/issues">Issues</a>
-    </p>
+    <div class="fp">
+      <div style="font-weight:650;color:var(--text)">Fishstrap V2 — <i>A new launcher, a new experience.</i></div>
+      <nav>
+        <a href="https://github.com/Mikeykorby/fishstrap-v2">GitHub</a>
+        <a href="https://github.com/Mikeykorby/fishstrap-v2/releases/latest">Download</a>
+        <a href="https://github.com/Mikeykorby/fishstrap-v2/issues">Issues</a>
+      </nav>
+    </div>
     <p class="fine">MIT licensed. Fishstrap V2 is a fork of
       <a href="https://github.com/fishstrap/fishstrap">Fishstrap</a> (MIT, © 2025 returnrqt),
       which is based on Bloxstrap by pizzaboxer. Server info by RoValra; Bloxnified themes by Svznify.
