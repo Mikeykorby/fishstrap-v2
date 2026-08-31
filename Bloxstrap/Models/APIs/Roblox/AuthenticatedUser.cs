@@ -14,7 +14,7 @@ namespace Bloxstrap.Models.APIs.Roblox
         [JsonPropertyName("name")]
         public string Username { get; set; } = string.Empty;
 
-        [JsonPropertyName("displayname")]
+        [JsonPropertyName("displayName")]
         public string Displayname { get; set; } = string.Empty;
     }
 }

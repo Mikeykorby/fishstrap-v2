@@ -384,6 +384,15 @@ namespace Bloxstrap.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Downloading - {0} out of {1}.
+        /// </summary>
+        public static string Bootstrapper_Status_DownloadingPackages {
+            get {
+                return ResourceManager.GetString("Bootstrapper.Status.DownloadingPackages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Installing {product}....
         /// </summary>
         public static string Bootstrapper_Status_Installing {
@@ -497,6 +506,15 @@ namespace Bloxstrap.Resources {
         public static string Bootstrapper_WMFNotFound {
             get {
                 return ResourceManager.GetString("Bootstrapper.WMFNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Acrylic backdrop.
+        /// </summary>
+        public static string Common_Acrylic {
+            get {
+                return ResourceManager.GetString("Common.Acrylic", resourceCulture);
             }
         }
         
@@ -1028,6 +1046,15 @@ namespace Bloxstrap.Resources {
         public static string Common_Warning {
             get {
                 return ResourceManager.GetString("Common.Warning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Window Manipulation.
+        /// </summary>
+        public static string Common_WindowManipulation {
+            get {
+                return ResourceManager.GetString("Common.WindowManipulation", resourceCulture);
             }
         }
         
@@ -1702,6 +1729,15 @@ namespace Bloxstrap.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to BetterMatchmaking will be disabled for this session..
+        /// </summary>
+        public static string Dialog_Connectivity_MatchmakingFailed {
+            get {
+                return ResourceManager.GetString("Dialog.Connectivity.MatchmakingFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to More information:.
         /// </summary>
         public static string Dialog_Connectivity_MoreInfo {
@@ -2017,6 +2053,15 @@ namespace Bloxstrap.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Windows Terminal.
+        /// </summary>
+        public static string Enums_BootstrapperStyle_TerminalDialog {
+            get {
+                return ResourceManager.GetString("Enums.BootstrapperStyle.TerminalDialog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Roblox (~2025).
         /// </summary>
         public static string Enums_BootstrapperStyle_TwentyFiveDialog {
@@ -2080,6 +2125,15 @@ namespace Bloxstrap.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to After 2 weeks.
+        /// </summary>
+        public static string Enums_CleanerOptions_TwoWeeks {
+            get {
+                return ResourceManager.GetString("Enums.CleanerOptions.TwoWeeks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 2006 (Cartoony).
         /// </summary>
         public static string Enums_CursorType_From2006 {
@@ -2112,6 +2166,24 @@ namespace Bloxstrap.Resources {
         public static string Enums_CustomThemeTemplate_Simple {
             get {
                 return ResourceManager.GetString("Enums.CustomThemeTemplate.Simple", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Details (Playing Game).
+        /// </summary>
+        public static string Enums_DiscordRPCStatusDisplay_Details {
+            get {
+                return ResourceManager.GetString("Enums.DiscordRPCStatusDisplay.Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name (Playing Roblox).
+        /// </summary>
+        public static string Enums_DiscordRPCStatusDisplay_Name {
+            get {
+                return ResourceManager.GetString("Enums.DiscordRPCStatusDisplay.Name", resourceCulture);
             }
         }
         
@@ -2251,56 +2323,11 @@ namespace Bloxstrap.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to OpenGL.
-        /// </summary>
-        public static string Enums_FlagPresets_RenderingMode_OpenGL {
-            get {
-                return ResourceManager.GetString("Enums.FlagPresets.RenderingMode.OpenGL", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Vulkan.
         /// </summary>
         public static string Enums_FlagPresets_RenderingMode_Vulkan {
             get {
                 return ResourceManager.GetString("Enums.FlagPresets.RenderingMode.Vulkan", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Level 0 (Lowest).
-        /// </summary>
-        public static string Enums_FlagPresets_TextureQuality_Level0 {
-            get {
-                return ResourceManager.GetString("Enums.FlagPresets.TextureQuality.Level0", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Level 1.
-        /// </summary>
-        public static string Enums_FlagPresets_TextureQuality_Level1 {
-            get {
-                return ResourceManager.GetString("Enums.FlagPresets.TextureQuality.Level1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Level 2.
-        /// </summary>
-        public static string Enums_FlagPresets_TextureQuality_Level2 {
-            get {
-                return ResourceManager.GetString("Enums.FlagPresets.TextureQuality.Level2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Level 3 (Highest).
-        /// </summary>
-        public static string Enums_FlagPresets_TextureQuality_Level3 {
-            get {
-                return ResourceManager.GetString("Enums.FlagPresets.TextureQuality.Level3", resourceCulture);
             }
         }
         
@@ -2844,6 +2871,33 @@ namespace Bloxstrap.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enable Acrylic backdrop for the settings menu and other dialogs. (Note: Does not work on Windows 11).
+        /// </summary>
+        public static string Menu_Appearance_Acrylic_Description {
+            get {
+                return ResourceManager.GetString("Menu.Appearance.Acrylic.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set the opacity for the Acrylic background..
+        /// </summary>
+        public static string Menu_Appearance_AcrylicOpacity_Description {
+            get {
+                return ResourceManager.GetString("Menu.Appearance.AcrylicOpacity.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Acrylic backdrop opacity.
+        /// </summary>
+        public static string Menu_Appearance_AcrylicOpacity_Title {
+            get {
+                return ResourceManager.GetString("Menu.Appearance.AcrylicOpacity.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You can make it look different, retro, or even just like Roblox..
         /// </summary>
         public static string Menu_Appearance_Bootstrapper_Description {
@@ -2925,7 +2979,7 @@ namespace Bloxstrap.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Title.
+        ///   Looks up a localized string similar to Bootstrapper Title.
         /// </summary>
         public static string Menu_Appearance_CustomisationTitle_Title {
             get {
@@ -2979,7 +3033,7 @@ namespace Bloxstrap.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose what icon it should use..
+        ///   Looks up a localized string similar to Choose what icon the bootstrapper should use..
         /// </summary>
         public static string Menu_Appearance_Icon_Description {
             get {
@@ -2988,7 +3042,7 @@ namespace Bloxstrap.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Icon.
+        ///   Looks up a localized string similar to Bootstrapper Icon.
         /// </summary>
         public static string Menu_Appearance_Icon_Title {
             get {
@@ -3083,6 +3137,15 @@ namespace Bloxstrap.Resources {
         public static string Menu_Appearance_Title {
             get {
                 return ResourceManager.GetString("Menu.Appearance.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This feature requires window manipulation.
+        /// </summary>
+        public static string Menu_Appearance_WindowManipulationAlert {
+            get {
+                return ResourceManager.GetString("Menu.Appearance.WindowManipulationAlert", resourceCulture);
             }
         }
         
@@ -3195,24 +3258,6 @@ namespace Bloxstrap.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Allows for having more than one Roblox game client instance open simultaneously. May cause issues with desktop app..
-        /// </summary>
-        public static string Menu_Behaviour_MultiInstances_Description {
-            get {
-                return ResourceManager.GetString("Menu.Behaviour.MultiInstances.Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Multi-instance launching.
-        /// </summary>
-        public static string Menu_Behaviour_MultiInstances_Title {
-            get {
-                return ResourceManager.GetString("Menu.Behaviour.MultiInstances.Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Bootstrapper.
         /// </summary>
         public static string Menu_Behaviour_Title {
@@ -3321,6 +3366,24 @@ namespace Bloxstrap.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Old Studio downloads will be deleted..
+        /// </summary>
+        public static string Menu_Bootstrapper_Cleaner_StudioCache_Description {
+            get {
+                return ResourceManager.GetString("Menu.Bootstrapper.Cleaner.StudioCache.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Studio Cache.
+        /// </summary>
+        public static string Menu_Bootstrapper_Cleaner_StudioCache_Title {
+            get {
+                return ResourceManager.GetString("Menu.Bootstrapper.Cleaner.StudioCache.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fishstrap will remove old data to save on space.
         /// </summary>
         public static string Menu_Bootstrapper_CleanUp_Description {
@@ -3398,6 +3461,16 @@ namespace Bloxstrap.Resources {
         public static string Menu_Channel_RobloxDomain_Description {
             get {
                 return ResourceManager.GetString("Menu.Channel.RobloxDomain.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The domain you&apos;ve enter appears to be invalid.
+        ///Please don&apos;t change this setting unless you know what you&apos;re doing..
+        /// </summary>
+        public static string Menu_Channel_RobloxDomain_InvalidDomain {
+            get {
+                return ResourceManager.GetString("Menu.Channel.RobloxDomain.InvalidDomain", resourceCulture);
             }
         }
         
@@ -3745,7 +3818,7 @@ namespace Bloxstrap.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Roblox only applies whitelisted FFlags. Double click to learn more..
+        ///   Looks up a localized string similar to Roblox only applies whitelisted FFlags..
         /// </summary>
         public static string Menu_FastFlags_EditorInfo {
             get {
@@ -3921,15 +3994,6 @@ namespace Bloxstrap.Resources {
         public static string Menu_FastFlags_Presets_RenderingMode_Title {
             get {
                 return ResourceManager.GetString("Menu.FastFlags.Presets.RenderingMode.Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Texture quality.
-        /// </summary>
-        public static string Menu_FastFlags_Presets_TextureQuality_Title {
-            get {
-                return ResourceManager.GetString("Menu.FastFlags.Presets.TextureQuality.Title", resourceCulture);
             }
         }
         
@@ -4390,29 +4454,38 @@ namespace Bloxstrap.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Allows for having more than one Roblox game client instance open simultaneously..
+        ///   Looks up a localized string similar to Allows Fishstrap to access Roblox&apos;s window handle allowing for better customization and features..
         /// </summary>
-        public static string Menu_Integrations_MultiInstanceLaunching_Description {
+        public static string Menu_Integrations_EnableWindowManipulation_Description {
             get {
-                return ResourceManager.GetString("Menu.Integrations.MultiInstanceLaunching.Description", resourceCulture);
+                return ResourceManager.GetString("Menu.Integrations.EnableWindowManipulation.Description", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Allow multi-instance launching.
+        ///   Looks up a localized string similar to Enable window manipulation.
         /// </summary>
-        public static string Menu_Integrations_MultiInstanceLaunching_Title {
+        public static string Menu_Integrations_EnableWindowManipulation_Title {
             get {
-                return ResourceManager.GetString("Menu.Integrations.MultiInstanceLaunching.Title", resourceCulture);
+                return ResourceManager.GetString("Menu.Integrations.EnableWindowManipulation.Title", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Multi-Instancing is prone to breaking. We will not provide support for issues with Multi-Instancing, since Roblox is actively adding measures to make sure it doesn&apos;t work. We cannot and won&apos;t attempt to bypass these measures..
+        ///   Looks up a localized string similar to Let&apos;s you use a fake version of borderless fullscreen while using Vulkan..
         /// </summary>
-        public static string Menu_Integrations_MultiInstanceLaunching_Warning {
+        public static string Menu_Integrations_FakeVulkanBorderless_Description {
             get {
-                return ResourceManager.GetString("Menu.Integrations.MultiInstanceLaunching.Warning", resourceCulture);
+                return ResourceManager.GetString("Menu.Integrations.FakeVulkanBorderless.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable Borderless Fullscreen for Vulkan.
+        /// </summary>
+        public static string Menu_Integrations_FakeVulkanBorderless_Title {
+            get {
+                return ResourceManager.GetString("Menu.Integrations.FakeVulkanBorderless.Title", resourceCulture);
             }
         }
         
@@ -4476,6 +4549,24 @@ namespace Bloxstrap.Resources {
         public static string Menu_Integrations_ShowGameActivity_Title {
             get {
                 return ResourceManager.GetString("Menu.Integrations.ShowGameActivity.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select the type of status display you want..
+        /// </summary>
+        public static string Menu_Integrations_StatusDisplay_Description {
+            get {
+                return ResourceManager.GetString("Menu.Integrations.StatusDisplay.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discord status display.
+        /// </summary>
+        public static string Menu_Integrations_StatusDisplay_Title {
+            get {
+                return ResourceManager.GetString("Menu.Integrations.StatusDisplay.Title", resourceCulture);
             }
         }
         

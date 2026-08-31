@@ -12,7 +12,7 @@ namespace Bloxstrap
         /// Should this version automatically open the release notes page?
         /// Recommended for major updates only.
         /// </summary>
-        private const bool OpenReleaseNotes = false;
+        private const bool OpenReleaseNotes = true;
 
         private static string DesktopShortcut => Path.Combine(Paths.Desktop, $"{App.ProjectName}.lnk");
 
@@ -166,6 +166,9 @@ namespace Bloxstrap
 
             // prevent issues with settings importing
             if (InstallLocation.Contains("Local\\Bloxstrap"))
+                return false;
+
+            if (InstallLocation.Contains("WindowsApps"))
                 return false;
 
             return true;
@@ -655,7 +658,7 @@ namespace Bloxstrap
             {
 #pragma warning disable CS0162 // Unreachable code detected
                 if (OpenReleaseNotes)
-                    Utilities.ShellExecute($"https://github.com/{App.ProjectRepository}/wiki/Release-notes-for-Bloxstrap-v{currentVer}");
+                    Utilities.ShellExecute($"https://wiki.fishstrap.app/patch-notes/v{currentVer.Replace(".", "-")}");
 #pragma warning restore CS0162 // Unreachable code detected
             }
             else

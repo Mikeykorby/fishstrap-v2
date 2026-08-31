@@ -30,6 +30,7 @@
         // cleaner paths
         public static string RobloxLogs { get; private set; } = "";
         public static string RobloxCache { get; private set; } = "";
+        public static string RobloxStudioCache { get; private set; } = "";
 
         public static string Application { get; private set; } = "";
 
@@ -49,7 +50,9 @@
             Roblox = Path.Combine(LocalAppData, "Roblox"); // that was base before?
 
             RobloxLogs = Path.Combine(Roblox, "logs");
-            RobloxCache = Path.Combine(Path.GetTempPath(), "Roblox");
+            RobloxCache = Path.Combine(Roblox, "rbx-storage");
+            // "studio is still using the old path," return said. -Naveandice
+            RobloxStudioCache = Path.Combine(Path.GetTempPath(), "Roblox");
 
             Application = Path.Combine(Base, $"{App.ProjectName}.exe");
         }

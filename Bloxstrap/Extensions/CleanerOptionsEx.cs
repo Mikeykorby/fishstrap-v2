@@ -7,6 +7,7 @@
             CleanerOptions.Never,
             CleanerOptions.OneDay,
             CleanerOptions.OneWeek,
+            CleanerOptions.TwoWeeks,
             CleanerOptions.OneMonth,
             CleanerOptions.TwoMonths
         };

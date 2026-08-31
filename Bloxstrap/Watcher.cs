@@ -55,7 +55,8 @@ namespace Bloxstrap
             if (_watcherData is null)
                 throw new Exception("Watcher data is invalid");
 
-            WindowManipulation = new(_watcherData.Handle, _watcherData.ProcessId);
+            if (App.Settings.Prop.EnableWindowManipulation && _watcherData.Handle != 0)
+                WindowManipulation = new(_watcherData.Handle, _watcherData.ProcessId);
 
             if (App.Settings.Prop.EnableActivityTracking)
             {
@@ -117,10 +118,7 @@ namespace Bloxstrap
                 return;
 
             ActivityWatcher?.Start();
-            WindowManipulation?.ApplyWindowModifications();
-
-            if (App.Settings.Prop.FakeBorderlessFullscreen)
-                WindowManipulation?.FakeBorderless();
+            WindowManipulation?.Start();
 
             while (Utilities.GetProcessesSafe().Any(x => x.Id == _watcherData.ProcessId))
                 await Task.Delay(1000);

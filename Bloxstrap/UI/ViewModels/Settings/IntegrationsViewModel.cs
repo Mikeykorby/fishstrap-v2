@@ -1,20 +1,30 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows.Input;
-
-using Microsoft.Win32;
-
+﻿using Bloxstrap.UI.Elements.Controls;
 using CommunityToolkit.Mvvm.Input;
-using System.Windows.Controls;
+using Microsoft.Win32;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
+using Wpf.Ui.Common.Interfaces;
 
 namespace Bloxstrap.UI.ViewModels.Settings
 {
-    public class IntegrationsViewModel : NotifyPropertyChangedViewModel
+    public class IntegrationsViewModel : NotifyPropertyChangedViewModel, INavigationAware
     {
+
+        public bool VulkanFullscreenAllowed => App.Settings.Prop.EnableWindowManipulation && (App.FastFlags.GetPreset("Rendering.Mode.Vulkan") ?? "False").Equals("True", StringComparison.OrdinalIgnoreCase);
+
         public ICommand AddIntegrationCommand => new RelayCommand(AddIntegration);
 
         public ICommand DeleteIntegrationCommand => new RelayCommand(DeleteIntegration);
 
         public ICommand BrowseIntegrationLocationCommand => new RelayCommand(BrowseIntegrationLocation);
+
+        public void OnNavigatedTo()
+        {
+            OnPropertyChanged(nameof(VulkanFullscreenAllowed));
+            OnPropertyChanged(nameof(EnableFakeBorderlessFullscreen));
+        } // vulkan is updated on a different page so we do this
+
+        public void OnNavigatedFrom() { }
 
         private void AddIntegration()
         {
@@ -107,6 +117,13 @@ namespace Bloxstrap.UI.ViewModels.Settings
                 }
             }
         }
+        public IReadOnlyList<DiscordRPCStatusDisplay> DiscordActivityStatusDisplayTypes => DiscordRPCStatusDisplayEx.Selections;
+
+        public DiscordRPCStatusDisplay DiscordActivityStatusDisplayType
+        {
+            get => App.Settings.Prop.RichPresenceStatusDisplayType;
+            set => App.Settings.Prop.RichPresenceStatusDisplayType = value;
+        }
 
         public bool DiscordActivityJoinEnabled
         {
@@ -126,28 +143,31 @@ namespace Bloxstrap.UI.ViewModels.Settings
             set => App.Settings.Prop.UseDisableAppPatch = value;
         }
 
-        public bool MultiInstanceLaunchingEnabled
-        {
-            get => App.Settings.Prop.MultiInstanceLaunching;
-            set => App.Settings.Prop.MultiInstanceLaunching = value;
-        }
-
         public ObservableCollection<CustomIntegration> CustomIntegrations
         {
             get => App.Settings.Prop.CustomIntegrations;
             set => App.Settings.Prop.CustomIntegrations = value;
         }
 
-        public RobloxIcon Icon
+        public bool EnableWindowManipulation
         {
-            get => App.Settings.Prop.RobloxIcon;
-            set => App.Settings.Prop.RobloxIcon = value;
+            get => App.Settings.Prop.EnableWindowManipulation;
+            set
+            {
+                App.Settings.Prop.EnableWindowManipulation = value;
+
+                if (!value)
+                    EnableFakeBorderlessFullscreen = false;
+
+                OnPropertyChanged(nameof(VulkanFullscreenAllowed));
+                OnPropertyChanged(nameof(EnableFakeBorderlessFullscreen));
+            }
         }
 
-        public string WindowTitle
+        public bool EnableFakeBorderlessFullscreen
         {
-            get => App.Settings.Prop.RobloxTitle;
-            set => App.Settings.Prop.RobloxTitle = value;
+            get => App.Settings.Prop.FakeBorderlessFullscreen;
+            set => App.Settings.Prop.FakeBorderlessFullscreen = VulkanFullscreenAllowed && value;
         }
 
         public CustomIntegration? SelectedCustomIntegration { get; set; }

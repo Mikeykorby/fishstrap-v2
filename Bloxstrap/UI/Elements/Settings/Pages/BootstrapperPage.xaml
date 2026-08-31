@@ -67,6 +67,11 @@
     Description="{x:Static resources:Strings.Menu_Bootstrapper_Cleaner_Cache_Description}">
                     <ui:ToggleSwitch IsChecked="{Binding CleanerCache, Mode=TwoWay}" />
                 </controls:OptionControl>
+                <controls:OptionControl
+    Header="{x:Static resources:Strings.Menu_Bootstrapper_Cleaner_StudioCache_Title}"
+    Description="{x:Static resources:Strings.Menu_Bootstrapper_Cleaner_StudioCache_Description}">
+                    <ui:ToggleSwitch IsChecked="{Binding CleanerStudioCache, Mode=TwoWay}" />
+                </controls:OptionControl>
                 <controls:OptionControl 
     Header="{x:Static resources:Strings.Menu_Bootstrapper_Cleaner_Logs_Title}" 
     Description="{x:Static resources:Strings.Menu_Bootstrapper_Cleaner_Logs_Description}">
@@ -116,15 +121,6 @@
             Description="{x:Static resources:Strings.Bootstrapper_Experimental_BetterMatchmaking_RandomizeServer_Description}">
             <StackPanel Orientation="Horizontal">
                 <ui:ToggleSwitch IsChecked="{Binding EnableBetterMatchmakingRandomization, Mode=TwoWay}" />
-            </StackPanel>
-        </controls:OptionControl>
-
-        <controls:OptionControl 
-            Header="Enable Borderless Fullscreen for Vulkan"
-            Description="Let's you use a fake version of borderless fullscreen while using Vulkan."
-            IsEnabled="{Binding IsVulkanEnabled, Mode=OneWay}">
-            <StackPanel Orientation="Horizontal">
-                <ui:ToggleSwitch IsChecked="{Binding EnableFakeBorderlessFullscreen, Mode=TwoWay}" />
             </StackPanel>
         </controls:OptionControl>
     </StackPanel>

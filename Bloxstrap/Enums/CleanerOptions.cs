@@ -5,6 +5,7 @@
         Never,
         OneDay,
         OneWeek,
+        TwoWeeks,
         OneMonth,
         TwoMonths
     }
