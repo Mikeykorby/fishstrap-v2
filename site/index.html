@@ -11,7 +11,7 @@
     /* the app's own theme */
     --bg:#0b0b0e; --bg-soft:#101014; --card:#17171b; --card-border:#26262e;
     --text:#f2f2f5; --muted:#9a9aa3; --faint:#6f6f78;
-    --red:#e5484d; --blue:#3b82f6; --blue-soft:rgba(59,130,246,.13);
+    --accent:#42a5e8; --accent-deep:#175c89; --accent-soft:rgba(66,165,232,.13);
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -22,8 +22,8 @@
   }
   .glow{position:fixed;inset:0;pointer-events:none;z-index:0;
     background:
-      radial-gradient(56rem 26rem at 50% -14rem, rgba(59,130,246,.16), transparent 62%),
-      radial-gradient(40rem 20rem at 88% 8%, rgba(229,72,77,.08), transparent 60%);}
+      radial-gradient(56rem 26rem at 50% -14rem, rgba(66,165,232,.18), transparent 62%),
+      radial-gradient(40rem 20rem at 88% 8%, rgba(23,92,137,.16), transparent 60%);}
   .wrap{position:relative;z-index:1;max-width:1060px;margin:0 auto;padding:0 24px}
 
   /* floating frosted pill nav, like fishstrap.app */
@@ -38,23 +38,23 @@
   .bar .links{display:flex;align-items:center;gap:4px}
   .bar .links a{color:var(--muted);text-decoration:none;font-size:14px;padding:7px 12px;border-radius:999px;white-space:nowrap}
   .bar .links a:hover{color:var(--text);background:var(--card)}
-  .bar .dl{color:#fff !important;background:var(--red)}
-  .bar .dl:hover{background:#f2595e;color:#fff !important}
+  .bar .dl{color:#fff !important;background:var(--accent-deep)}
+  .bar .dl:hover{background:var(--accent);color:#fff !important}
   @media (max-width:640px){ .bar .links a.hide-s{display:none} }
 
   /* hero */
   header{padding:84px 0 44px;text-align:center}
-  .pill{display:inline-block;font-size:12.5px;color:var(--blue);background:var(--blue-soft);
-    border:1px solid rgba(59,130,246,.3);border-radius:999px;padding:5px 14px;margin-bottom:24px}
+  .pill{display:inline-block;font-size:12.5px;color:var(--accent);background:var(--accent-soft);
+    border:1px solid rgba(66,165,232,.3);border-radius:999px;padding:5px 14px;margin-bottom:24px}
   h1{font-size:clamp(40px,7vw,64px);line-height:1.08;letter-spacing:-.025em;font-weight:800}
-  h1 .grad{background:linear-gradient(94deg,#8fb3ff 10%,var(--blue) 60%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  h1 .grad{background:linear-gradient(94deg,#9fd0f5 10%,var(--accent) 60%);-webkit-background-clip:text;background-clip:text;color:transparent}
   .tag{color:var(--muted);font-size:17.5px;margin:20px auto 32px;max-width:640px}
   .tag b{color:var(--text);font-weight:600}
   .cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
   .btn{display:inline-block;text-decoration:none;font-weight:600;font-size:15px;
     padding:13px 28px;border-radius:12px;border:1px solid transparent;transition:filter .15s ease}
   .btn:hover{filter:brightness(1.12)}
-  .btn-red{background:var(--red);color:#fff}
+  .btn-accent{background:var(--accent-deep);color:#fff}
   .btn-ghost{border-color:var(--card-border);color:var(--text);background:var(--card)}
 
   .shot{margin:54px 0 0;border:1px solid var(--card-border);border-radius:16px;overflow:hidden;
@@ -69,8 +69,7 @@
   .card{background:var(--card);border:1px solid var(--card-border);border-radius:14px;padding:20px}
   .card b{display:block;margin-bottom:6px;font-size:15.5px}
   .card span{color:var(--muted);font-size:14px}
-  .card .dot{display:inline-block;width:8px;height:8px;border-radius:999px;background:var(--red);margin-right:8px}
-  .card .dot.blue{background:var(--blue)}
+  .card .dot{display:inline-block;width:8px;height:8px;border-radius:999px;background:var(--accent);margin-right:8px}
 
   footer{border-top:1px solid var(--card-border);margin-top:30px;padding:40px 0 52px;
     color:var(--muted);font-size:13.5px;text-align:center}
@@ -102,12 +101,12 @@
       for Roblox, redesigned around a sleek, dark, dashboard-first interface —
       quick launch, quick settings and live stats on one screen.</p>
     <div class="cta">
-      <a class="btn btn-red" href="https://github.com/Mikeykorby/fishstrap-v2/releases/latest">Download latest</a>
+      <a class="btn btn-accent" href="https://github.com/Mikeykorby/fishstrap-v2/releases/latest">Download latest</a>
       <a class="btn btn-ghost" href="https://github.com/Mikeykorby/fishstrap-v2">View source</a>
     </div>
     <div class="shot">
       <img src="https://raw.githubusercontent.com/Mikeykorby/fishstrap-v2/main/Images/Screenshots/Dashboard.png"
-           alt="Fishstrap V2 dashboard — quick launch, quick settings and live statistics" loading="lazy">
+           width="1920" height="1154" alt="Fishstrap V2 dashboard — quick launch, quick settings and live statistics">
     </div>
     <p class="cap">The Fishstrap V2 dashboard</p>
   </header>
@@ -117,13 +116,13 @@
     <p class="sub">The essentials live on the dashboard; the power tools are one sidebar click deep.</p>
     <div class="grid">
       <div class="card"><b><i class="dot"></i>Quick Launch</b><span>Roblox Player and Studio with your custom setup, right from the dashboard.</span></div>
-      <div class="card"><b><i class="dot blue"></i>FastFlags editor</b><span>Unhidden, with search, presets, JSON import/export and an allowlist mode.</span></div>
+      <div class="card"><b><i class="dot"></i>FastFlags editor</b><span>Unhidden, with search, presets, JSON import/export and an allowlist mode.</span></div>
       <div class="card"><b><i class="dot"></i>Bootstrapper themes</b><span>Classic Fluent, Terminal, TwentyFive, Bloxnified — or import any Bloxstrap-style theme.</span></div>
-      <div class="card"><b><i class="dot blue"></i>Server info by RoValra</b><span>See the server you joined — location and uptime — while you play.</span></div>
+      <div class="card"><b><i class="dot"></i>Server info by RoValra</b><span>See the server you joined — location and uptime — while you play.</span></div>
       <div class="card"><b><i class="dot"></i>Version management</b><span>Channel switcher, version pinning, reinstall and old-version pruning.</span></div>
-      <div class="card"><b><i class="dot blue"></i>Mods</b><span>Custom cursors, sounds and fonts, applied on every launch.</span></div>
+      <div class="card"><b><i class="dot"></i>Mods</b><span>Custom cursors, sounds and fonts, applied on every launch.</span></div>
       <div class="card"><b><i class="dot"></i>Discord Rich Presence</b><span>Show your game in Discord, with activity tracking on the side.</span></div>
-      <div class="card"><b><i class="dot blue"></i>Live statistics</b><span>Launches and playtime with a 14-day activity chart.</span></div>
+      <div class="card"><b><i class="dot"></i>Live statistics</b><span>Launches and playtime with a 14-day activity chart.</span></div>
     </div>
   </section>
 
@@ -132,7 +131,7 @@
     <p class="sub">Search, presets, import/export — and editing through a filter can't wipe what you can't see.</p>
     <div class="shot" style="margin-top:0">
       <img src="https://raw.githubusercontent.com/Mikeykorby/fishstrap-v2/main/Images/Screenshots/FastFlags.png"
-           alt="Fishstrap V2 FastFlags editor" loading="lazy">
+           width="1920" height="1154" alt="Fishstrap V2 FastFlags editor">
     </div>
   </section>
 
