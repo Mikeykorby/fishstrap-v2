@@ -50,6 +50,7 @@ public static class LaunchManager
             StatisticsStore.RecordLaunch("Player", exe);
 
         Process.Start(psi);
+        ApplyPostLaunchSettings();
         Logger.Info($"Launched Roblox Player ({entry.Hash})");
         _playerLastLaunch = DateTime.UtcNow;
         return entry;
@@ -127,5 +128,56 @@ public static class LaunchManager
         if (!string.IsNullOrWhiteSpace(extra))
             parts.Add(extra.Trim());
         return string.Join(" ", parts.Where(p => p.Length > 0));
+    }
+
+    /// <summary>
+    /// Applies the post-launch behaviour settings: the Roblox client's process priority
+    /// and killing any lingering RobloxCrashHandler processes. Every step is best-effort.
+    /// </summary>
+    private static void ApplyPostLaunchSettings()
+    {
+        var launcher = SettingsStore.Settings.Launcher;
+
+        if (!launcher.ProcessPriority.Equals("Normal", StringComparison.OrdinalIgnoreCase))
+        {
+            try
+            {
+                foreach (var proc in Process.GetProcessesByName("RobloxPlayerBeta"))
+                {
+                    if (proc.HasExited) continue;
+                    proc.PriorityClass = launcher.ProcessPriority.ToLowerInvariant() switch
+                    {
+                        "low" => ProcessPriorityClass.Idle,
+                        "below normal" => ProcessPriorityClass.BelowNormal,
+                        "above normal" => ProcessPriorityClass.AboveNormal,
+                        "high" => ProcessPriorityClass.High,
+                        _ => ProcessPriorityClass.Normal,
+                    };
+                    Logger.Info($"Set Roblox process priority to {launcher.ProcessPriority}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Warn($"Could not set Roblox process priority: {ex.Message}");
+            }
+        }
+
+        if (launcher.AutoCloseCrashHandler)
+        {
+            try
+            {
+                var killed = 0;
+                foreach (var crashProc in Process.GetProcessesByName("RobloxCrashHandler"))
+                {
+                    try { crashProc.Kill(); killed++; } catch { }
+                }
+                if (killed > 0)
+                    Logger.Info($"Closed {killed} lingering Roblox Crash Handler process(es)");
+            }
+            catch (Exception ex)
+            {
+                Logger.Warn($"Could not close Roblox Crash Handler: {ex.Message}");
+            }
+        }
     }
 }

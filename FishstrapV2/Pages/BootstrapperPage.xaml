@@ -34,6 +34,27 @@
                                   Checked="Register_Changed" Unchecked="Register_Changed"/>
                     </ctrl:SettingRow.RowContent>
                 </ctrl:SettingRow>
+                <ctrl:SettingRow x:Name="RowPriority" Icon="gauge" IconTint="{DynamicResource BrushTextSecondary}"
+                                 Title="Roblox process priority" Subtitle="Priority class given to the Roblox client at launch"
+                                 Margin="0,10,0,0">
+                    <ctrl:SettingRow.RowContent>
+                        <ComboBox x:Name="CmbPriority" Width="150" SelectionChanged="Priority_Changed">
+                            <ComboBoxItem Content="Normal"/>
+                            <ComboBoxItem Content="Below Normal"/>
+                            <ComboBoxItem Content="Low"/>
+                            <ComboBoxItem Content="Above Normal"/>
+                            <ComboBoxItem Content="High"/>
+                        </ComboBox>
+                    </ctrl:SettingRow.RowContent>
+                </ctrl:SettingRow>
+                <ctrl:SettingRow x:Name="RowCrashHandler" Icon="shield" IconTint="{DynamicResource BrushTextSecondary}"
+                                 Title="Close Roblox Crash Handler" Subtitle="Kill lingering RobloxCrashHandler processes to free memory"
+                                 Margin="0,10,0,0">
+                    <ctrl:SettingRow.RowContent>
+                        <CheckBox x:Name="ChkCrashHandler" Style="{StaticResource ModernToggle}"
+                                  Checked="Toggle_Changed" Unchecked="Toggle_Changed"/>
+                    </ctrl:SettingRow.RowContent>
+                </ctrl:SettingRow>
             </StackPanel>
 
             <Border Style="{StaticResource Card}" Margin="0,12,0,0">
