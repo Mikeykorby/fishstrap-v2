@@ -233,7 +233,6 @@ public partial class DeploymentPage : FishstrapPage
             return;
 
         RobloxInstallManager.UninstallAll();
-        RobloxInstallManager.UninstallAll();
         RefreshVersionList();
         MainWindow.Current?.ShowToast("All Roblox versions removed");
     }
