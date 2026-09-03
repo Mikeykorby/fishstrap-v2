@@ -20,6 +20,10 @@ public class LauncherSettings
     public bool AutoCloseAfterLaunch { get; set; } = false;
     public bool CreateShortcutsOnInstall { get; set; } = true;
     public string LaunchArgs { get; set; } = "";
+    /// <summary>Priority class applied to the Roblox client at launch: "Low", "Below Normal", "Normal", "Above Normal" or "High".</summary>
+    public string ProcessPriority { get; set; } = "Normal";
+    /// <summary>Kills lingering RobloxCrashHandler processes after launching Roblox.</summary>
+    public bool AutoCloseCrashHandler { get; set; } = false;
     /// <summary>Bootstrapper progress dialog: "Fishstrap" (default), "Disabled", a fishstrap original style ("Classic Fluent", "Terminal", "TwentyFive"), Bloxnified V2, or an imported theme name.</summary>
     public string BootstrapperStyle { get; set; } = "Fishstrap";
     public string BootstrapperTitle { get; set; } = "Fishstrap V2";

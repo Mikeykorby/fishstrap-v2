@@ -52,6 +52,72 @@ public partial class FastFlagsPage : FishstrapPage
         CmbPresets.SelectedIndex = 0;
         _suppress = false;
         Reload();
+        ReloadProfiles();
+    }
+
+    private void ReloadProfiles()
+    {
+        var profiles = FastFlagManager.GetProfiles();
+        ProfileList.ItemsSource = profiles;
+        NoProfiles.Visibility = profiles.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+    }
+
+    private void BtnSaveProfile_Click(object sender, RoutedEventArgs e)
+    {
+        var name = TxtProfileName.Text.Trim();
+        if (name.Length == 0)
+        {
+            MainWindow.Current?.ShowToast("Enter a profile name first", true);
+            return;
+        }
+        try
+        {
+            FastFlagManager.SaveProfile(name);
+            ReloadProfiles();
+            TxtProfileName.Text = "";
+            MainWindow.Current?.ShowToast($"Profile saved: {name}");
+        }
+        catch (Exception ex)
+        {
+            MainWindow.Current?.ShowToast("Save failed: " + ex.Message, true);
+        }
+    }
+
+    private void ProfileName_KeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.Key == Key.Enter)
+        {
+            BtnSaveProfile_Click(sender, e);
+            e.Handled = true;
+        }
+    }
+
+    private void ProfileApply_Click(object sender, RoutedEventArgs e)
+    {
+        if ((sender as Button)?.Tag is not string name) return;
+        try
+        {
+            var (loaded, blocked) = FastFlagManager.LoadProfile(name, clearFlags: true);
+            Persist();
+            Reload();
+            MainWindow.Current?.ShowToast(blocked > 0
+                ? $"Profile applied: {name} ({loaded} flags, {blocked} blocked by the allowlist)"
+                : $"Profile applied: {name} ({loaded} flags)");
+        }
+        catch (Exception ex)
+        {
+            MainWindow.Current?.ShowToast("Apply failed: " + ex.Message, true);
+        }
+    }
+
+    private void ProfileDelete_Click(object sender, RoutedEventArgs e)
+    {
+        if ((sender as Button)?.Tag is not string name) return;
+        if (MessageBox.Show($"Delete the FastFlag profile \"{name}\"?", "Fishstrap V2",
+                MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.Yes)
+            return;
+        FastFlagManager.DeleteProfile(name);
+        ReloadProfiles();
     }
 
     private void Reload()

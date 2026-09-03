@@ -95,6 +95,79 @@ public static class FastFlagManager
         }
     }
 
+    // ---- FastFlag profiles -------------------------------------------------
+    // A profile is a named snapshot of the flag list, stored as a JSON file so
+    // profiles survive even if settings.json is reset.
+
+    public static readonly string ProfilesDir = Path.Combine(Paths.AppData, "SavedFlagProfiles");
+
+    public static List<string> GetProfiles()
+    {
+        try
+        {
+            if (!Directory.Exists(ProfilesDir)) return new List<string>();
+            return Directory.GetFiles(ProfilesDir, "*.json")
+                .Select(Path.GetFileNameWithoutExtension)
+                .OrderBy(n => n, StringComparer.OrdinalIgnoreCase)
+                .ToList();
+        }
+        catch (Exception ex)
+        {
+            Logger.Warn($"Could not list FastFlag profiles: {ex.Message}");
+            return new List<string>();
+        }
+    }
+
+    public static void SaveProfile(string name)
+    {
+        var safe = SanitizeProfileName(name);
+        if (safe.Length == 0) throw new ArgumentException("Profile name cannot be empty.");
+        Directory.CreateDirectory(ProfilesDir);
+        var json = JsonSerializer.Serialize(SettingsStore.Settings.FastFlags.Flags, JsonOpts);
+        File.WriteAllText(Path.Combine(ProfilesDir, safe + ".json"), json);
+        Logger.Info($"Saved FastFlag profile {safe}");
+    }
+
+    /// <summary>Replaces the current flags with a profile's flags, skipping any the allowlist blocks.</summary>
+    public static (int Loaded, int Blocked) LoadProfile(string name, bool clearFlags)
+    {
+        var safe = SanitizeProfileName(name);
+        var path = Path.Combine(ProfilesDir, safe + ".json");
+        if (!File.Exists(path)) return (0, 0);
+
+        using var doc = JsonDocument.Parse(File.ReadAllText(path));
+        var target = SettingsStore.Settings.FastFlags.Flags;
+        if (clearFlags) target.Clear();
+        var loaded = 0;
+        var blocked = 0;
+        var enforce = SettingsStore.Settings.FastFlags.EnforceAllowlist;
+
+        foreach (var prop in doc.RootElement.EnumerateObject())
+        {
+            if (enforce && !FlagAllowlist.IsAllowed(prop.Name))
+            {
+                blocked++;
+                continue;
+            }
+            target[prop.Name] = prop.Value.Clone();
+            loaded++;
+        }
+
+        Logger.Info($"Loaded FastFlag profile {safe} ({loaded} flags)");
+        return (loaded, blocked);
+    }
+
+    public static void DeleteProfile(string name)
+    {
+        var safe = SanitizeProfileName(name);
+        var path = Path.Combine(ProfilesDir, safe + ".json");
+        if (File.Exists(path)) File.Delete(path);
+        Logger.Info($"Deleted FastFlag profile {safe}");
+    }
+
+    private static string SanitizeProfileName(string name) => string.Concat(
+        (name ?? "").Trim().Where(c => !Path.GetInvalidFileNameChars().Contains(c) && c != '.'));
+
     /// <summary>Parses a raw string into a native JSON value (bool, number or string).</summary>
     public static JsonElement ParseValue(string raw)
     {

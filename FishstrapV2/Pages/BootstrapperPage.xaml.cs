@@ -23,9 +23,20 @@ public partial class BootstrapperPage : FishstrapPage
         ChkAutoClose.IsChecked = s.Launcher.AutoCloseAfterLaunch;
         ChkShortcuts.IsChecked = s.Launcher.CreateShortcutsOnInstall;
         ChkRegister.IsChecked = IsRegisteredAsLauncher();
+        ChkCrashHandler.IsChecked = s.Launcher.AutoCloseCrashHandler;
+        CmbPriority.SelectedIndex = Math.Max(0, PriorityIndex(s.Launcher.ProcessPriority));
         TxtLaunchArgs.Text = s.Launcher.LaunchArgs;
         _suppress = false;
     }
+
+    private static int PriorityIndex(string value) => value.ToLowerInvariant() switch
+    {
+        "below normal" => 1,
+        "low" => 2,
+        "above normal" => 3,
+        "high" => 4,
+        _ => 0,
+    };
 
     private void Toggle_Changed(object sender, RoutedEventArgs e)
     {
@@ -33,7 +44,16 @@ public partial class BootstrapperPage : FishstrapPage
         var s = SettingsStore.Settings.Launcher;
         s.AutoCloseAfterLaunch = ChkAutoClose.IsChecked == true;
         s.CreateShortcutsOnInstall = ChkShortcuts.IsChecked == true;
+        s.AutoCloseCrashHandler = ChkCrashHandler.IsChecked == true;
         Persist();
+    }
+
+    private void Priority_Changed(object sender, SelectionChangedEventArgs e)
+    {
+        if (!IsLoaded || _suppress || CmbPriority.SelectedItem is not ComboBoxItem item) return;
+        SettingsStore.Settings.Launcher.ProcessPriority = (string)item.Content;
+        Persist();
+        MainWindow.Current?.ShowToast($"Roblox priority set to {item.Content}");
     }
 
     private void Register_Changed(object sender, RoutedEventArgs e)

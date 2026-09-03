@@ -116,6 +116,49 @@
                 <TextBlock Style="{DynamicResource TextTertiary}" FontSize="12" HorizontalAlignment="Right"
                            Text="Written to ClientAppSettings.json on launch"/>
             </Grid>
+
+            <!-- Profiles -->
+            <TextBlock Text="Profiles" Style="{StaticResource H2}" Margin="0,24,0,12"/>
+            <Border Style="{StaticResource Card}" Padding="14">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="TxtProfileName" MaxWidth="360" HorizontalAlignment="Left"
+                                 Tag="Profile name" KeyDown="ProfileName_KeyDown"/>
+                        <Button Grid.Column="1" Content="Save current as profile" Style="{StaticResource CmdButton}"
+                                Margin="12,0,0,0" Click="BtnSaveProfile_Click"/>
+                    </Grid>
+                    <TextBlock Text="A profile is a named snapshot of your current flags — save one, then swap whole setups in one click."
+                               Style="{DynamicResource TextSecondary}" FontSize="11.5" Margin="0,2,0,10"/>
+                    <ItemsControl x:Name="ProfileList">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,4,0,4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding}" FontFamily="{StaticResource MonoFont}" FontSize="12"
+                                               VerticalAlignment="Center"/>
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                        <Button Content="Apply" Style="{StaticResource CmdButton}" Padding="14,5"
+                                                Margin="0,0,8,0" Click="ProfileApply_Click" Tag="{Binding}"/>
+                                        <Button Style="{StaticResource IconButton}" Click="ProfileDelete_Click" Tag="{Binding}"
+                                                ToolTip="Delete profile">
+                                            <ctrl:IconGlyph Icon="trash-2" Size="13"/>
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <TextBlock x:Name="NoProfiles" Text="No profiles saved yet."
+                               Style="{DynamicResource TextSecondary}" FontSize="12" Margin="0,6,0,0"/>
+                </StackPanel>
+            </Border>
         </StackPanel>
     </ScrollViewer>
 </local:FishstrapPage>
