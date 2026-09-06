@@ -24,6 +24,8 @@ public class LauncherSettings
     public string ProcessPriority { get; set; } = "Normal";
     /// <summary>Kills lingering RobloxCrashHandler processes after launching Roblox.</summary>
     public bool AutoCloseCrashHandler { get; set; } = false;
+    /// <summary>Pre-creates Roblox's singleton mutex so more than one client can run at once.</summary>
+    public bool MultiInstanceLaunching { get; set; } = false;
     /// <summary>Bootstrapper progress dialog: "Fishstrap" (default), "Disabled", a fishstrap original style ("Classic Fluent", "Terminal", "TwentyFive"), Bloxnified V2, or an imported theme name.</summary>
     public string BootstrapperStyle { get; set; } = "Fishstrap";
     public string BootstrapperTitle { get; set; } = "Fishstrap V2";

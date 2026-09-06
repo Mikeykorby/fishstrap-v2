@@ -10,6 +10,13 @@ public partial class App : Application
 
     protected override void OnStartup(StartupEventArgs e)
     {
+        // The multi-instance watcher is a headless process — it must not touch the GUI mutex.
+        if (e.Args.Contains("-multiinstancewatcher"))
+        {
+            Core.MultiInstanceWatcher.RunWatcher();
+            return;
+        }
+
         bool createdNew;
         _singleInstanceMutex = new Mutex(true, @"Local\FishstrapV2-SingleInstance", out createdNew);
 
