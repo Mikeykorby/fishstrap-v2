@@ -102,8 +102,11 @@ public static class MultiInstanceWatcher
 
     private static Mutex? EnsureNamedMutex(string name)
     {
-        if (Mutex.TryOpenExisting(name, out _))
+        if (Mutex.TryOpenExisting(name, out var existing))
+        {
+            existing.Dispose(); // kernel object survives while its real owner holds it
             return null;
+        }
         return new Mutex(false, name);
     }
 

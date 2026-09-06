@@ -37,6 +37,10 @@ public static class SessionWatcher
     // 1 = kicked for inactivity, 277 = network disconnect.
     private static readonly HashSet<string> RejoinReasons = new() { "1", "277" };
     private static int _rejoinPending;
+    // True while parsing bytes that were already in the log before we first saw it
+    // (app startup or a new client's log). Disconnects in that content are stale —
+    // they happened before we were watching — so auto-rejoin must not fire on them.
+    private static bool _replayingHistory;
 
     private static System.Timers.Timer? _pollTimer;
     private static long _logOffset;
@@ -118,6 +122,10 @@ public static class SessionWatcher
                     }
                 }
             }
+
+            // Everything from this batch onward is live content; only the initial
+            // backlog of a log is history.
+            _replayingHistory = false;
         }
         catch (Exception ex)
         {
@@ -132,6 +140,7 @@ public static class SessionWatcher
     /// </summary>
     private static void MaybeScheduleRejoin(string reasonCode, Session session)
     {
+        if (_replayingHistory) return;
         if (!SettingsStore.Settings.Integrations.AutoRejoin) return;
         if (!RejoinReasons.Contains(reasonCode)) return;
         if (string.IsNullOrEmpty(session.PlaceId) || string.IsNullOrEmpty(session.JobId)) return;
@@ -184,6 +193,7 @@ public static class SessionWatcher
                     _lastLogFile = log.FullName;
                     _currentLogFile = log.FullName;
                     _logOffset = 0;
+                    _replayingHistory = true;
                     if (Current is not null)
                     {
                         Current = null;
