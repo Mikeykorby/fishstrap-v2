@@ -9,7 +9,7 @@
     <LangVersion>latest</LangVersion>
     <RootNamespace>FishstrapV2</RootNamespace>
     <AssemblyName>FishstrapV2</AssemblyName>
-    <Version>3.1.2</Version>
+    <Version>3.2.0-beta.1</Version>
     <AssemblyTitle>Fishstrap V2</AssemblyTitle>
     <Product>Fishstrap V2</Product>
     <Description>Fishstrap V2 - a custom bootstrapper for Roblox</Description>
