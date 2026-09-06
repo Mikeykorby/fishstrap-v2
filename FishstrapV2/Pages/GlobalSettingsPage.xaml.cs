@@ -49,6 +49,15 @@ public partial class GlobalSettingsPage : FishstrapPage
         ChkPostFx.IsChecked = e.DisablePostEffects;
         ChkShadows.IsChecked = e.DisablePlayerShadows;
         ChkTelemetry.IsChecked = e.BlockTelemetry;
+
+        CmbAutoClean.SelectedIndex = SettingsStore.Settings.Launcher.AutoCleanCache switch
+        {
+            "Daily" => 1,
+            "Weekly" => 2,
+            "Monthly" => 3,
+            "Two Months" => 4,
+            _ => 0,
+        };
         _suppress = false;
 
         RefreshEffectiveCount();
@@ -167,6 +176,14 @@ public partial class GlobalSettingsPage : FishstrapPage
         ProfileStore.Delete(row.Name);
         RefreshProfiles();
         MainWindow.Current?.ShowToast($"Profile '{row.Name}' deleted");
+    }
+
+    private void AutoClean_Changed(object sender, SelectionChangedEventArgs e)
+    {
+        if (!IsLoaded || _suppress || CmbAutoClean.SelectedItem is not ComboBoxItem item) return;
+        SettingsStore.Settings.Launcher.AutoCleanCache = (string)item.Content;
+        Persist();
+        MainWindow.Current?.ShowToast($"Automatic cache cleaning: {item.Content}");
     }
 
     private void ClearCache_Click(object sender, RoutedEventArgs e)

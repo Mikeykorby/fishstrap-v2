@@ -81,8 +81,21 @@
             </StackPanel>
 
             <!-- Maintenance -->
+            <ctrl:SettingRow x:Name="RowAutoClean" Icon="clock" IconTint="{DynamicResource BrushTextSecondary}"
+                             Title="Automatic cache cleaning" Subtitle="Delete old cache and log files at startup"
+                             Margin="0,12,0,0">
+                <ctrl:SettingRow.RowContent>
+                    <ComboBox x:Name="CmbAutoClean" Width="140" SelectionChanged="AutoClean_Changed">
+                        <ComboBoxItem Content="Never"/>
+                        <ComboBoxItem Content="Daily"/>
+                        <ComboBoxItem Content="Weekly"/>
+                        <ComboBoxItem Content="Monthly"/>
+                        <ComboBoxItem Content="Two Months"/>
+                    </ComboBox>
+                </ctrl:SettingRow.RowContent>
+            </ctrl:SettingRow>
             <ctrl:SettingRow x:Name="RowCache" Icon="trash-2" IconTint="{DynamicResource BrushTextSecondary}"
-                             Title="Clear Roblox cache" Subtitle="Removes the HTTP cache and Roblox logs" Margin="0,12,0,0">
+                             Title="Clear Roblox cache" Subtitle="Removes the HTTP cache and Roblox logs" Margin="0,10,0,0">
                 <ctrl:SettingRow.RowContent>
                     <Button Content="Clear" Style="{StaticResource CmdButton}" Click="ClearCache_Click"/>
                 </ctrl:SettingRow.RowContent>

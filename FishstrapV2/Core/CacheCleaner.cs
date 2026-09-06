@@ -4,6 +4,78 @@ namespace FishstrapV2.Core;
 
 public static class CacheCleaner
 {
+    // Scheduled cleaning (ported from Froststrap's Cleaner): delete cache files older
+    // than the configured age, capped per directory so a huge backlog can't stall startup.
+    private const int MaxFilesPerDirectory = 200;
+
+    /// <summary>Max age in hours for the AutoCleanCache setting; null means disabled.</summary>
+    private static int? MaxAgeHours(string setting) => setting switch
+    {
+        "Daily" => 24,
+        "Weekly" => 24 * 7,
+        "Monthly" => 24 * 30,
+        "Two Months" => 24 * 60,
+        _ => null,
+    };
+
+    /// <summary>
+    /// Runs the scheduled cleaner if enabled. Called at app startup; best-effort.
+    /// </summary>
+    public static void RunScheduled()
+    {
+        var hours = MaxAgeHours(SettingsStore.Settings.Launcher.AutoCleanCache);
+        if (hours is null) return;
+
+        int deleted = CleanOldFiles(hours.Value);
+        if (deleted > 0)
+            Logger.Info($"Scheduled cache clean removed {deleted} old file(s)");
+    }
+
+    /// <summary>Deletes files older than maxAgeHours across all cache targets.</summary>
+    public static int CleanOldFiles(int maxAgeHours)
+    {
+        var threshold = DateTime.UtcNow - TimeSpan.FromHours(maxAgeHours);
+        var roots = new[] { Paths.LogsDir, Paths.DownloadsDir, Paths.RobloxHttpCache, Paths.RobloxLogsDir };
+        var totalDeleted = 0;
+
+        foreach (var root in roots)
+        {
+            if (!Directory.Exists(root)) continue;
+
+            // Upstream caps deletions per directory per run so a huge backlog can't stall startup.
+            var deleted = 0;
+            foreach (var file in EnumerateFilesSafe(root))
+            {
+                if (deleted >= MaxFilesPerDirectory) break;
+                if (File.GetLastWriteTimeUtc(file) > threshold) continue;
+                if (!IsSafeToDelete(file, root)) continue;
+
+                try { File.Delete(file); deleted++; totalDeleted++; }
+                catch { /* locked files (e.g. the live client log) stay */ }
+            }
+        }
+
+        return totalDeleted;
+    }
+
+    private static IEnumerable<string> EnumerateFilesSafe(string root)
+    {
+        var files = Enumerable.Empty<string>();
+        try { files = Directory.EnumerateFiles(root, "*", SearchOption.AllDirectories); }
+        catch (Exception ex) { Logger.Warn($"Cache clean skipped {root}: {ex.Message}"); }
+        return files;
+    }
+
+    /// <summary>Only paths under our own cache roots may be deleted (path-prefix, not substring).</summary>
+    public static bool IsSafeToDelete(string file, string root)
+    {
+        var fullFile = Path.GetFullPath(file);
+        var fullRoot = Path.GetFullPath(root);
+        var comparison = OperatingSystem.IsWindows() ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
+        return fullFile.StartsWith(fullRoot, comparison)
+            && !fullFile.Contains("Windows", comparison);
+    }
+
     public static List<(string Label, string Path)> GetTargets()
     {
         var targets = new List<(string, string)>();
