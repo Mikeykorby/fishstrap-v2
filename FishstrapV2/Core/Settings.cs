@@ -55,6 +55,8 @@ public class IntegrationsSettings
 {
     public DiscordRpcSettings DiscordRpc { get; set; } = new();
     public bool ActivityTracking { get; set; } = true;
+    /// <summary>Rejoins the last server automatically after disconnect reason 1 (inactivity) or 277 (internet loss).</summary>
+    public bool AutoRejoin { get; set; } = false;
 }
 
 public class ModCategorySettings

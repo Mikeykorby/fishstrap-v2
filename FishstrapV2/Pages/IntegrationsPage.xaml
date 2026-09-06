@@ -70,6 +70,15 @@
                 </StackPanel>
             </Border>
 
+            <ctrl:SettingRow x:Name="RowRejoin" Icon="rotate-ccw" IconTint="{DynamicResource BrushTextSecondary}"
+                             Title="Auto-rejoin on disconnect" Subtitle="Rejoin the same server after an inactivity or internet disconnect"
+                             Margin="0,12,0,0">
+                <ctrl:SettingRow.RowContent>
+                    <CheckBox x:Name="ChkRejoin" Style="{StaticResource ModernToggle}"
+                              Checked="Rejoin_Changed" Unchecked="Rejoin_Changed"/>
+                </ctrl:SettingRow.RowContent>
+            </ctrl:SettingRow>
+
             <ctrl:SettingRow x:Name="RowActivity" Icon="activity" IconTint="{DynamicResource BrushTextSecondary}"
                              Title="Activity Tracking" Subtitle="Record launches and play time for statistics"
                              Margin="0,12,0,0">

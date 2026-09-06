@@ -30,6 +30,13 @@ public static class SessionWatcher
         new(@"UDMUX Address = ([0-9\.]+), Port = [0-9]+", RegexOptions.Compiled);
     private static readonly Regex ServerPrefixRegex =
         new(@"Server Prefix:.+_([0-9]{8}T[0-9]{6}Z)_RCC_[0-9a-z]+", RegexOptions.Compiled);
+    private static readonly Regex DisconnectReasonRegex =
+        new(@"Sending disconnect with reason: (\d+)", RegexOptions.Compiled);
+
+    // Disconnect reasons that trigger an auto-rejoin (ported from Bloxstrap/Froststrap):
+    // 1 = kicked for inactivity, 277 = network disconnect.
+    private static readonly HashSet<string> RejoinReasons = new() { "1", "277" };
+    private static int _rejoinPending;
 
     private static System.Timers.Timer? _pollTimer;
     private static long _logOffset;
@@ -78,6 +85,13 @@ public static class SessionWatcher
 
                     if (Current is null) continue;
 
+                    var reason = DisconnectReasonRegex.Match(line);
+                    if (reason.Success)
+                    {
+                        MaybeScheduleRejoin(reason.Groups[1].Value, Current);
+                        continue;
+                    }
+
                     var udmux = UdmuxRegex.Match(line);
                     if (udmux.Success)
                     {
@@ -109,6 +123,45 @@ public static class SessionWatcher
         {
             Logger.Warn("Session watcher poll failed: " + ex.Message);
         }
+    }
+
+    /// <summary>
+    /// Schedules an automatic rejoin of the current place/server after a disconnect with a
+    /// rejoinable reason code. Ported from Bloxstrap/Froststrap: 3s delay, then the
+    /// roblox:// experience deeplink with the job id (same server). Best-effort only.
+    /// </summary>
+    private static void MaybeScheduleRejoin(string reasonCode, Session session)
+    {
+        if (!SettingsStore.Settings.Integrations.AutoRejoin) return;
+        if (!RejoinReasons.Contains(reasonCode)) return;
+        if (string.IsNullOrEmpty(session.PlaceId) || string.IsNullOrEmpty(session.JobId)) return;
+        if (Interlocked.Exchange(ref _rejoinPending, 1) == 1) return;
+
+        var placeId = session.PlaceId;
+        var jobId = session.JobId;
+        Logger.Info($"Disconnect reason {reasonCode} — auto-rejoining place {placeId}");
+
+        _ = Task.Run(async () =>
+        {
+            try
+            {
+                await Task.Delay(3000);
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = $"roblox://experiences/start?placeId={placeId}&gameInstanceId={jobId}",
+                    UseShellExecute = true,
+                });
+                Logger.Info($"Auto-rejoin launched for place {placeId} (job {jobId})");
+            }
+            catch (Exception ex)
+            {
+                Logger.Warn($"Auto-rejoin failed: {ex.Message}");
+            }
+            finally
+            {
+                Interlocked.Exchange(ref _rejoinPending, 0);
+            }
+        });
     }
 
     private static string? ReadLogDelta()
