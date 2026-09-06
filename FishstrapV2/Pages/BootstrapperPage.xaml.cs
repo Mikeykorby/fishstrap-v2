@@ -24,6 +24,7 @@ public partial class BootstrapperPage : FishstrapPage
         ChkShortcuts.IsChecked = s.Launcher.CreateShortcutsOnInstall;
         ChkRegister.IsChecked = IsRegisteredAsLauncher();
         ChkCrashHandler.IsChecked = s.Launcher.AutoCloseCrashHandler;
+        ChkMultiInstance.IsChecked = s.Launcher.MultiInstanceLaunching;
         CmbPriority.SelectedIndex = Math.Max(0, PriorityIndex(s.Launcher.ProcessPriority));
         TxtLaunchArgs.Text = s.Launcher.LaunchArgs;
         _suppress = false;
@@ -45,6 +46,7 @@ public partial class BootstrapperPage : FishstrapPage
         s.AutoCloseAfterLaunch = ChkAutoClose.IsChecked == true;
         s.CreateShortcutsOnInstall = ChkShortcuts.IsChecked == true;
         s.AutoCloseCrashHandler = ChkCrashHandler.IsChecked == true;
+        s.MultiInstanceLaunching = ChkMultiInstance.IsChecked == true;
         Persist();
     }
 

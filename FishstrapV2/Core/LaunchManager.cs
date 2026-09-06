@@ -49,6 +49,9 @@ public static class LaunchManager
         if (SettingsStore.Settings.Integrations.ActivityTracking)
             StatisticsStore.RecordLaunch("Player", exe);
 
+        if (SettingsStore.Settings.Launcher.MultiInstanceLaunching)
+            MultiInstanceWatcher.PrepareForLaunch();
+
         Process.Start(psi);
         ApplyPostLaunchSettings();
         Logger.Info($"Launched Roblox Player ({entry.Hash})");

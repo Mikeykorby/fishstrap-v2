@@ -47,6 +47,14 @@
                         </ComboBox>
                     </ctrl:SettingRow.RowContent>
                 </ctrl:SettingRow>
+                <ctrl:SettingRow x:Name="RowMultiInstance" Icon="copy" IconTint="{DynamicResource BrushTextSecondary}"
+                                 Title="Multi-instance launching" Subtitle="Allow opening more than one Roblox client at a time"
+                                 Margin="0,10,0,0">
+                    <ctrl:SettingRow.RowContent>
+                        <CheckBox x:Name="ChkMultiInstance" Style="{StaticResource ModernToggle}"
+                                  Checked="Toggle_Changed" Unchecked="Toggle_Changed"/>
+                    </ctrl:SettingRow.RowContent>
+                </ctrl:SettingRow>
                 <ctrl:SettingRow x:Name="RowCrashHandler" Icon="shield" IconTint="{DynamicResource BrushTextSecondary}"
                                  Title="Close Roblox Crash Handler" Subtitle="Kill lingering RobloxCrashHandler processes to free memory"
                                  Margin="0,10,0,0">
