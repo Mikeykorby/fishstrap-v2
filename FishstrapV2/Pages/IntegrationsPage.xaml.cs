@@ -22,6 +22,7 @@ public partial class IntegrationsPage : FishstrapPage
         TxtDetails.Text = s.Integrations.DiscordRpc.Details;
         TxtState.Text = s.Integrations.DiscordRpc.State;
         ChkActivity.IsChecked = s.Integrations.ActivityTracking;
+        ChkRejoin.IsChecked = s.Integrations.AutoRejoin;
         RpcPanel.Opacity = s.Integrations.DiscordRpc.Enabled ? 1 : 0.55;
         UpdatePreview();
     }
@@ -56,6 +57,13 @@ public partial class IntegrationsPage : FishstrapPage
     {
         if (!IsLoaded) return;
         SettingsStore.Settings.Integrations.ActivityTracking = ChkActivity.IsChecked == true;
+        Persist();
+    }
+
+    private void Rejoin_Changed(object sender, RoutedEventArgs e)
+    {
+        if (!IsLoaded) return;
+        SettingsStore.Settings.Integrations.AutoRejoin = ChkRejoin.IsChecked == true;
         Persist();
     }
 
