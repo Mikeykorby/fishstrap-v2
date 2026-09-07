@@ -14,6 +14,7 @@
                 </Grid.ColumnDefinitions>
                 <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          LostFocus="FlagName_LostFocus" KeyDown="FlagRow_KeyDown"
+                         IsEnabled="{Binding IsUserEditable}"
                          FontFamily="{StaticResource MonoFont}" FontSize="12"
                          ToolTip="Flag name"/>
                 <TextBlock Grid.Column="1" Text="=" FontSize="12"
@@ -21,12 +22,38 @@
                            HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <TextBox Grid.Column="2" Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          LostFocus="FlagValue_LostFocus" KeyDown="FlagRow_KeyDown"
+                         IsEnabled="{Binding IsUserEditable}"
                          FontFamily="{StaticResource MonoFont}" FontSize="12"
                          ToolTip="Flag value (bool, number or string)"/>
-                <Button Grid.Column="3" Style="{StaticResource IconButton}" Click="FlagDelete_Click" Tag="{Binding}"
-                        ToolTip="Delete flag" Margin="6,0,0,0">
-                    <ctrl:IconGlyph Icon="trash-2" Size="12"/>
-                </Button>
+                <Grid Grid.Column="3" Margin="6,0,0,0">
+                    <Button Click="FlagDelete_Click" Tag="{Binding}"
+                            ToolTip="Delete flag">
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource IconButton}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Managed}" Value="True">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        <ctrl:IconGlyph Icon="trash-2" Size="12"/>
+                    </Button>
+                    <TextBlock Text="Global" FontSize="10.5" VerticalAlignment="Center"
+                               Foreground="{DynamicResource BrushTextTertiary}"
+                               ToolTip="Managed by Global Settings — change it there">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Managed}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
             </Grid>
         </DataTemplate>
     </local:FishstrapPage.Resources>

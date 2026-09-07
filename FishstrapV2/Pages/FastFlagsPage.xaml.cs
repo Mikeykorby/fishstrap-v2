@@ -19,6 +19,11 @@ public class FlagRow : INotifyPropertyChanged
     /// <summary>Key this row came from; edits only touch their own key so a filtered view can never wipe other flags.</summary>
     public string OriginalKey { get; set; } = "";
 
+    /// <summary>True when Global Settings owns this flag's value — the row is read-only.</summary>
+    public bool Managed { get; set; }
+
+    public bool IsUserEditable => !Managed;
+
     public string Name
     {
         get => _name;
@@ -120,15 +125,44 @@ public partial class FastFlagsPage : FishstrapPage
         ReloadProfiles();
     }
 
-    private void Reload()
+    private void Reload() => LoadRows(TxtSearch.Text.Trim());
+
+    /// <summary>
+    /// Renders the effective flag set: the user's own flags (editable) plus the engine flags
+    /// Global Settings contributes (read-only), so everything that applies on launch is visible.
+    /// </summary>
+    private void LoadRows(string filter)
     {
-        var flags = SettingsStore.Settings.FastFlags.Flags;
-        FlagsList.ItemsSource = flags
-            .OrderBy(k => k.Key, StringComparer.OrdinalIgnoreCase)
-            .Select(kvp => new FlagRow { OriginalKey = kvp.Key, Name = kvp.Key, Value = FastFlagManager.ValueToString(kvp.Value) })
+        var s = SettingsStore.Settings;
+        var user = s.FastFlags.Flags;
+        var effective = FastFlagManager.BuildEffectiveFlags(s);
+        var engine = FastFlagManager.EngineOwnedKeys(s);
+
+        IEnumerable<string> keys = user.Keys.Concat(effective.Keys).Distinct(StringComparer.OrdinalIgnoreCase);
+        if (filter.Length > 0)
+            keys = keys.Where(k => k.Contains(filter, StringComparison.OrdinalIgnoreCase));
+
+        FlagsList.ItemsSource = keys
+            .OrderBy(k => k, StringComparer.OrdinalIgnoreCase)
+            .Select(k => new FlagRow
+            {
+                OriginalKey = k,
+                Name = k,
+                Value = effective.TryGetValue(k, out var v) && engine.Contains(k)
+                    ? FastFlagManager.ValueToString(v)
+                    : user.TryGetValue(k, out var uv) ? FastFlagManager.ValueToString(uv) : "",
+                Managed = engine.Contains(k),
+            })
             .ToList();
-        NoFlags.Visibility = flags.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
-        FlagCount.Text = $"{flags.Count} flag(s) configured";
+
+        UpdateFooter();
+    }
+
+    private void UpdateFooter()
+    {
+        var s = SettingsStore.Settings;
+        FlagCount.Text = $"{FastFlagManager.BuildEffectiveFlags(s).Count} flag(s) apply on launch ({s.FastFlags.Flags.Count} custom)";
+        NoFlags.Visibility = FlagsList.Items.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
     }
 
     /// <summary>
@@ -143,6 +177,7 @@ public partial class FastFlagsPage : FishstrapPage
 
         foreach (var row in rows)
         {
+            if (row.Managed) continue; // engine-owned — Global Settings is its only editor
             var name = row.Name.Trim();
             if (row.OriginalKey.Length > 0)
             {
@@ -156,22 +191,10 @@ public partial class FastFlagsPage : FishstrapPage
 
         // Rows whose name was cleared keep their old value; deleting is the trash button's job.
         Persist();
-        NoFlags.Visibility = flags.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
-        FlagCount.Text = $"{flags.Count} flag(s) configured";
+        UpdateFooter();
     }
 
-    private void Search_TextChanged(object sender, TextChangedEventArgs e)
-    {
-        var query = TxtSearch.Text.Trim();
-        if (query.Length == 0) { Reload(); return; }
-
-        var flags = SettingsStore.Settings.FastFlags.Flags;
-        FlagsList.ItemsSource = flags
-            .Where(k => k.Key.Contains(query, StringComparison.OrdinalIgnoreCase))
-            .OrderBy(k => k.Key, StringComparer.OrdinalIgnoreCase)
-            .Select(kvp => new FlagRow { OriginalKey = kvp.Key, Name = kvp.Key, Value = FastFlagManager.ValueToString(kvp.Value) })
-            .ToList();
-    }
+    private void Search_TextChanged(object sender, TextChangedEventArgs e) => LoadRows(TxtSearch.Text.Trim());
 
     private void FlagRow_KeyDown(object sender, KeyEventArgs e)
     {
