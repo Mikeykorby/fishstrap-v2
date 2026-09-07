@@ -25,13 +25,13 @@ public static class FastFlagManager
     };
 
     /// <summary>Combines user flags (allowlist-gated) with engine settings into one flag map.</summary>
-    public static Dictionary<string, JsonElement> BuildEffectiveFlags(AppSettings s)
+    public static Dictionary<string, JsonElement> BuildEffectiveFlags(AppSettings s, IReadOnlyDictionary<string, JsonElement>? userFlags = null)
     {
         var dict = new Dictionary<string, JsonElement>(StringComparer.OrdinalIgnoreCase);
 
         if (s.FastFlags.Enabled)
         {
-            foreach (var (name, value) in s.FastFlags.Flags)
+            foreach (var (name, value) in (userFlags ?? s.FastFlags.Flags))
             {
                 if (!s.FastFlags.EnforceAllowlist || FlagAllowlist.IsAllowed(name))
                     dict[name] = value;
@@ -77,6 +77,10 @@ public static class FastFlagManager
 
         return dict;
     }
+
+    /// <summary>Keys whose values are owned by Global Settings rather than the user's flag list.</summary>
+    public static HashSet<string> EngineOwnedKeys(AppSettings s) =>
+        BuildEffectiveFlags(s, new Dictionary<string, JsonElement>()).Keys.ToHashSet(StringComparer.OrdinalIgnoreCase);
 
     /// <summary>Writes the effective flag set into the version folder.</summary>
     public static void ApplyToVersion(string versionDir, AppSettings s)
