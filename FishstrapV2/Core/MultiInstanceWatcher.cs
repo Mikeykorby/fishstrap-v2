@@ -28,9 +28,11 @@ public static class MultiInstanceWatcher
     {
         try
         {
-            // Already exists (another client/watcher owns it) — nothing to create or hold.
-            _singletonMutex = EnsureNamedMutex(SingletonMutexName);
-            _singletonEvent = EnsureNamedMutex(SingletonEventName);
+            // Each squat independently: losing one still leaves the watcher something to hold.
+            try { _singletonMutex = EnsureNamedMutex(SingletonMutexName); }
+            catch (Exception ex) { Logger.Warn($"Could not squat {SingletonMutexName}: {ex.Message}"); }
+            try { _singletonEvent = EnsureNamedMutex(SingletonEventName); }
+            catch (Exception ex) { Logger.Warn($"Could not squat {SingletonEventName}: {ex.Message}"); }
 
             using var initEvent = new EventWaitHandle(false, EventResetMode.AutoReset, InitEventName);
 
@@ -80,6 +82,13 @@ public static class MultiInstanceWatcher
             Logger.Info("Holding Roblox singleton mutex for multi-instance launching");
             initEvent.Set();
 
+            // Hold the singleton event name too: if the name is left free, Roblox creates its
+            // own event there and every later client sees a live instance and quits. While any
+            // client runs, the name must stay squatted by a mutex.
+            Mutex? eventSquat = null;
+            try { eventSquat = new Mutex(false, SingletonEventName); }
+            catch (Exception ex) { Logger.Warn($"Could not hold {SingletonEventName}: {ex.Message}"); }
+
             // Stay alive while any Roblox client is running, then release the singleton.
             int count;
             do
@@ -88,6 +97,7 @@ public static class MultiInstanceWatcher
                 count = GetClientCount();
             } while (count == -1 || count > 0);
 
+            eventSquat?.Dispose();
             Logger.Info("All Roblox clients closed — releasing singleton mutex");
         }
         catch (Exception ex)
